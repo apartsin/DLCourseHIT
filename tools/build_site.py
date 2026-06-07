@@ -370,8 +370,6 @@ def index_html():
         '<p>Everything in this course site, by section:</p>'
         '<ul class="clean">'
         '<li><a href="prereq/index.html">Prerequisites</a>: math, Python, and ML refreshers.</li>'
-        '<li>Formal syllabus document: <a href="syllabus/syllabus.html">HTML</a>, '
-        '<a href="syllabus/syllabus.docx">DOCX</a>, <a href="syllabus/syllabus.pdf">PDF</a>.</li>'
         '<li><a href="labs/week01.html">Labs</a>: weekly homework labs with self-check questions.</li>'
         '<li><a href="lessons/week01.html">Lesson plans</a>: instructor lecture and practice outlines, with the week\'s curated references.</li>'
         '<li><a href="' + colab_url(1) + '" target="_blank" rel="noopener">Practice notebooks</a>: Colab notebooks the instructor runs during the practice lessons.</li>'
