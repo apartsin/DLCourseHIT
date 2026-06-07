@@ -65,6 +65,8 @@ labs/                 week01..week13 student lab handouts (with self-check quest
 references/           week01..week13 curated reference pages
 lessons/              week01..week13 instructor lesson plans (lecture + practice)
 notebooks/            week01..week13 Colab-ready practice notebooks
+prereq/               Math, Python, and ML prerequisite review pages
+projects/             Example briefs: 10 mid-term + 10 final projects
 hit-catalogue/        HIT submission package (EN + HE syllabus, rationale, summary, questionnaire)
 assets/style.css      Shared house style
 tools/                Generators: build_site.py, build_notebooks.py, build_hit_package.py, content.py, refs.json, lessons.py, selfcheck.py

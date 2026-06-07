@@ -7,6 +7,7 @@ from content import COURSE, PARTS, WEEKS
 from lessons import LESSONS
 from selfcheck import SELFCHECK
 from prereq import PREREQ, ORDER as PREREQ_ORDER
+from projects import PROJECTS, ORDER as PROJECTS_ORDER
 
 OUTCOMES = [
     "Frame ML tasks as networks (tensors in, a loss out).",
@@ -41,7 +42,8 @@ def topnav(depth):
             f'<a class="brand" href="{up}index.html">Introduction to Deep Learning <span>&middot; HIT</span></a>'
             f'<nav><a href="{up}index.html">Home</a>'
             f'<a href="{up}prereq/index.html">Prerequisites</a>'
-            f'<a href="{up}syllabus/syllabus.html">Syllabus</a></nav></div></div>')
+            f'<a href="{up}syllabus/syllabus.html">Syllabus</a>'
+            f'<a href="{up}projects/index.html">Projects</a></nav></div></div>')
 
 def page(title, depth, inner):
     css = ("../" if depth else "") + "assets/style.css"
@@ -213,6 +215,44 @@ def prereq_index_html():
     )
     return page("Prerequisites: Introduction to Deep Learning", 1, inner)
 
+def project_page_html(kind):
+    pj = PROJECTS[kind]
+    cards = ""
+    for i, ex in enumerate(pj["examples"], 1):
+        flds = "".join(f'<p class="fld"><b>{esc(label)}:</b> {esc(ex[key])}</p>'
+                       for key, label in pj["fields"] if ex.get(key))
+        cards += (f'<div class="pcard"><h3><span class="n">{i:02d}</span>{esc(ex["title"])}</h3>{flds}</div>')
+    other = "final" if kind == "midterm" else "midterm"
+    inner = (
+        f'<div class="whead"><p class="eyebrow"><span class="wbadge">{esc(pj["badge"])}</span> &nbsp; {esc(pj["meta"])}</p>'
+        f'<h1>{esc(pj["title"])}</h1><p class="sub">{esc(pj["intro"])}</p></div>'
+        + f'<div class="callout"><b>Deliverables.</b><ul class="clean" style="margin-bottom:0">{li(pj["deliverables"])}</ul></div>'
+        + f'<h2><span class="ic">&#128203;</span>Ten examples</h2>{cards}'
+        + '<p style="margin-top:22px">'
+          f'<a class="btn" href="{other}.html">{esc(PROJECTS[other]["title"])}</a> '
+          '<a class="btn" href="../syllabus/syllabus.html">Syllabus</a> '
+          '<a class="btn" href="../index.html">Course home</a></p>'
+    )
+    return page(pj["title"], 1, inner)
+
+def projects_index_html():
+    cards = ""
+    for k in PROJECTS_ORDER:
+        pj = PROJECTS[k]
+        cards += (f'<div class="refcard"><div class="kind">{esc(pj["badge"])}</div><div class="body">'
+                  f'<a href="{k}.html">{esc(pj["title"])}</a> <span class="dom">{esc(pj["meta"])}</span>'
+                  f'<p class="note">{esc(pj["intro"])}</p></div></div>')
+    inner = (
+        '<div class="whead"><p class="eyebrow"><span class="wbadge">Projects</span></p>'
+        '<h1>Project examples</h1>'
+        '<p class="sub">Worked example briefs for the mid-term mini-project and the final project. '
+        'Use one as given or adapt it; you may also propose your own in the same spirit.</p></div>'
+        + f'<div class="refgrid">{cards}</div>'
+        + '<p style="margin-top:22px"><a class="btn" href="../index.html">&larr; Course home</a> '
+          '<a class="btn" href="../syllabus/syllabus.html">Syllabus</a></p>'
+    )
+    return page("Projects: Introduction to Deep Learning", 1, inner)
+
 KINDS = [("course", "Course"), ("book", "Book"), ("video", "Video"), ("blog", "Blog / Docs")]
 
 def ref_html(w):
@@ -292,19 +332,20 @@ def index_html():
         '<h2>Explore</h2>'
         '<p>Everything in this course site, by section:</p>'
         '<ul class="clean">'
-        '<li><a href="prereq/index.html">Prerequisites</a>:math, Python, and ML refreshers.</li>'
-        '<li><a href="syllabus/syllabus.html">Syllabus</a>:full course outline (also DOCX and PDF).</li>'
-        '<li><a href="labs/week01.html">Labs</a>:weekly student handouts with self-check questions.</li>'
-        '<li><a href="references/week01.html">References</a>:curated free courses, books, videos, and blogs.</li>'
-        '<li><a href="lessons/week01.html">Lesson plans</a>:instructor lecture and practice outlines.</li>'
-        '<li><a href="' + colab_url(1) + '" target="_blank" rel="noopener">Notebooks</a>:Colab-ready practice notebooks.</li>'
+        '<li><a href="prereq/index.html">Prerequisites</a>: math, Python, and ML refreshers.</li>'
+        '<li><a href="syllabus/syllabus.html">Syllabus</a>: full course outline (also DOCX and PDF).</li>'
+        '<li><a href="labs/week01.html">Labs</a>: weekly student handouts with self-check questions.</li>'
+        '<li><a href="references/week01.html">References</a>: curated free courses, books, videos, and blogs.</li>'
+        '<li><a href="lessons/week01.html">Lesson plans</a>: instructor lecture and practice outlines.</li>'
+        '<li><a href="' + colab_url(1) + '" target="_blank" rel="noopener">Notebooks</a>: Colab-ready practice notebooks.</li>'
+        '<li><a href="projects/index.html">Projects</a>: example briefs for the mid-term and final projects.</li>'
         '</ul>'
     )
     inner = hero + rationale + outcomes + prereq_cta + table + explore
     return page(f'{COURSE["title"]} (HIT)', 0, inner)
 
 def main():
-    for d in ("labs", "references", "lessons", "prereq"):
+    for d in ("labs", "references", "lessons", "prereq", "projects"):
         os.makedirs(P(d), exist_ok=True)
     n = 0
     for w in WEEKS:
@@ -314,6 +355,9 @@ def main():
     open(P("prereq", "index.html"), "w", encoding="utf-8").write(prereq_index_html()); n += 1
     for k in PREREQ_ORDER:
         open(P("prereq", f"{k}.html"), "w", encoding="utf-8").write(prereq_page_html(k)); n += 1
+    open(P("projects", "index.html"), "w", encoding="utf-8").write(projects_index_html()); n += 1
+    for k in PROJECTS_ORDER:
+        open(P("projects", f"{k}.html"), "w", encoding="utf-8").write(project_page_html(k)); n += 1
     open(P("index.html"), "w", encoding="utf-8").write(index_html()); n += 1
     write_folder_readmes()
     print(f"generated {n} pages (index + {len(WEEKS)} x3 weekly + {len(PREREQ_ORDER)+1} prereq) and folder READMEs")
@@ -344,8 +388,12 @@ def write_folder_readmes():
         "hit-catalogue": "# HIT catalogue package\n\nDepartment submission package in the HIT form, with the "
                          "official HIT letterhead.\n\n- `syllabus_en.docx` (English syllabus)\n- `syllabus_he.docx` "
                          "(Hebrew syllabus)\n- `rationale.docx`\n- `catalogue_summary.docx`\n- `committee_questionnaire.docx`\n",
+        "projects": "# Projects\n\nExample briefs for the mid-term mini-project (CNN-based) and the final "
+                    "project (any architecture family), ten examples each.\n\n"
+                    f"View: {PAGES}/projects/\n\n- [Mid-term examples]({PAGES}/projects/midterm.html)\n"
+                    f"- [Final examples]({PAGES}/projects/final.html)\n",
         "assets": "# Assets\n\nShared stylesheet (`style.css`) for the course site (index, prerequisites, labs, "
-                  "references, lesson plans).\n",
+                  "references, lesson plans, projects).\n",
         "tools": "# Build tools\n\nGenerators for the course site and packages.\n\n```bash\n"
                  "python tools/build_site.py        # index + prereq + labs + references + lessons\n"
                  "python tools/build_notebooks.py   # Colab notebooks\n"
