@@ -4,7 +4,7 @@ from content.py (lab handouts) and refs.json (scouted references). Shared CSS in
 import json, html, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from content import COURSE, PARTS, WEEKS
-from lessons import LESSONS
+from lessons import LESSONS, PRACTICE
 from selfcheck import SELFCHECK
 from prereq import PREREQ, ORDER as PREREQ_ORDER
 from projects import PROJECTS, ORDER as PROJECTS_ORDER
@@ -83,15 +83,16 @@ def lab_html(w):
     inner = (
         whead(w)
         + f'<div class="goals"><h2>Learning goals</h2><ul class="clean">{li(w["goals"])}</ul></div>'
-        + '<div class="callout">This lab follows the course\'s <b>Build / Predict &amp; probe / Explain &amp; defend</b> model. '
-          'Use an AI assistant freely for the Build; the graded learning is in Predict and Explain. '
+        + '<div class="callout">This is the weekly <b>homework lab</b>, completed on your own after the lecture and the practice lesson. '
+          'It follows the course\'s <b>Build / Predict &amp; probe / Explain &amp; defend</b> model: '
+          'use an AI assistant freely for the Build; the graded learning is in Predict and Explain. '
           'See <a href="../syllabus/syllabus.html">the syllabus</a> for the AI-use policy.</div>'
         + '<h2><span class="ic">&#9881;</span>Exercise</h2>' + f'<div class="steps">{steps}</div>'
         + '<h2><span class="ic">&#10003;</span>Deliverables</h2>' + f'<ul class="clean">{li(w["deliverables"])}</ul>'
         + f'<div class="callout hint"><b>Hints.</b><ul class="clean" style="margin-bottom:0">{li(w["hints"])}</ul></div>'
         + selfcheck_block(w)
         + ('<p style="margin-top:22px">'
-           f'<a class="btn" href="{colab_url(w["num"])}" target="_blank" rel="noopener">Open practice notebook in Colab</a> '
+           f'<a class="btn" href="{colab_url(w["num"])}" target="_blank" rel="noopener">Open the lab notebook in Colab</a> '
            f'<a class="btn" href="../references/{w2(w["num"])}.html">Reference material</a> '
            f'<a class="btn" href="../lessons/{w2(w["num"])}.html">Instructor lesson plan</a></p>')
         + pager("lab", w)
@@ -129,17 +130,17 @@ def lesson_html(w):
         (10, "Break", ""),
         (45, L["conceptB"]["title"], pts(L["conceptB"])),
         (30, "Live demo", L["demo"]),
-        (15, "Wrap-up & lab preview", "Recap the takeaways and brief this week's lab."),
+        (15, "Wrap-up & practice preview", "Recap the takeaways and preview the practice lesson."),
         (10, "Buffer & questions", ""),
     ]
+    demos = PRACTICE[n]
+    half = (len(demos) + 1) // 2
     practice = [
-        (10, "Setup & brief", "Confirm environments run; restate the lab goal and deliverables."),
-        (15, "Predict", "Students write predictions before coding. " + "; ".join(w["predict"])),
-        (45, "Build (AI assistant welcome)", "; ".join(w["build"])),
+        (10, "Setup & recap", "Recap the lecture's key ideas and open the working notebook."),
+        (50, "Instructor demonstrations", "; ".join(demos[:half])),
         (5, "Break", ""),
-        (25, "Probe", "Run controlled experiments and compare results against the predictions."),
-        (15, "Explain & defend", "; ".join(w["explain"])),
-        (5, "Wrap & deliverable check", "; ".join(w["deliverables"])),
+        (40, "Instructor demonstrations (continued)", "; ".join(demos[half:])),
+        (15, "Wrap-up & lab brief", "Summarize the patterns shown and brief the weekly lab (homework), which students complete on their own."),
     ]
     inner = (
         f'<div class="whead"><p class="eyebrow"><span class="wbadge">Week {n}</span> &nbsp; '
@@ -151,11 +152,11 @@ def lesson_html(w):
         + timeline(lecture)
         + f'<div class="callout"><b>Key takeaways.</b><ul class="clean" style="margin-bottom:0">{li(L["takeaways"])}</ul></div>'
         + '<h2><span class="ic">&#128187;</span><span class="secttag prac">Practice &middot; 2 hours</span></h2>'
-        + '<p>The practice class follows the lab\'s Build / Predict &amp; probe / Explain &amp; defend model.</p>'
+        + f'<p>In the practice lesson the instructor demonstrates implementations, runs code, and works through examples. The weekly <a href="../labs/{w2(n)}.html">lab</a> is then set as homework, where students apply this themselves.</p>'
         + timeline(practice)
         + f'<div class="callout hint"><b>Common pitfalls to pre-empt.</b><ul class="clean" style="margin-bottom:0">{li(w["hints"])}</ul></div>'
         + ('<p style="margin-top:22px">'
-           f'<a class="btn" href="../labs/{w2(n)}.html">Student lab</a> '
+           f'<a class="btn" href="../labs/{w2(n)}.html">Lab (homework)</a> '
            f'<a class="btn" href="../references/{w2(n)}.html">References</a></p>')
         + pager("lesson", w)
     )
@@ -307,12 +308,14 @@ def index_html():
         '<p>This is the foundation deep-learning course in the program. It turns an introductory '
         'machine-learning background into working neural-network skill in PyTorch: framing a task in tensor '
         'terms, then building, training, and debugging networks. The emphasis is on building and '
-        'experimentation, not on watching.</p>'
+        'experimentation, not on watching. Each week has a 3-hour lecture (theory), a 2-hour '
+        'instructor-led practice lesson (live implementation and worked examples), and a hands-on '
+        'lab set as homework.</p>'
         '<p><b>Rationale.</b> Modern AI in vision and language rests on a shared deep-learning foundation. '
         'This course provides that common base and is the bridge to the advanced electives in <b>large '
         'language models</b> and <b>computer vision</b>: once you can frame, build, train, and debug a '
         'network, those courses can focus on what is specific to their domains. It is project- and '
-        'exercise-based and designed for the way you will actually work, with an AI coding assistant at '
+        'lab-based and designed for the way you will actually work, with an AI coding assistant at '
         'hand, while keeping the learning genuine through a Build, Predict, and Explain model.</p>'
     )
     ocards = "".join(f'<div class="ocard"><span class="n">{i}</span><div>{esc(o)}</div></div>'
@@ -336,10 +339,10 @@ def index_html():
         '<ul class="clean">'
         '<li><a href="prereq/index.html">Prerequisites</a>: math, Python, and ML refreshers.</li>'
         '<li><a href="syllabus/syllabus.html">Syllabus</a>: full course outline (also DOCX and PDF).</li>'
-        '<li><a href="labs/week01.html">Labs</a>: weekly student handouts with self-check questions.</li>'
+        '<li><a href="labs/week01.html">Labs</a>: weekly homework labs with self-check questions.</li>'
         '<li><a href="references/week01.html">References</a>: curated free courses, books, videos, and blogs.</li>'
         '<li><a href="lessons/week01.html">Lesson plans</a>: instructor lecture and practice outlines.</li>'
-        '<li><a href="' + colab_url(1) + '" target="_blank" rel="noopener">Notebooks</a>: Colab-ready practice notebooks.</li>'
+        '<li><a href="' + colab_url(1) + '" target="_blank" rel="noopener">Notebooks</a>: Colab-ready lab notebooks (homework).</li>'
         '<li><a href="projects/index.html">Projects</a>: example briefs for the mid-term and final projects.</li>'
         '</ul>'
     )

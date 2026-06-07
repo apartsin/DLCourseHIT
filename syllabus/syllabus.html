@@ -75,7 +75,7 @@
   ul.clean{ margin:6px 0 0; padding-left:1.2em; }
   ul.clean li{ margin:0 0 6px; }
 
-  /* The three-part exercise model */
+  /* The three-part lab model */
   .triad{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:8px 0 0; }
   .triad .card{ border:1px solid var(--rule); border-top:3px solid var(--navy);
     border-radius:0 0 5px 5px; padding:12px 14px; background:#fff; }
@@ -151,10 +151,10 @@
 
   <dl class="facts">
     <div><dt>Term</dt><dd>Fall 2026</dd></div>
-    <div><dt>Format</dt><dd>3&nbsp;h lecture + 2&nbsp;h exercise/week</dd></div>
+    <div><dt>Format</dt><dd>3&nbsp;h lecture + 2&nbsp;h practice/week; weekly lab (homework)</dd></div>
     <div><dt>Credits</dt><dd>3</dd></div>
     <div><dt>Lecture</dt><dd><span class="tbd">Tue / Thu, time TBA</span></dd></div>
-    <div><dt>Exercise lab</dt><dd><span class="tbd">Fri, time TBA</span></dd></div>
+    <div><dt>Practice</dt><dd><span class="tbd">Fri, time TBA</span></dd></div>
     <div><dt>Location</dt><dd><span class="tbd">Room TBA</span></dd></div>
     <div><dt>Instructor</dt><dd><span class="tbd">Name TBA</span></dd></div>
     <div><dt>Office hours</dt><dd><span class="tbd">TBA</span></dd></div>
@@ -174,7 +174,7 @@
     <h2><span class="num">1</span>Course Description</h2>
     <p class="flush">This is the foundational deep learning course in the program. It assumes students have completed an introductory machine-learning course and turns that background into working neural-network skills: framing a task in tensor terms, and then implementing, training, and debugging networks in PyTorch. The emphasis throughout is on building and experimentation, not on watching.</p>
     <p>The course serves as a bridge to the advanced electives. The architectures, training discipline, and representation-learning ideas students build here serve as the assumed background for the later <b>Advanced Large Language Models</b> and <b>Advanced Computer Vision</b> courses. The goal is a solid, transferable foundation rather than depth in any single application area: once students can frame, build, train, and debug a network, the advanced courses can focus on what is specific to language and to vision.</p>
-    <p>The course is project- and exercise-based. Every week pairs a lecture with a hands-on exercise students build themselves, and the term ends in a project students take from framing to a working, evaluated model. The exercises are designed for the way students will actually work with an AI coding assistant at hand. Section 5 explains how that works.</p>
+    <p>The course is project- and lab-based. Every week pairs a lecture and a practice lesson with a hands-on lab students build themselves, and the term ends in a project students take from framing to a working, evaluated model. The labs are designed for the way students will actually work, with an AI coding assistant at hand. Section 5 explains how that works.</p>
   </section>
 
   <section>
@@ -206,13 +206,13 @@
 
   <section>
     <h2><span class="num">4</span>Course Format</h2>
-    <p class="flush">Each week combines a <b>3-hour lecture</b> that develops the concepts with a <b>2-hour exercise lab</b> in which students implement and experiment with them. The exercises are the heart of the course: students write the code, run the training, read the curves, and explain what they found.</p>
+    <p class="flush">Each week has three parts. A <b>3-hour lecture</b> develops the concepts and theory. A <b>2-hour practice lesson</b> follows, in which the instructor demonstrates implementations, runs code, and works through examples. A weekly <b>lab</b> is then set as homework, where students implement, experiment, read the curves, and explain what they found. The labs are the graded hands-on core of the course.</p>
     <p>The thirteen weeks are organized into four parts: <b>Foundations</b> (weeks 1 to 3), <b>Training Infrastructure</b> (weeks 4 to 7), <b>Architectures and Representation Learning</b> (weeks 8 to 12), and <b>Integration</b> (week 13). A mid-term mini-project consolidates Parts I and II; a final project consolidates the entire course and points toward the advanced electives.</p>
   </section>
 
   <section>
-    <h2><span class="num">5</span>Working with an AI assistant: How the Exercises Are Built</h2>
-    <p class="flush">Students are expected to use an AI assistant as a coding partner in this course. That is how practitioners work now, and pretending otherwise would not prepare them for the advanced courses or for practice. The exercises are designed around that reality: An AI assistant can write the boilerplate, but it cannot do the learning for them. Every weekly exercise, therefore, has three parts.</p>
+    <h2><span class="num">5</span>Working with an AI assistant: How the Labs Are Built</h2>
+    <p class="flush">Students are expected to use an AI assistant as a coding partner in this course. That is how practitioners work now, and pretending otherwise would not prepare them for the advanced courses or for practice. The labs are designed around that reality: An AI assistant can write the boilerplate, but it cannot do the learning for them. Every weekly lab, therefore, has three parts.</p>
     <div class="triad">
       <div class="card">
         <span class="tag">Part A · AI assistant welcome</span>
@@ -233,8 +233,8 @@
     <h3>What this means in practice</h3>
     <ul class="clean">
       <li>Grading weight sits on <b>Predict</b> and <b>Explain</b>, the parts where copying an answer does not help them.</li>
-      <li>Several exercises ask students to <b>critique an AI-generated solution</b> that contains a subtle, realistic mistake (a wrong loss, a data leak, a misplaced normalization). Finding it requires understanding, not generation.</li>
-      <li>Exercises are framed as <b>predict, build, break, and explain</b>, so an answer a student cannot reason about is worth little.</li>
+      <li>Several labs ask students to <b>critique an AI-generated solution</b> that contains a subtle, realistic mistake (a wrong loss, a data leak, a misplaced normalization). Finding it requires understanding, not generation.</li>
+      <li>Labs are framed as <b>predict, build, break, and explain</b>, so an answer a student cannot reason about is worth little.</li>
       <li>The final project includes a short <b>oral defense</b>, so what is assessed is the student's understanding, not who or what typed the code.</li>
       <li><b>Disclosure.</b> Students note where they used the AI assistant. Using it is encouraged; submitting work they cannot explain is an integrity violation (Section 9).</li>
     </ul>
@@ -244,7 +244,7 @@
     <h2><span class="num">6</span>Weekly Schedule</h2>
     <table class="schedule">
       <thead>
-        <tr><th class="wk">Wk</th><th>Lecture topic (3&nbsp;h)</th><th>Weekly exercise: build with an AI assistant, then learn it (2&nbsp;h)</th></tr>
+        <tr><th class="wk">Wk</th><th>Lecture topic (3&nbsp;h)</th><th>Weekly lab (homework): build with an AI assistant, then learn it</th></tr>
       </thead>
 
       <tbody>
@@ -333,16 +333,16 @@
 
   <section>
     <h2><span class="num">7</span>Assessment &amp; Grading</h2>
-    <p class="flush">Grading is project- and exercise-based, with weight placed on the parts that an AI assistant cannot do for the student: reasoning, interpretation, and defense. There are no written exams.</p>
+    <p class="flush">Grading is project- and lab-based, with weight placed on the parts that an AI assistant cannot do for the student: reasoning, interpretation, and defense. There are no written exams.</p>
     <table class="grade">
       <thead>
         <tr><th>Component</th><th>What it covers</th><th style="text-align:right">Weight</th></tr>
       </thead>
       <tbody>
-        <tr><td><b>Weekly exercises</b></td><td>Eleven exercises (best 10 count), each graded mostly on the Predict and Explain parts, not on the code alone.</td><td class="pct">40%</td></tr>
+        <tr><td><b>Weekly labs</b></td><td>Eleven labs (best 10 count), each graded mostly on the Predict and Explain parts, not on the code alone.</td><td class="pct">40%</td></tr>
         <tr><td><b>Mid-term mini-project</b></td><td>A CNN-based project (around weeks 9 to 10): build, train, ablate, and report on an image task.</td><td class="pct">20%</td></tr>
         <tr><td><b>Final project</b></td><td>Implementation, a written report with results, an AI-use reflection, and a short oral defense.</td><td class="pct">35%</td></tr>
-        <tr><td><b>Participation</b></td><td>In-lecture exercises and lab engagement.</td><td class="pct">5%</td></tr>
+        <tr><td><b>Participation</b></td><td>In-class exercises and participation.</td><td class="pct">5%</td></tr>
         <tr class="total"><td>Total</td><td></td><td class="pct">100%</td></tr>
       </tbody>
     </table>
@@ -353,11 +353,11 @@
   <section>
     <h2><span class="num">8</span>Tools &amp; Resources</h2>
     <ul class="clean">
-      <li><b>Core stack:</b> Python 3.11+, PyTorch, NumPy, and Matplotlib; Jupyter notebooks or Google Colab for exercises.</li>
-      <li><b>AI assistant:</b> An AI assistant is part of the toolkit and is expected for the Build portion of exercises.</li>
-      <li><b>Compute:</b> a GPU is helpful but not required; Colab provides free GPU access for the exercises and project.</li>
+      <li><b>Core stack:</b> Python 3.11+, PyTorch, NumPy, and Matplotlib; Jupyter notebooks or Google Colab for the labs.</li>
+      <li><b>AI assistant:</b> An AI assistant is part of the toolkit and is expected for the Build portion of the labs.</li>
+      <li><b>Compute:</b> a GPU is helpful but not required; Colab provides free GPU access for the labs and project.</li>
       <li><b>Reference reading:</b> <i>Dive into Deep Learning</i> (d2l.ai) and the official PyTorch tutorials, used as companions to lecture.</li>
-      <li><b>Course materials:</b> lecture slides, exercise notebooks, and starter code are posted weekly on the course site.</li>
+      <li><b>Course materials:</b> lecture slides, lab notebooks, and starter code are posted weekly on the course site.</li>
     </ul>
   </section>
 

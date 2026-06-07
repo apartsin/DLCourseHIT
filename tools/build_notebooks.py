@@ -29,7 +29,7 @@ def notebook(w):
         f'# Week {n}: {w["title"]}\n'
         f'**{COURSE["title"]} (HIT)** &middot; Part {w["part"]}: {PARTS[w["part"]]}\n\n'
         f'{w["sub"]}\n\n'
-        f'This practice notebook follows the course\'s **Build / Predict & probe / Explain & defend** '
+        f'This is the weekly lab notebook (homework). It follows the course\'s **Build / Predict & probe / Explain & defend** '
         f'model. Use an AI assistant freely for the Build; the graded learning is in Predict and Explain.'
     ))
     cells.append(md("## Goals\n\n" + "\n".join(f"- {g}" for g in w["goals"])))

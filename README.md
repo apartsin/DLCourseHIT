@@ -8,8 +8,11 @@ bridge to the advanced electives in **Large Language Models** and **Computer Vis
 
 - **Prerequisite:** Introduction to Machine Learning
 - **Leads to:** Advanced LLMs · Advanced Computer Vision
-- **Format:** 3 h lecture + 2 h exercise lab per week
-- **Assessment:** project- and exercise-based (no written exams)
+- **Format:** 3 h lecture + 2 h practice lesson per week (+ a homework lab)
+- **Assessment:** project- and lab-based (no written exams)
+
+**Each week has three parts:** a **lecture** (theory), an instructor-led **practice lesson** (live
+implementation and worked examples), and a **lab** set as homework (the graded Build/Predict/Explain work).
 
 **Course site (GitHub Pages):** https://apartsin.github.io/DLCourseHIT/
 
@@ -17,9 +20,9 @@ bridge to the advanced electives in **Large Language Models** and **Computer Vis
 
 - [HTML](syllabus/syllabus.html) · [Word (.docx)](syllabus/syllabus.docx) · [PDF](syllabus/syllabus.pdf)
 
-## Working with an AI assistant (the exercise model)
+## Working with an AI assistant (the lab model)
 
-Every week is built for the way students actually work, with an AI coding assistant at hand.
+The weekly lab (homework) is built for the way students actually work, with an AI coding assistant at hand.
 Each lab and notebook has three parts:
 
 1. **Build** (AI assistant welcome): produce working code that meets a spec or hits a target metric.

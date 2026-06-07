@@ -253,3 +253,76 @@ LESSONS = {
         ],
     },
 }
+
+
+# Practice-lesson content: what the INSTRUCTOR demonstrates live in the 2-hour
+# practice lesson (implementations, code runs, worked examples). Distinct from the
+# weekly LAB, which is the student's homework (the Build / Predict / Explain exercise).
+PRACTICE = {
+    1: [
+        "Set up PyTorch live and confirm the device (GPU or CPU).",
+        "Walk through a minimal training loop on a toy dataset, run it, and read the loss curve.",
+        "Vary the learning rate live to show divergence versus convergence.",
+        "Frame a classification and a regression example as tensors-in, loss-out, in code.",
+    ],
+    2: [
+        "Demonstrate tensor creation, reshape, permute, and indexing in a notebook.",
+        "Show broadcasting on several shape examples; trigger a shape-mismatch error and fix it.",
+        "Encode an image and a small table into tensors and move them to the device.",
+    ],
+    3: [
+        "Build an MLP with nn.Module live and train it on a small task.",
+        "Inspect .grad after a backward pass and show the effect of zero_grad.",
+        "Compare a hand-computed gradient with autograd on a tiny example.",
+    ],
+    4: [
+        "Write a custom Dataset and DataLoader live and iterate over batches.",
+        "Show how batch size and shuffling change each epoch.",
+        "Introduce a data leak (normalizing on the full dataset), show the inflated metric, then fix it.",
+    ],
+    5: [
+        "Run a training loop with loss and metric logging.",
+        "Show MSE on a classification task failing, then cross-entropy working.",
+        "Compute accuracy versus F1 on an imbalanced example.",
+    ],
+    6: [
+        "Train the same model with SGD, momentum, and Adam, and compare the curves.",
+        "Sweep three learning rates live and read the resulting curves.",
+        "Add a learning-rate schedule and show its effect.",
+    ],
+    7: [
+        "Force a model to overfit and show the train-minus-validation gap.",
+        "Add dropout and weight decay live and watch the gap close.",
+        "Demonstrate data augmentation on a few images.",
+    ],
+    8: [
+        "Build a CNN and print the layer-by-layer output shapes.",
+        "Compute output sizes and parameter counts by hand and verify against a summary.",
+        "Train on FashionMNIST and visualize a few feature maps.",
+    ],
+    9: [
+        "Add batch normalization and residual blocks to the CNN.",
+        "Ablate normalization and residuals live and compare the training curves.",
+        "Show a deeper network failing without residuals and training with them.",
+    ],
+    10: [
+        "Build a plain RNN on a short sequence task and run it.",
+        "Plot gradient norms across time steps to expose vanishing gradients.",
+        "Demonstrate gradient clipping.",
+    ],
+    11: [
+        "Swap the RNN for an LSTM or GRU on the same task and compare.",
+        "Walk through the gates and the cell state on the board and in code.",
+        "Show behavior on long versus short sequences.",
+    ],
+    12: [
+        "Train an autoencoder and visualize reconstructions and the latent space.",
+        "Interpolate between two points in latent space live.",
+        "Sketch a contrastive setup and show the augmentation views.",
+    ],
+    13: [
+        "Load a pretrained model and fine-tune it live on a new task.",
+        "Compare from-scratch, frozen-features, and fine-tuning side by side.",
+        "Run inference on new inputs end to end.",
+    ],
+}
