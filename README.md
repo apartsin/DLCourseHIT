@@ -22,9 +22,9 @@ bridge to the advanced electives in **Large Language Models** and **Computer Vis
 Every week is built for the way students actually work, with an AI coding assistant at hand.
 Each lab and notebook has three parts:
 
-1. **Build** (Claude welcome) — produce working code that meets a spec or hits a target metric.
-2. **Predict & probe** (your reasoning) — predict outcomes before running, then run controlled experiments.
-3. **Explain & defend** (in plain language) — explain why it works, where it breaks, and what changed.
+1. **Build** (Claude welcome): produce working code that meets a spec or hits a target metric.
+2. **Predict & probe** (your reasoning): predict outcomes before running, then run controlled experiments.
+3. **Explain & defend** (in plain language): explain why it works, where it breaks, and what changed.
 
 Grading weight sits on **Predict** and **Explain**, the parts an AI assistant cannot do for the student.
 

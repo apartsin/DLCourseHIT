@@ -4,7 +4,7 @@ HITCatalogueExamples templates: English syllabus, Hebrew syllabus, rationale,
 catalogue summary, and committee questionnaire. Output: hit-catalogue/*.docx"""
 import os
 from docx import Document
-from docx.shared import Pt, RGBColor
+from docx.shared import Pt, RGBColor, Inches
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
@@ -12,6 +12,16 @@ from docx.oxml import OxmlElement
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "hit-catalogue")
 HE_FONT, EN_FONT = "David", "Times New Roman"
+TEAL = RGBColor(0x00, 0x78, 0x81)            # official HIT brand teal
+LOGO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "hit-logo.png")
+
+def new_doc():
+    """A document pre-loaded with the official HIT logo letterhead."""
+    d = Document()
+    hp = d.sections[0].header.paragraphs[0]
+    hp.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    hp.add_run().add_picture(LOGO, width=Inches(1.7))
+    return d
 
 def _set_rtl(p):
     pPr = p._p.get_or_add_pPr()
@@ -29,6 +39,7 @@ def _font(run, name, size, bold):
 def he(doc, text, size=11, bold=False, space=6):
     p = doc.add_paragraph(); _set_rtl(p)
     r = p.add_run(text); _font(r, HE_FONT, size, bold)
+    if bold and size >= 13: r.font.color.rgb = TEAL
     r._element.get_or_add_rPr().append(OxmlElement('w:rtl'))
     p.paragraph_format.space_after = Pt(space)
     return p
@@ -37,6 +48,7 @@ def en(doc, text, size=11, bold=False, space=6, align=None):
     p = doc.add_paragraph()
     if align: p.alignment = align
     r = p.add_run(text); _font(r, EN_FONT, size, bold)
+    if bold and size >= 13: r.font.color.rgb = TEAL
     p.paragraph_format.space_after = Pt(space)
     return p
 
@@ -98,7 +110,7 @@ def week_table(doc, header_left, header_right, weeks, rtl):
 
 # ---------------- 1. English syllabus ----------------
 def build_syllabus_en():
-    d = Document()
+    d = new_doc()
     en(d, "Introduction to Deep Learning", 16, True, 4)
     en(d, "Lecture: 3 hours, practice: 2 hours", 11, False, 0)
     en(d, "5 hours, 4 credits", 11, False, 0)
@@ -121,7 +133,7 @@ def build_syllabus_en():
 
 # ---------------- 2. Hebrew syllabus ----------------
 def build_syllabus_he():
-    d = Document()
+    d = new_doc()
     he(d, "מבוא ללמידה עמוקה - Introduction to Deep Learning", 16, True, 4)
     he(d, "אופן הוראה: שיעור ותרגול.", 11, False, 0)
     he(d, "שעות שבועיות: הרצאה 3 שעות + תרגול 2 שעות, סה\"כ שעות – 5", 11, False, 0)
@@ -148,7 +160,7 @@ def build_syllabus_he():
 
 # ---------------- 3. Rationale ----------------
 def build_rationale():
-    d = Document()
+    d = new_doc()
     he(d, "מסמך רציונל לקורס מבוא ללמידה עמוקה", 14, True, 2)
     en(d, "Introduction to Deep Learning", 12, True, 10, align=WD_ALIGN_PARAGRAPH.RIGHT)
     he(d, "הקורס עוסק ביסודות הלמידה העמוקה: ייצוג נתונים כטנזורים, בניית רשתות נוירונים ואימונן בעזרת PyTorch, והבנת הדינמיקה של אופטימיזציה, רגולריזציה ואבחון תהליך האימון. הקורס מקנה בסיס תיאורטי ומעשי כאחד.")
@@ -160,7 +172,7 @@ def build_rationale():
 
 # ---------------- 4. Catalogue summary ----------------
 def build_summary():
-    d = Document()
+    d = new_doc()
     he(d, "תקצירים לידיעון", 14, True, 8)
     he(d, "מבוא ללמידה עמוקה", 13, True, 0)
     en(d, "Introduction to Deep Learning", 12, True, 8, align=WD_ALIGN_PARAGRAPH.RIGHT)
@@ -180,7 +192,7 @@ def build_summary():
 
 # ---------------- 5. Committee questionnaire ----------------
 def build_questionnaire():
-    d = Document()
+    d = new_doc()
     he(d, "שאלות למידע נוסף כהכנה לדיון בוועדת קוריקולום", 13, True, 6)
     he(d, "תאריך: _________", 11, False, 0)
     he(d, "פקולטה: מדעי המחשב            מחלקה: מדעי המחשב", 11, False, 8)

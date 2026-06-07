@@ -6,6 +6,20 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from content import COURSE, PARTS, WEEKS
 from lessons import LESSONS
 from selfcheck import SELFCHECK
+from prereq import PREREQ, ORDER as PREREQ_ORDER
+
+OUTCOMES = [
+    "Frame ML tasks as networks (tensors in, a loss out).",
+    "Represent data as tensors and use them fluently.",
+    "Build data pipelines with Dataset and DataLoader.",
+    "Use automatic differentiation to compute gradients.",
+    "Implement neural networks in PyTorch.",
+    "Reason about optimization (SGD, Adam, learning rates).",
+    "Diagnose training issues (overfitting, instability).",
+    "Build MLPs, CNNs, RNNs, LSTMs/GRUs, and autoencoders.",
+    "Apply representation learning and transfer learning.",
+    "Carry a transferable base into advanced LLM and vision courses.",
+]
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 def P(*a): return os.path.join(ROOT, *a)
@@ -26,6 +40,7 @@ def topnav(depth):
     return (f'<div class="topnav"><div class="inner">'
             f'<a class="brand" href="{up}index.html">Introduction to Deep Learning <span>&middot; HIT</span></a>'
             f'<nav><a href="{up}index.html">Home</a>'
+            f'<a href="{up}prereq/index.html">Prerequisites</a>'
             f'<a href="{up}syllabus/syllabus.html">Syllabus</a></nav></div></div>')
 
 def page(title, depth, inner):
@@ -144,6 +159,60 @@ def lesson_html(w):
     )
     return page(f'Week {n} Lesson Plan: {w["title"]}', 1, inner)
 
+def prereq_pager(key):
+    i = PREREQ_ORDER.index(key)
+    L = ""
+    if i > 0:
+        p = PREREQ_ORDER[i-1]
+        L += f'<a href="{p}.html"><span class="lbl">Previous</span>{esc(PREREQ[p]["title"])}</a>'
+    if i < len(PREREQ_ORDER)-1:
+        nk = PREREQ_ORDER[i+1]
+        L += f'<a class="nx" href="{nk}.html"><span class="lbl">Next</span>{esc(PREREQ[nk]["title"])}</a>'
+    return f'<div class="pager">{L}</div>'
+
+def prereq_page_html(key):
+    pr = PREREQ[key]
+    secs = ""
+    for s in pr["sections"]:
+        secs += f'<h2>{esc(s["h"])}</h2><ul class="clean">{li(s["points"])}</ul>'
+    res = "".join(
+        f'<div class="refcard"><div class="kind">Refresh</div><div class="body">'
+        f'<a href="{esc(r["url"])}" target="_blank" rel="noopener">{esc(r["title"])}</a> '
+        f'<span class="dom">{esc(dom(r["url"]))}</span></div></div>'
+        for r in pr["resources"])
+    sc = "".join(f'<details><summary>{esc(q)}</summary><div class="ans">{esc(a)}</div></details>'
+                 for q, a in pr["selfcheck"])
+    inner = (
+        f'<div class="whead"><p class="eyebrow"><span class="wbadge">Prerequisite</span> &nbsp; Review &amp; refresh</p>'
+        f'<h1>{pr["icon"]} {esc(pr["title"])}</h1><p class="sub">{esc(pr["intro"])}</p></div>'
+        + secs
+        + '<div class="goals"><h2>You should be able to</h2><ul class="clean">' + li(pr["checklist"]) + '</ul></div>'
+        + '<h2><span class="ic">&#10067;</span>Self-check</h2><div class="selfcheck">' + sc + '</div>'
+        + '<h2><span class="ic">&#128218;</span>Refresher resources</h2>' + f'<div class="refgrid">{res}</div>'
+        + '<p style="margin-top:22px"><a class="btn" href="index.html">&larr; All prerequisites</a> '
+          '<a class="btn" href="../index.html">Course home</a></p>'
+        + prereq_pager(key)
+    )
+    return page(f'Prerequisite: {pr["title"]}', 1, inner)
+
+def prereq_index_html():
+    cards = ""
+    for k in PREREQ_ORDER:
+        pr = PREREQ[k]
+        cards += (f'<div class="refcard"><div class="kind">{pr["icon"]}</div><div class="body">'
+                  f'<a href="{k}.html">{esc(pr["title"])}</a>'
+                  f'<p class="note">{esc(pr["intro"])}</p></div></div>')
+    inner = (
+        '<div class="whead"><p class="eyebrow"><span class="wbadge">Before you start</span></p>'
+        '<h1>Prerequisites review</h1>'
+        '<p class="sub">This course assumes a prior machine-learning course plus comfort with the math '
+        'and Python below. Use these pages to self-assess and refresh before Week 1.</p></div>'
+        + f'<div class="refgrid">{cards}</div>'
+        + '<p style="margin-top:22px"><a class="btn" href="../index.html">&larr; Course home</a> '
+          '<a class="btn" href="../syllabus/syllabus.html">Syllabus</a></p>'
+    )
+    return page("Prerequisites: Introduction to Deep Learning", 1, inner)
+
 KINDS = [("course", "Course"), ("book", "Book"), ("video", "Video"), ("blog", "Blog / Docs")]
 
 def ref_html(w):
@@ -188,32 +257,104 @@ def index_html():
         '<div class="meta"><span><b>Prerequisite:</b> Introduction to Machine Learning</span>'
         '<span><b>Leads to:</b> Advanced LLMs &middot; Advanced Computer Vision</span>'
         '<span><b>Format:</b> 3 h lecture + 2 h exercise / week</span></div>'
-        '<div class="btnrow"><a class="btn" href="syllabus/syllabus.html">Syllabus (HTML)</a>'
-        '<a class="btn" href="syllabus/syllabus.docx">Syllabus (DOCX)</a>'
-        '<a class="btn" href="syllabus/syllabus.pdf">Syllabus (PDF)</a></div></div>'
+        '<div class="btnrow"><a class="btn" href="prereq/index.html">Prerequisites</a>'
+        '<a class="btn" href="syllabus/syllabus.html">Syllabus (HTML)</a>'
+        '<a class="btn" href="syllabus/syllabus.docx">DOCX</a>'
+        '<a class="btn" href="syllabus/syllabus.pdf">PDF</a></div></div>'
     )
-    intro = (
+    rationale = (
+        '<h2>About this course</h2>'
         '<p>This is the foundation deep-learning course in the program. It turns an introductory '
-        'machine-learning background into working neural-network skill in PyTorch: framing a task, then '
-        'building, training, and debugging networks. It is the bridge to the advanced electives in large '
-        'language models and computer vision.</p>'
-        '<p>The course is project- and exercise-based, designed for working with an AI assistant. Every week '
-        'has a <b>lab</b> (Build with Claude, then Predict and Explain) and a <b>reference page</b> of curated '
-        'free resources.</p>'
+        'machine-learning background into working neural-network skill in PyTorch: framing a task in tensor '
+        'terms, then building, training, and debugging networks. The emphasis is on building and '
+        'experimentation, not on watching.</p>'
+        '<p><b>Rationale.</b> Modern AI in vision and language rests on a shared deep-learning foundation. '
+        'This course provides that common base and is the bridge to the advanced electives in <b>large '
+        'language models</b> and <b>computer vision</b>: once you can frame, build, train, and debug a '
+        'network, those courses can focus on what is specific to their domains. It is project- and '
+        'exercise-based and designed for the way you will actually work, with an AI coding assistant at '
+        'hand, while keeping the learning genuine through a Build, Predict, and Explain model.</p>'
     )
-    inner = hero + intro + '<h2>Weekly materials</h2><table class="weeks"><thead><tr><th>Wk</th><th>Topic</th><th>Materials</th></tr></thead><tbody>' + rows + '</tbody></table>'
+    outcomes = ('<div class="goals"><h2>Expected outcomes</h2><p>By the end of the course you will be able to:</p>'
+                '<ol class="clean" style="columns:2;column-gap:32px">' + li(OUTCOMES) + '</ol></div>')
+    prereq_cta = (
+        '<h2>Before you start</h2>'
+        '<p>The course assumes a prior ML course plus comfort with the math and Python it relies on. '
+        'Review and self-assess with the prerequisite pages:</p>'
+        '<p class="btnrow">'
+        '<a class="btn" href="prereq/math.html">Mathematics</a>'
+        '<a class="btn" href="prereq/python.html">Python</a>'
+        '<a class="btn" href="prereq/ml.html">Machine learning</a></p>'
+    )
+    table = ('<h2>Weekly materials</h2><table class="weeks"><thead><tr><th>Wk</th><th>Topic</th>'
+             '<th>Materials</th></tr></thead><tbody>' + rows + '</tbody></table>')
+    explore = (
+        '<h2>Explore</h2>'
+        '<p>Everything in this course site, by section:</p>'
+        '<ul class="clean">'
+        '<li><a href="prereq/index.html">Prerequisites</a>:math, Python, and ML refreshers.</li>'
+        '<li><a href="syllabus/syllabus.html">Syllabus</a>:full course outline (also DOCX and PDF).</li>'
+        '<li><a href="labs/week01.html">Labs</a>:weekly student handouts with self-check questions.</li>'
+        '<li><a href="references/week01.html">References</a>:curated free courses, books, videos, and blogs.</li>'
+        '<li><a href="lessons/week01.html">Lesson plans</a>:instructor lecture and practice outlines.</li>'
+        '<li><a href="' + colab_url(1) + '" target="_blank" rel="noopener">Notebooks</a>:Colab-ready practice notebooks.</li>'
+        '</ul>'
+    )
+    inner = hero + rationale + outcomes + prereq_cta + table + explore
     return page(f'{COURSE["title"]} (HIT)', 0, inner)
 
 def main():
-    for d in ("labs", "references", "lessons"):
+    for d in ("labs", "references", "lessons", "prereq"):
         os.makedirs(P(d), exist_ok=True)
     n = 0
     for w in WEEKS:
         open(P("labs", f'{w2(w["num"])}.html'), "w", encoding="utf-8").write(lab_html(w)); n += 1
         open(P("references", f'{w2(w["num"])}.html'), "w", encoding="utf-8").write(ref_html(w)); n += 1
         open(P("lessons", f'{w2(w["num"])}.html'), "w", encoding="utf-8").write(lesson_html(w)); n += 1
+    open(P("prereq", "index.html"), "w", encoding="utf-8").write(prereq_index_html()); n += 1
+    for k in PREREQ_ORDER:
+        open(P("prereq", f"{k}.html"), "w", encoding="utf-8").write(prereq_page_html(k)); n += 1
     open(P("index.html"), "w", encoding="utf-8").write(index_html()); n += 1
-    print(f"generated {n} pages: index + {len(WEEKS)} labs + {len(WEEKS)} references + {len(WEEKS)} lessons")
+    write_folder_readmes()
+    print(f"generated {n} pages (index + {len(WEEKS)} x3 weekly + {len(PREREQ_ORDER)+1} prereq) and folder READMEs")
+
+PAGES = "https://apartsin.github.io/DLCourseHIT"
+
+def _wk_list(folder):
+    return "\n".join(f"- Week {w['num']:02d}: [{w['title']}]({PAGES}/{folder}/{w2(w['num'])}.html)" for w in WEEKS)
+
+def write_folder_readmes():
+    rm = {
+        "prereq": "# Prerequisites\n\nReview-and-refresh pages for the background the course assumes: "
+                  "mathematics, Python, and basic machine learning.\n\n"
+                  f"View: {PAGES}/prereq/\n\n- [Mathematics]({PAGES}/prereq/math.html)\n"
+                  f"- [Python]({PAGES}/prereq/python.html)\n- [Machine learning]({PAGES}/prereq/ml.html)\n",
+        "syllabus": "# Syllabus\n\nThe course syllabus. `syllabus.html` is the source of truth; the DOCX and "
+                    "PDF are regenerated from it.\n\n"
+                    f"- [HTML]({PAGES}/syllabus/syllabus.html)\n- [Word (.docx)](syllabus.docx)\n- [PDF](syllabus.pdf)\n",
+        "labs": "# Labs\n\nWeekly student lab handouts, each with goals, a Build / Predict & probe / Explain & "
+                "defend exercise, deliverables, and self-check questions.\n\n" + _wk_list("labs") + "\n",
+        "references": "# References\n\nPer-week curated, free, canonical resources (a course, a book chapter, a "
+                      "video, and an authoritative blog or tutorial).\n\n" + _wk_list("references") + "\n",
+        "lessons": "# Lesson plans\n\nInstructor lesson plans: a timed 3-hour lecture outline and a 2-hour "
+                   "practice outline per week.\n\n" + _wk_list("lessons") + "\n",
+        "notebooks": "# Notebooks\n\nColab-ready practice notebooks with an Open-in-Colab badge and the "
+                     "Build / Predict / Explain scaffolding.\n\n" +
+                     "\n".join(f"- Week {w['num']:02d}: [Open in Colab]({colab_url(w['num'])}) &middot; [`{w2(w['num'])}.ipynb`]({w2(w['num'])}.ipynb)" for w in WEEKS) + "\n",
+        "hit-catalogue": "# HIT catalogue package\n\nDepartment submission package in the HIT form, with the "
+                         "official HIT letterhead.\n\n- `syllabus_en.docx` (English syllabus)\n- `syllabus_he.docx` "
+                         "(Hebrew syllabus)\n- `rationale.docx`\n- `catalogue_summary.docx`\n- `committee_questionnaire.docx`\n",
+        "assets": "# Assets\n\nShared stylesheet (`style.css`) for the course site (index, prerequisites, labs, "
+                  "references, lesson plans).\n",
+        "tools": "# Build tools\n\nGenerators for the course site and packages.\n\n```bash\n"
+                 "python tools/build_site.py        # index + prereq + labs + references + lessons\n"
+                 "python tools/build_notebooks.py   # Colab notebooks\n"
+                 "python tools/build_hit_package.py # HIT catalogue .docx package\n```\n\n"
+                 "Content lives in `content.py`, `lessons.py`, `selfcheck.py`, `prereq.py`, and `refs.json`.\n",
+    }
+    for folder, text in rm.items():
+        os.makedirs(P(folder), exist_ok=True)
+        open(P(folder, "README.md"), "w", encoding="utf-8").write(text)
 
 if __name__ == "__main__":
     main()
