@@ -95,6 +95,38 @@ def en(doc, text, size=11, bold=False, space=6, align=None):
     p.paragraph_format.space_after = Pt(space)
     return p
 
+HEAD_COLOR = RGBColor(0x36, 0x5F, 0x91)   # accent1 BF, the example's Heading 1 blue
+HEAD_PT = 16                              # example Heading 1 = 32 half-points
+
+def _outline(p, lvl=0):
+    pPr = p._p.get_or_add_pPr()
+    ol = OxmlElement('w:outlineLvl'); ol.set(qn('w:val'), str(lvl)); pPr.append(ol)
+    kn = OxmlElement('w:keepNext'); pPr.append(kn)
+
+def he_head(doc, text, space=4):
+    """RTL section heading styled as a real header (matches the example Heading 1)."""
+    p = doc.add_paragraph(); _set_rtl(p)
+    p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY        # RTL start = right edge
+    try: p.style = doc.styles['Heading 1']
+    except KeyError: pass
+    r = p.add_run(text); _font(r, HE_FONT, HEAD_PT, True); r.font.color.rgb = HEAD_COLOR
+    r._element.get_or_add_rPr().append(OxmlElement('w:rtl'))
+    _outline(p)
+    p.paragraph_format.space_before = Pt(10); p.paragraph_format.space_after = Pt(space)
+    return p
+
+def en_head(doc, text, space=4):
+    """LTR section heading styled as a real header (matches the example Heading 1)."""
+    p = doc.add_paragraph()
+    bidi = OxmlElement('w:bidi'); bidi.set(qn('w:val'), '0')
+    p._p.get_or_add_pPr().append(bidi)
+    try: p.style = doc.styles['Heading 1']
+    except KeyError: pass
+    r = p.add_run(text); _font(r, EN_FONT, HEAD_PT, True); r.font.color.rgb = HEAD_COLOR
+    _outline(p)
+    p.paragraph_format.space_before = Pt(10); p.paragraph_format.space_after = Pt(space)
+    return p
+
 # ---------------- shared course data ----------------
 WEEKS_EN = [
     "Introduction to deep learning and framing a task as a network",
@@ -166,19 +198,19 @@ def build_syllabus_en():
     en(d, "Lecture: 3 hours, practice: 2 hours", 11, True, 0)
     en(d, "5 hours, 4 credits", 11, False, 0)
     en(d, "Prerequisites: Machine Learning 63303, Probability 20021", 11, True, 10)
-    en(d, "Course Objectives", 13, True, 4)
+    en_head(d, "Course Objectives")
     en(d, "Deep learning underlies modern AI systems in vision, language, and beyond. This course gives a rigorous, hands-on foundation in neural networks: how to frame a machine-learning task in tensor terms, and how to build, train, and debug networks in PyTorch.")
     en(d, "It is a foundational course required of every computer-science student and is taught across all specializations. It provides the shared deep-learning base for continued specialization in artificial intelligence, including computer vision and large language models, and is valuable in its own right rather than only as a step toward later courses. By the end of the course, students can take a new task, frame it, build a suitable network, train it, diagnose failures, and improve it.")
-    en(d, "Course content", 13, True, 4)
+    en_head(d, "Course content")
     en(d, "The course begins with the building blocks: tensors and data representation, the multilayer perceptron, and backpropagation with automatic differentiation. It then covers the training stack: data pipelines, loss functions and metrics, optimization (SGD, Adam), and regularization. The second half studies the core architecture families: convolutional networks (including normalization and residual connections), recurrent networks (RNNs, LSTMs, and GRUs), and representation learning with autoencoders and contrastive methods. The course concludes with transfer learning and an end-to-end workflow. It is highly practical, taught in PyTorch with weekly hands-on labs, and designed for working with an AI coding assistant.")
-    en(d, "Student duties and grade components", 13, True, 4)
+    en_head(d, "Student duties and grade components")
     en(d, "The course is project- and lab-based with no written exams. The final grade combines weekly labs (40%), a mid-term mini-project (20%), a final project with a short oral defense (35%), and participation (5%).")
-    en(d, "Course of lessons", 13, True, 4)
+    en_head(d, "Course of lessons")
     en(d, "Each week has three parts: a 3-hour lecture that develops the theory, a 2-hour practice lesson in which the instructor demonstrates implementations and works through examples, and a weekly lab set as homework. The labs follow a build, predict, and explain model: students may use an AI assistant for the build, but the graded work is predicting outcomes and explaining results.")
     en(d, "The order of the lessons (may change if required)", 11, True, 4)
     week_table(d, "Week", "Subject", WEEKS_EN, rtl=False)
     en(d, "", 6, False, 0)
-    en(d, "Textbooks", 13, True, 4)
+    en_head(d, "Textbooks")
     for b in BIB: en(d, b, 11, False, 3)
     d.save(os.path.join(OUT, "syllabus_en.docx"))
 
@@ -190,14 +222,14 @@ def build_syllabus_he():
     he(d, "שעות שבועיות: הרצאה 3 שעות + תרגול 2 שעות, סה\"כ שעות – 5", 11, False, 0)
     he(d, "נקודות זכות: 4", 11, False, 0)
     he(d, "דרישות קדם: מבוא ללמידת מכונה 63303, הסתברות 20021", 11, False, 10)
-    he(d, "מטרות הקורס", 13, True, 4)
+    he_head(d, "מטרות הקורס")
     he(d, "כאשר מערכות בינה מלאכותית פועלות בתחומי הראייה הממוחשבת, השפה והדיבור, הן נשענות על רשתות נוירונים עמוקות. קורס זה מקנה בסיס מעמיק ומעשי ברשתות נוירונים: כיצד לנסח משימת למידת מכונה במונחים של טנזורים, וכיצד לבנות, לאמן ולנפות רשתות בעזרת PyTorch.")
     he(d, "זהו קורס יסוד הנדרש מכל סטודנט למדעי המחשב ונלמד בכל המסלולים. הוא מספק את הבסיס המשותף בלמידה עמוקה להמשך התמחות בבינה מלאכותית, ובכלל זה ראייה ממוחשבת ומודלי שפה גדולים, והוא בעל ערך בפני עצמו ולא רק כשלב לקראת קורסים מתקדמים. בסיום הקורס יוכלו הסטודנטים לקחת משימה חדשה, לנסח אותה, לבנות רשת מתאימה, לאמן אותה, לאבחן כשלים ולשפר אותה.")
-    he(d, "תוכן הקורס", 13, True, 4)
+    he_head(d, "תוכן הקורס")
     he(d, "הקורס נפתח באבני הבניין: טנזורים וייצוג נתונים, הפרספטרון הרב-שכבתי (MLP) ואלגוריתם ההתפשטות לאחור (backpropagation) עם גזירה אוטומטית. בהמשך נלמד את שלבי האימון: צינורות נתונים, פונקציות מחיר ומדדים, אופטימיזציה (SGD, Adam) ורגולריזציה. החצי השני עוסק במשפחות הארכיטקטורות המרכזיות: רשתות קונבולוציה (כולל נרמול וחיבורים שאריתיים), רשתות נשנות (RNN, LSTM ו-GRU), ולמידת ייצוגים בעזרת מקודדים אוטומטיים ושיטות ניגודיות (contrastive). הקורס מסתיים בלמידת העברה (transfer learning) ובתהליך עבודה מקצה לקצה. הקורס מעשי, נלמד ב-PyTorch עם תרגול שבועי, ומותאם לעבודה עם עוזר תכנות מבוסס בינה מלאכותית.")
-    he(d, "חובות התלמידים ומרכיבי הציון", 13, True, 4)
+    he_head(d, "חובות התלמידים ומרכיבי הציון")
     he(d, "הקורס מבוסס פרויקטים ומעבדות, ללא מבחן כתוב. הציון הסופי מורכב ממעבדות שבועיות (40%), פרויקט אמצע (20%), פרויקט סיום עם הגנה קצרה בעל-פה (35%), והשתתפות (5%).")
-    he(d, "מהלך השיעורים", 13, True, 4)
+    he_head(d, "מהלך השיעורים")
     he(d, "כל שבוע כולל שלושה חלקים: הרצאה בת 3 שעות המפתחת את התיאוריה, שיעור תרגול בן שעתיים שבו המרצה מדגים יישומים ועובר על דוגמאות, ומעבדה הניתנת כשיעורי בית. המעבדות בנויות לפי מודל של בנייה, חיזוי והסבר: מותר להיעזר בעוזר בינה מלאכותית לשלב הבנייה, אך הציון ניתן על חיזוי התוצאות והסברן.")
     he(d, "שיטות ההוראה: הוראה פרונטלית מלווה במצגות ובהדגמות קוד.", 11, False, 2)
     he(d, "שימוש בטכנולוגיה: הדגמות ותרגול ב-Python ו-PyTorch, מחברות Colab, ושימוש בעוזר תכנות מבוסס בינה מלאכותית.", 11, False, 2)
@@ -205,7 +237,7 @@ def build_syllabus_he():
     he(d, "תכנית הוראה מפורטת לכל השיעורים (סדר השיעורים צפוי להשתנות)", 11, True, 4)
     week_table(d, "שבוע", "נושאים", WEEKS_HE, rtl=True)
     he(d, "", 6, False, 0)
-    he(d, "ביבליוגרפיה", 13, True, 4)
+    he_head(d, "ביבליוגרפיה")
     for b in BIB: en(d, b, 11, False, 3, align=WD_ALIGN_PARAGRAPH.LEFT)
     d.save(os.path.join(OUT, "syllabus_he.docx"))
 

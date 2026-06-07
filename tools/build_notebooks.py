@@ -5,8 +5,7 @@ Open-in-Colab badge and one section per live demonstration. The student homework
 import json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from content import COURSE, PARTS, WEEKS
-from lessons import PRACTICE
-from notebook_code import CODE
+from notebook_code import NB
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REPO = "apartsin/DLCourseHIT"
@@ -26,17 +25,16 @@ def bullets(items): return "\n".join(f"{i}. {x}" for i, x in enumerate(items, 1)
 def notebook(w):
     n = w["num"]
     cells = []
-    demos = PRACTICE[n]
     cells.append(md(
         f'[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]({colab_url(n)})\n\n'
         f'# Week {n}: {w["title"]}\n'
         f'**{COURSE["title"]} (HIT)** &middot; Part {w["part"]}: {PARTS[w["part"]]}\n\n'
         f'{w["sub"]}\n\n'
-        f'**Instructor practice notebook.** Run these live demonstrations during the 2-hour practice '
-        f'lesson. The student homework is the weekly lab.'
+        f'**Instructor practice notebook** for the 2-hour practice lesson. Work through the sections below '
+        f'live, running each cell and trying the variations. The student homework is the weekly lab.'
     ))
-    cells.append(md("## Goals for the practice lesson\n\n" + "\n".join(f"- {g}" for g in w["goals"])))
-    cells.append(md("## Setup\nRun this first. On Colab, set Runtime > Change runtime type > GPU for the later weeks."))
+    cells.append(md("### Goals\n\n" + "\n".join(f"- {g}" for g in w["goals"])))
+    cells.append(md("### Setup\nRun this first. On Colab, set Runtime > Change runtime type > GPU for the later weeks."))
     cells.append(code(
         "import torch\n"
         "import torch.nn as nn\n"
@@ -46,11 +44,8 @@ def notebook(w):
         "torch.manual_seed(0)\n"
         "print('PyTorch', torch.__version__, '| device:', device)"
     ))
-    snippets = CODE.get(n, [])
-    for i, demo in enumerate(demos, 1):
-        cells.append(md(f"## Demonstration {i}\n{demo}"))
-        src = snippets[i - 1] if i - 1 < len(snippets) else f"# {demo}\n"
-        cells.append(code(src))
+    for kind, text in NB.get(n, []):
+        cells.append(md(text) if kind == "md" else code(text))
     cells.append(md(
         f"---\nStudent materials for this week: the lab handout (`labs/{w2(n)}.html`) and the curated "
         f"references (`references/{w2(n)}.html`) in the course site."))
