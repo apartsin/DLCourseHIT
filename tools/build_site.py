@@ -341,7 +341,16 @@ def index_html():
         '<li><a href="projects/index.html">Projects</a>: example briefs for the mid-term and final projects.</li>'
         '</ul>'
     )
-    inner = hero + rationale + outcomes + prereq_cta + table + explore
+    hitpkg = (
+        '<h2>HIT course catalogue package</h2>'
+        '<p>Department submission documents in the HIT form, on the official letterhead (Word, downloadable):</p>'
+        '<p class="btnrow">'
+        '<a class="btn" href="hit-catalogue/syllabus_en.docx">Syllabus (English)</a>'
+        '<a class="btn" href="hit-catalogue/syllabus_he.docx">Syllabus (Hebrew)</a>'
+        '<a class="btn" href="hit-catalogue/rationale.docx">Rationale</a>'
+        '<a class="btn" href="hit-catalogue/catalogue_summary.docx">Catalogue summary</a></p>'
+    )
+    inner = hero + rationale + outcomes + prereq_cta + table + explore + hitpkg
     return page(f'{COURSE["title"]} (HIT)', 0, inner)
 
 def main():

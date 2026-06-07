@@ -37,7 +37,9 @@ def _font(run, name, size, bold):
     rFonts.set(qn('w:cs'), name); rFonts.set(qn('w:ascii'), name); rFonts.set(qn('w:hAnsi'), name)
 
 def he(doc, text, size=11, bold=False, space=6):
-    p = doc.add_paragraph(); _set_rtl(p)
+    p = doc.add_paragraph(); _set_rtl(p)          # bidi + right-align
+    if not (bold and size >= 13):                  # justify body, keep headings right-aligned
+        p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
     r = p.add_run(text); _font(r, HE_FONT, size, bold)
     if bold and size >= 13: r.font.color.rgb = TEAL
     r._element.get_or_add_rPr().append(OxmlElement('w:rtl'))
@@ -47,6 +49,7 @@ def he(doc, text, size=11, bold=False, space=6):
 def en(doc, text, size=11, bold=False, space=6, align=None):
     p = doc.add_paragraph()
     if align: p.alignment = align
+    elif not (bold and size >= 13): p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
     r = p.add_run(text); _font(r, EN_FONT, size, bold)
     if bold and size >= 13: r.font.color.rgb = TEAL
     p.paragraph_format.space_after = Pt(space)

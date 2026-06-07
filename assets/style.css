@@ -8,7 +8,11 @@ html{ -webkit-text-size-adjust:100%; }
 body{
   font-family:"Charter","Iowan Old Style","Source Serif Pro",Georgia,"Times New Roman",serif;
   color:var(--ink); background:#fff; margin:0; line-height:1.6; font-size:17px;
+  hyphens:auto; -webkit-hyphens:auto;
 }
+/* justified body text (academic house style) */
+p, li, .refcard .note, .pcard .fld, .step li, .selfcheck .ans, .timeline .dt{ text-align:justify; }
+.sub, .meta, .eyebrow, .dom, .lbl, .wbadge, .secttag, footer, .pager a{ text-align:left; hyphens:none; }
 a{ color:var(--navy); }
 code,.mono{ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   background:var(--code); padding:1px 5px; border-radius:4px; font-size:.92em; }
