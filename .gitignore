@@ -23,3 +23,7 @@ tools/__pycache__/
 _*.png
 _*.pdf
 *.tmp
+
+# notebook smoke-test artifacts
+/data/
+*.pt
