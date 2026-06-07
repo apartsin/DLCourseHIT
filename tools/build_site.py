@@ -42,7 +42,6 @@ def topnav(depth):
             f'<a class="brand" href="{up}index.html">Introduction to Deep Learning <span>&middot; HIT</span></a>'
             f'<nav><a href="{up}index.html">Home</a>'
             f'<a href="{up}prereq/index.html">Prerequisites</a>'
-            f'<a href="{up}syllabus/syllabus.html">Syllabus</a>'
             f'<a href="{up}projects/index.html">Projects</a></nav></div></div>')
 
 def page(title, depth, inner):
@@ -86,7 +85,7 @@ def lab_html(w):
         + '<div class="callout">This is the weekly <b>homework lab</b>, completed independently after the lecture and the practice lesson. '
           'It follows the course\'s <b>Build / Predict &amp; probe / Explain &amp; defend</b> model: '
           'use an AI assistant freely for the Build; the graded learning is in Predict and Explain. '
-          'See <a href="../syllabus/syllabus.html">the syllabus</a> for the AI-use policy.</div>'
+          'See the <a href="../index.html#ai-usage">AI-use policy</a> on the course home page.</div>'
         + '<h2><span class="ic">&#9881;</span>Exercise</h2>' + f'<div class="steps">{steps}</div>'
         + '<h2><span class="ic">&#10003;</span>Deliverables</h2>' + f'<ul class="clean">{li(w["deliverables"])}</ul>'
         + f'<div class="callout hint"><b>Hints.</b><ul class="clean" style="margin-bottom:0">{li(w["hints"])}</ul></div>'
@@ -377,7 +376,55 @@ def index_html():
         'Predict, Explain, and short oral-defense steps verify understanding rather than authorship; where an '
         'assistant was used, it should be disclosed.</p>'
     )
-    inner = hero + hitpkg + rationale + ai + outcomes + prereq_cta + table + explore
+    format_sec = (
+        '<h2>Course format</h2>'
+        '<p>Each week has three parts: a <b>3-hour lecture</b> (theory), a <b>2-hour practice lesson</b> in which '
+        'the instructor demonstrates implementations and works through examples, and a <b>weekly lab</b> set as '
+        'homework. The thirteen weeks form four parts: Foundations (weeks 1 to 3), Training Infrastructure '
+        '(4 to 7), Architectures and Representation Learning (8 to 12), and Integration (13). A mid-term '
+        'mini-project consolidates Parts I and II; a final project consolidates the whole course.</p>'
+    )
+    lab_model = (
+        '<p>Every weekly lab follows a three-part model:</p>'
+        '<div class="steps">'
+        '<div class="step a"><h3><span class="tag">Part A &middot; AI assistant welcome</span>Build</h3>'
+        '<p>Produce working code that meets a specification or reaches a target metric; an AI assistant may be used freely.</p></div>'
+        '<div class="step b"><h3><span class="tag">Part B &middot; reasoning</span>Predict &amp; probe</h3>'
+        '<p>Before running anything, write down the expected outcome, then run controlled experiments and compare.</p></div>'
+        '<div class="step c"><h3><span class="tag">Part C &middot; in plain language</span>Explain &amp; defend</h3>'
+        '<p>Explain why the solution works, where it would break, and what changed; be ready to defend any line.</p></div>'
+        '</div>'
+    )
+    assessment = (
+        '<h2>Assessment and grading</h2>'
+        '<p>Grading is project- and lab-based, with weight on the parts an AI assistant cannot do for the student: '
+        'reasoning, interpretation, and defense. There are no written exams.</p>'
+        '<table class="gtab"><thead><tr><th>Component</th><th>What it covers</th><th>Weight</th></tr></thead><tbody>'
+        '<tr><td><b>Weekly labs</b></td><td>Eleven labs (best 10 count), graded mostly on the Predict and Explain parts.</td><td class="pct">40%</td></tr>'
+        '<tr><td><b>Mid-term mini-project</b></td><td>A CNN-based project (around weeks 9 to 10): build, train, ablate, and report.</td><td class="pct">20%</td></tr>'
+        '<tr><td><b>Final project</b></td><td>Implementation, a written report, an AI-use reflection, and a short oral defense.</td><td class="pct">35%</td></tr>'
+        '<tr><td><b>Participation</b></td><td>In-class exercises and lab engagement.</td><td class="pct">5%</td></tr>'
+        '</tbody></table>'
+        '<p><b>Final project.</b> Working solo or in a pair, students take a task end to end: frame it, build a '
+        'suitable architecture, train and tune it, diagnose failures, and report results. Deliverables are a '
+        'one-page proposal (around week 8), a code submission, a short report, a half-page AI-use reflection, and '
+        'a short oral defense where understanding, rather than authorship, is confirmed.</p>'
+        '<p><b>Grading scale.</b> A 93 to 100, A&minus; 90 to 92, B+ 87 to 89, B 83 to 86, B&minus; 80 to 82, '
+        'C+ 77 to 79, C 73 to 76, C&minus; 70 to 72, D 60 to 69, F below 60. The weights and scale are a sensible '
+        'default; adjust to the institution standard before publishing.</p>'
+    )
+    tools = (
+        '<h2>Tools and resources</h2>'
+        '<ul class="clean">'
+        '<li><b>Core stack:</b> Python 3.11+, PyTorch, NumPy, and Matplotlib; Jupyter notebooks or Google Colab.</li>'
+        '<li><b>AI assistant:</b> part of the toolkit, expected for the Build portion of the labs.</li>'
+        '<li><b>Compute:</b> a GPU helps but is not required; Colab provides free GPU access.</li>'
+        '<li><b>Reference reading:</b> <i>Dive into Deep Learning</i> (d2l.ai) and the official PyTorch tutorials.</li>'
+        '<li><b>Course materials:</b> lecture slides, exercise notebooks, and starter code are posted weekly.</li>'
+        '</ul>'
+    )
+    inner = (hero + hitpkg + rationale + format_sec + outcomes + ai + lab_model
+             + prereq_cta + table + assessment + tools + explore)
     return page(f'{COURSE["title"]} (HIT)', 0, inner)
 
 def main():

@@ -138,6 +138,14 @@ ul.clean li{ margin:0 0 7px; }
 .ocard .oi{ flex:0 0 auto; font-size:1.05rem; line-height:1; }
 .ocard .ot{ color:var(--soft); }
 
+/* assessment / grade table */
+.gtab{ border-collapse:collapse; width:100%; font-size:.95rem; margin-top:8px; }
+.gtab th{ text-align:left; font-variant:small-caps; letter-spacing:.05em; color:var(--muted);
+  font-weight:700; font-size:.8rem; border-bottom:1.5px solid var(--ink); padding:7px 10px; }
+.gtab td{ padding:9px 10px; border-top:1px solid #e6e8eb; vertical-align:top; }
+.gtab td.pct{ font-family:ui-monospace,Menlo,Consolas,monospace; font-weight:700; text-align:right;
+  color:var(--navy); white-space:nowrap; }
+
 /* prerequisites readiness table */
 .prereqs{ border-collapse:collapse; width:100%; font-size:.95rem; margin-top:8px; }
 .prereqs th{ text-align:left; font-variant:small-caps; letter-spacing:.05em; color:var(--muted);
