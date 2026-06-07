@@ -350,7 +350,7 @@ def index_html():
         '<a class="btn" href="hit-catalogue/rationale.docx">Rationale</a>'
         '<a class="btn" href="hit-catalogue/catalogue_summary.docx">Catalogue summary</a></p>'
     )
-    inner = hero + rationale + outcomes + prereq_cta + table + explore + hitpkg
+    inner = hero + hitpkg + rationale + outcomes + prereq_cta + table + explore
     return page(f'{COURSE["title"]} (HIT)', 0, inner)
 
 def main():
