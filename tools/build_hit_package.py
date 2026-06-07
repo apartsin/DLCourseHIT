@@ -60,6 +60,10 @@ def _shade(cell, fill):
 def _repeat_header(row):
     row._tr.get_or_add_trPr().append(OxmlElement('w:tblHeader'))
 
+def _no_split(row):
+    """Keep a table row intact across a page break (no mid-row split)."""
+    row._tr.get_or_add_trPr().append(OxmlElement('w:cantSplit'))
+
 def _widths(row, widths):
     for cell, w in zip(row.cells, widths):
         cell.width = w
@@ -178,7 +182,7 @@ def week_table(doc, header_left, header_right, weeks, rtl):
             r._element.get_or_add_rPr().append(OxmlElement('w:rtl'))
     _widths(hrow, [NUM, TOPIC])
     for i, wk in enumerate(weeks, 1):
-        row = t.add_row()
+        row = t.add_row(); _no_split(row)
         pn = row.cells[0].paragraphs[0]; pn.alignment = WD_ALIGN_PARAGRAPH.CENTER
         _font(pn.add_run(str(i)), EN_FONT, 11, False)
         ps = row.cells[1].paragraphs[0]; rs = ps.add_run(wk); _font(rs, HE_FONT if rtl else EN_FONT, 11, False)
@@ -291,7 +295,7 @@ def build_questionnaire():
     t = d.add_table(rows=0, cols=2); t.style = "Table Grid"; t.alignment = 2; _set_table_rtl(t); _fixed_layout(t)
     LABEL, CONTENT = Cm(6.5), Cm(9.1)
     for left, right in rows:
-        row = t.add_row()
+        row = t.add_row(); _no_split(row)
         for cell, txt in zip(row.cells, [left, right]):
             p = cell.paragraphs[0]; _set_rtl(p); p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
             r = p.add_run(txt); _font(r, HE_FONT, 11, False)

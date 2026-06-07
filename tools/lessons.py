@@ -268,6 +268,146 @@ LESSONS = {1: {'motivation': 'Why deep learning now: representation learning, sc
                     'Freeze first, then unfreeze gradually.',
                     "Match the pretrained model's input preprocessing."]}}
 
+# Active-learning layer for the lecture: a named misconception to confront, two
+# concept-check questions for retrieval practice (pose mid-block, reveal after),
+# and a prediction prompt to make the live demo active rather than passively watched.
+PEDAGOGY = {
+ 1: {'misconception': ('Stacking more linear layers makes a more powerful model.',
+                       'Without a nonlinearity between them, any stack of linear layers is equivalent to a single '
+                       'linear layer W x + b; the activation is what gives depth its power.'),
+     'checks': [('Remove every activation from a 5-layer MLP. What function class can it still represent?',
+                 'Only linear functions: the whole stack collapses to one linear map.'),
+                ('You predict house price from features. What output layer and loss, and why?',
+                 'One linear output unit and MSE (or MAE): the target is a continuous value, so no softmax and no '
+                 'cross-entropy.')],
+     'predict': 'Before running, ask the class to predict what the loss curve does when the learning rate is set 10x '
+                'too high, then run it and compare.'},
+ 2: {'misconception': ('Broadcasting aligns shapes from the first (leftmost) dimension.',
+                       'It aligns from the trailing (rightmost) dimension: (3,) broadcasts with (5,3) but not with '
+                       '(3,5).'),
+     'checks': [('Can a (3,) tensor be added to a (5,3)? To a (3,5)?',
+                 '(5,3): yes, trailing dims match (3==3) and it expands across the 5 rows. (3,5): no, trailing dims '
+                 '3 vs 5 mismatch.'),
+                ('Why must class labels be long (int64) and inputs float32?',
+                 'Cross-entropy indexes the target class with an integer; the matrix multiplies need floating-point '
+                 'inputs. A float label or double input is a classic dtype bug.')],
+     'predict': 'Show two shapes and ask the class to predict whether they broadcast and to what shape, before '
+                'running the operation.'},
+ 3: {'misconception': ('Backpropagation is a separate, mysterious algorithm.',
+                       'Backprop is exactly the chain rule applied backward over the computational graph; autograd '
+                       'just records the graph and applies it automatically.'),
+     'checks': [('After two backward() calls on the same loss with no zero_grad(), what is in .grad?',
+                 'Twice the single-step gradient: gradients accumulate, which is why you zero them each step.'),
+                ('How would you sanity-check that autograd is correct?',
+                 'Compare against a finite-difference estimate, or use torch.autograd.gradcheck.')],
+     'predict': 'Ask the class to predict .grad after the second backward (with no zero_grad) before revealing it.'},
+ 4: {'misconception': ('Normalizing the whole dataset before splitting is harmless, it is just scaling.',
+                       'Fitting normalization statistics on all data leaks test information into training and '
+                       'silently inflates results; fit on the training split only, then apply to val and test.'),
+     'checks': [('You scale features with the mean and std of the entire dataset, then split. What is wrong?',
+                 'Test statistics leaked into the scaler, so the model has seen test information; compute mean and '
+                 'std on train only.'),
+                ('Shuffle the validation set each epoch? The training set?',
+                 'Training: yes, to decorrelate minibatches. Validation and test: no need, order does not change the '
+                 'metric.')],
+     'predict': 'Ask the class to predict whether the leaked-normalization accuracy will be higher or lower than the '
+                'honest one, then show the inflated number.'},
+ 5: {'misconception': ('The loss and the evaluation metric should be the same thing.',
+                       'The loss must be differentiable to train on; the metric (accuracy, F1) need not be and '
+                       'reflects what you care about. You optimize one and report the other.'),
+     'checks': [('Why pass raw logits, not softmax probabilities, to CrossEntropyLoss?',
+                 'It applies log-softmax internally; pre-softmaxing double-applies it and is numerically unstable.'),
+                ('A model is 95% accurate on a 95%-negative dataset. Is it good?',
+                 'Not necessarily: always predicting negative also scores 95%. Check precision, recall, and F1 on the '
+                 'positive class.')],
+     'predict': 'Ask the class to predict the accuracy of an always-negative classifier on the imbalanced set before '
+                'computing it.'},
+ 6: {'misconception': ('A smaller learning rate is always the safer choice.',
+                       'Too small crawls or stalls in a poor region; the rate must be in the right range, and '
+                       'schedules help. There is no universally safe tiny value.'),
+     'checks': [('The loss spikes and diverges after a few steps. Learning rate too large or too small?',
+                 'Too large: the updates overshoot. Lower it, or add warmup.'),
+                ('What does momentum add over plain SGD?',
+                 'A velocity accumulated from past gradients: it damps oscillation across ravines and accelerates '
+                 'along consistent directions.')],
+     'predict': 'Before the three-rate sweep, ask the class to rank the three curves (too small, good, too large) '
+                'and then reveal them.'},
+ 7: {'misconception': ('Low training loss means the model is good.',
+                       'Low training loss with high validation loss is overfitting; the train-minus-validation gap, '
+                       'not training loss, is the signal that matters.'),
+     'checks': [('Validation loss rises while training loss keeps falling. What is happening, and one fix?',
+                 'Overfitting; fix with early stopping, weight decay, dropout, or more and augmented data.'),
+                ('Is dropout active at evaluation time?',
+                 'No: dropout is on during training and off at eval (model.eval()); the full network is used at '
+                 'eval.')],
+     'predict': 'Ask the class to predict what happens to the validation curve after dropout is added, before '
+                'running the regularized model.'},
+ 8: {'misconception': ('A convolution layer has a separate weight for every pixel position.',
+                       'A filter shares one small set of weights across all positions; that weight sharing is why '
+                       'CNNs use far fewer parameters than dense layers on images.'),
+     'checks': [('Input 32x32, a 3x3 filter, stride 1, padding 1. Output spatial size?',
+                 '32x32: out = floor((32 + 2 - 3)/1) + 1 = 32. A padded 3x3 stride-1 conv preserves size.'),
+                ('Why are CNNs more parameter-efficient than MLPs on images?',
+                 'Local connectivity plus weight sharing: one filter reused everywhere, not a unique weight per '
+                 'input-output pair.')],
+     'predict': 'Ask the class to predict the output shape after each conv and pool before printing the per-layer '
+                'shapes.'},
+ 9: {'misconception': ('Adding more layers to a plain network can only help, or at worst do nothing.',
+                       'Very deep plain nets train worse (the degradation problem) because gradients struggle to '
+                       'propagate; residual connections give gradients a direct path so depth helps again.'),
+     'checks': [('Why does batch norm behave differently at train and eval?',
+                 'At train it uses the minibatch mean and variance; at eval it uses running statistics, so a single '
+                 'test example is normalized consistently.'),
+                ('Write a residual block output in one line and say why the skip helps.',
+                 'out = F(x) + x; the +x gives gradients a direct route back, so the block can learn the identity '
+                 'and very deep nets still train.')],
+     'predict': 'Before the ablation, ask the class to predict which deep network trains, with residuals or without, '
+                'then show both curves.'},
+ 10: {'misconception': ('An RNN has a separate set of weights for each time step.',
+                        'The same weights are reused at every step (weight sharing across time); unrolling only '
+                        'makes it look deep, it is one shared cell applied repeatedly.'),
+      'checks': [('Why do gradients vanish or explode in a plain RNN over long sequences?',
+                  'BPTT multiplies by the recurrent matrix once per step; repeated multiplication shrinks (<1) or '
+                  'grows (>1) the gradient exponentially with length.'),
+                 ('Does gradient clipping fix vanishing or exploding gradients?',
+                  'Exploding: it caps the gradient norm. Vanishing needs an architectural fix (gating), next '
+                  'week.')],
+      'predict': 'Ask the class to predict how the gradient reaching the first step changes as the sequence gets '
+                 'longer, then plot it.'},
+ 11: {'misconception': ('LSTMs beat plain RNNs because they are bigger and have more parameters.',
+                        'It is the cell state’s near-linear, gated path, not the parameter count, that '
+                        'preserves gradients across long sequences; the gates learn what to keep and forget.'),
+      'checks': [('What is the role of the cell state versus the hidden state in an LSTM?',
+                  'The cell state is a protected, near-linear memory carried across steps (a gradient highway); the '
+                  'hidden state is the gated output exposed to the next step or layer.'),
+                 ('Sentiment classification of a whole sentence: many-to-one or many-to-many?',
+                  'Many-to-one: a whole sequence in, a single label out.')],
+      'predict': 'Ask the class to predict whether the LSTM or the plain RNN holds the long-range signal better '
+                 'before comparing them.'},
+ 12: {'misconception': ('An autoencoder is useful because it reconstructs its input accurately.',
+                        'Perfect reconstruction is trivial if the bottleneck is wide enough; the value is the '
+                        'constrained latent code, where an undercomplete bottleneck forces salient structure.'),
+      'checks': [('Why does an autoencoder need an undercomplete (narrow) bottleneck?',
+                  'Otherwise it can learn the identity and copy the input; the narrow bottleneck forces compression '
+                  'to salient features.'),
+                 ('In contrastive learning, what defines which examples are similar?',
+                  'The augmentation policy: two augmented views of the same example are a positive pair pulled '
+                  'together, other examples are pushed apart.')],
+      'predict': 'Ask the class to predict what a latent interpolation between two examples will look like before '
+                 'decoding it.'},
+ 13: {'misconception': ('To use a pretrained model on your data, retrain the whole network from scratch.',
+                        'Usually you freeze the pretrained backbone and train only a new head (or fine-tune with a '
+                        'small learning rate); the pretrained features are the value, retraining from scratch '
+                        'discards them.'),
+      'checks': [('You have 500 labeled images similar to ImageNet. Feature-extract or fine-tune everything?',
+                  'Feature-extract: freeze the backbone, train a new head. With little, similar data, fine-tuning '
+                  'all weights risks overfitting.'),
+                 ('Why must you match the pretrained model’s input preprocessing?',
+                  'The frozen features were learned on inputs normalized a specific way; a mismatch shifts the input '
+                  'distribution and degrades the features.')],
+      'predict': 'Ask the class to predict the ranking of from-scratch, frozen-features, and fine-tuning on small '
+                 'data before showing the three results.'}}
+
 PRACTICE = {1: ['Set up PyTorch live and confirm the device (GPU or CPU).',
      'Walk through a minimal training loop on a toy dataset, run it, and read the loss curve.',
      'Vary the learning rate live to show divergence versus convergence.',

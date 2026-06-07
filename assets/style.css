@@ -72,7 +72,10 @@ ul.clean li{ margin:0 0 7px; }
 .callout{ background:var(--code); border-left:3px solid var(--navy); border-radius:0 5px 5px 0;
   padding:12px 16px; margin:10px 0 0; font-size:.96rem; color:var(--soft); }
 .callout.hint{ border-left-color:#7a5a14; }
+.callout.miss{ border-left-color:#9c3b2e; background:#fbf4f2; }
+.callout.check{ border-left-color:#1c6b4a; background:#f1f8f4; }
 .callout b{ color:var(--ink); }
+.callout .selfcheck details{ margin:6px 0; }
 
 /* deliverables / goals chips */
 .goals{ background:var(--band); border:1px solid var(--rule); border-radius:8px; padding:14px 18px; margin:18px 0 0; }

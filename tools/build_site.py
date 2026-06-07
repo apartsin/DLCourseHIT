@@ -4,7 +4,7 @@ from content.py (lab handouts) and refs.json (scouted references). Shared CSS in
 import json, html, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from content import COURSE, PARTS, WEEKS
-from lessons import LESSONS, PRACTICE
+from lessons import LESSONS, PRACTICE, PEDAGOGY
 from selfcheck import SELFCHECK
 from prereq import PREREQ, ORDER as PREREQ_ORDER
 from projects import PROJECTS, ORDER as PROJECTS_ORDER
@@ -121,18 +121,31 @@ def timeline(segs):
     return f'<table class="timeline">{rows}</table>'
 
 def lesson_html(w):
-    n = w["num"]; L = LESSONS[n]
+    n = w["num"]; L = LESSONS[n]; P = PEDAGOGY.get(n, {})
     def pts(block): return "; ".join(block["points"])
     lecture = [
-        (10, "Recap & objectives", "Connect to the previous week; state this week's objectives."),
+        (10, "Recap & retrieval", "Open with two quick questions on last week's material (retrieval practice), then state this week's objectives."),
         (15, "Motivation", L["motivation"]),
         (45, L["conceptA"]["title"], L["conceptA"]["points"]),
         (10, "Break", ""),
         (45, L["conceptB"]["title"], L["conceptB"]["points"]),
-        (30, "Live demo", L["demo"]),
-        (15, "Wrap-up & practice preview", "Recap the takeaways and preview the practice lesson."),
+        (30, "Live demo (predict, then run)", (P["predict"] + " " + L["demo"]) if P.get("predict") else L["demo"]),
+        (15, "Wrap-up & practice preview", "Revisit the misconception and concept checks below, recap the takeaways, and preview the practice lesson."),
         (10, "Buffer & questions", ""),
     ]
+    miss = P.get("misconception")
+    miss_html = ("" if not miss else
+        '<div class="callout miss"><b>Common misconception to confront.</b> '
+        f'<p style="margin:6px 0 0"><i>Students often think:</i> {esc(miss[0])}<br>'
+        f'<i>Set it straight:</i> {esc(miss[1])}</p></div>')
+    checks = P.get("checks", [])
+    checks_html = ("" if not checks else
+        '<div class="callout check"><b>Check for understanding</b> (pose during the concept blocks; let students '
+        'answer before revealing).'
+        + '<div class="selfcheck" style="margin-top:8px">'
+        + "".join(f'<details><summary>{esc(q)}</summary><div class="ans">{esc(a)}</div></details>'
+                  for q, a in checks)
+        + '</div></div>')
     demos = PRACTICE[n]
     half = (len(demos) + 1) // 2
     practice = [
@@ -150,6 +163,8 @@ def lesson_html(w):
         + '<div class="goals"><h2>Learning objectives</h2><ul class="clean">' + li(w["goals"]) + '</ul></div>'
         + '<h2><span class="ic">&#127891;</span><span class="secttag">Lecture &middot; 3 hours</span></h2>'
         + timeline(lecture)
+        + miss_html
+        + checks_html
         + f'<div class="callout"><b>Key takeaways.</b><ul class="clean" style="margin-bottom:0">{li(L["takeaways"])}</ul></div>'
         + '<h2><span class="ic">&#128187;</span><span class="secttag prac">Practice &middot; 2 hours</span></h2>'
         + f'<p>In the practice lesson the instructor demonstrates implementations, runs code, and works through examples, using the practice notebook linked below. The weekly <a href="../labs/{w2(n)}.html">lab</a> is then set as homework, where students apply this themselves.</p>'
@@ -413,9 +428,6 @@ def index_html():
         'suitable architecture, train and tune it, diagnose failures, and report results. Deliverables are a '
         'one-page proposal (around week 8), a code submission, a short report, a half-page AI-use reflection, and '
         'a short oral defense where understanding, rather than authorship, is confirmed.</p>'
-        '<p><b>Grading scale.</b> A 93 to 100, A&minus; 90 to 92, B+ 87 to 89, B 83 to 86, B&minus; 80 to 82, '
-        'C+ 77 to 79, C 73 to 76, C&minus; 70 to 72, D 60 to 69, F below 60. The weights and scale are a sensible '
-        'default; adjust to the institution standard before publishing.</p>'
     )
     tools = (
         '<h2>Tools and resources</h2>'
