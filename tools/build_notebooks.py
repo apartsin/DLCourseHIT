@@ -6,6 +6,7 @@ import json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from content import COURSE, PARTS, WEEKS
 from lessons import PRACTICE
+from notebook_code import CODE
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REPO = "apartsin/DLCourseHIT"
@@ -45,9 +46,11 @@ def notebook(w):
         "torch.manual_seed(0)\n"
         "print('PyTorch', torch.__version__, '| device:', device)"
     ))
+    snippets = CODE.get(n, [])
     for i, demo in enumerate(demos, 1):
         cells.append(md(f"## Demonstration {i}\n{demo}"))
-        cells.append(code(f"# {demo}\n"))
+        src = snippets[i - 1] if i - 1 < len(snippets) else f"# {demo}\n"
+        cells.append(code(src))
     cells.append(md(
         f"---\nStudent materials for this week: the lab handout (`labs/{w2(n)}.html`) and the curated "
         f"references (`references/{w2(n)}.html`) in the course site."))

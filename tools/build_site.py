@@ -92,8 +92,7 @@ def lab_html(w):
         + f'<div class="callout hint"><b>Hints.</b><ul class="clean" style="margin-bottom:0">{li(w["hints"])}</ul></div>'
         + selfcheck_block(w)
         + ('<p style="margin-top:22px">'
-           f'<a class="btn" href="../references/{w2(w["num"])}.html">Reference material</a> '
-           f'<a class="btn" href="../lessons/{w2(w["num"])}.html">Instructor lesson plan</a></p>')
+           f'<a class="btn" href="../lessons/{w2(w["num"])}.html">Instructor lesson plan (with references)</a></p>')
         + pager("lab", w)
     )
     return page(f'Week {w["num"]} Lab: {w["title"]}', 1, inner)
@@ -156,8 +155,8 @@ def lesson_html(w):
         + f'<div class="callout hint"><b>Common pitfalls to pre-empt.</b><ul class="clean" style="margin-bottom:0">{li(w["hints"])}</ul></div>'
         + ('<p style="margin-top:22px">'
            f'<a class="btn" href="{colab_url(n)}" target="_blank" rel="noopener">Open the practice notebook in Colab</a> '
-           f'<a class="btn" href="../labs/{w2(n)}.html">Lab (homework)</a> '
-           f'<a class="btn" href="../references/{w2(n)}.html">References</a></p>')
+           f'<a class="btn" href="../references/{w2(n)}.html">Curated references</a> '
+           f'<a class="btn" href="../labs/{w2(n)}.html">Lab (homework)</a></p>')
         + pager("lesson", w)
     )
     return page(f'Week {n} Lesson Plan: {w["title"]}', 1, inner)
@@ -294,11 +293,10 @@ def index_html():
             rows += (f'<tr class="part"><td colspan="3">Part {w["part"]} &middot; {esc(PARTS[w["part"]])}</td></tr>')
         rows += (f'<tr><td class="wk">{w["num"]}</td>'
                  f'<td class="t"><b>{esc(w["title"])}</b><span>{esc(w["sub"])}</span></td>'
-                 f'<td class="lk"><a href="labs/{w2(w["num"])}.html">Lab</a>'
+                 f'<td class="lk"><a href="lessons/{w2(w["num"])}.html">Lesson plan</a>'
+                 f'<a href="{colab_url(w["num"])}" target="_blank" rel="noopener">Practice notebook</a>'
                  f'<a href="labs/{w2(w["num"])}.html#self-check">Self-check</a>'
-                 f'<a href="references/{w2(w["num"])}.html">References</a>'
-                 f'<a href="lessons/{w2(w["num"])}.html">Lesson plan</a>'
-                 f'<a href="{colab_url(w["num"])}" target="_blank" rel="noopener">Practice notebook</a></td></tr>')
+                 f'<a href="labs/{w2(w["num"])}.html">Homework lab</a></td></tr>')
     hero = (
         '<div class="hero">'
         '<img class="hitlogo" src="assets/hit-logo.png" alt="Holon Institute of Technology">'
@@ -359,8 +357,7 @@ def index_html():
         '<li><a href="prereq/index.html">Prerequisites</a>: math, Python, and ML refreshers.</li>'
         '<li><a href="syllabus/syllabus.html">Syllabus</a>: full course outline (also DOCX and PDF).</li>'
         '<li><a href="labs/week01.html">Labs</a>: weekly homework labs with self-check questions.</li>'
-        '<li><a href="references/week01.html">References</a>: curated free courses, books, videos, and blogs.</li>'
-        '<li><a href="lessons/week01.html">Lesson plans</a>: instructor lecture and practice outlines.</li>'
+        '<li><a href="lessons/week01.html">Lesson plans</a>: instructor lecture and practice outlines, with the week\'s curated references.</li>'
         '<li><a href="' + colab_url(1) + '" target="_blank" rel="noopener">Practice notebooks</a>: Colab notebooks the instructor runs during the practice lessons.</li>'
         '<li><a href="projects/index.html">Projects</a>: example briefs for the mid-term and final projects.</li>'
         '</ul>'

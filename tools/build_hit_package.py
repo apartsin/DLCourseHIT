@@ -51,10 +51,12 @@ def _font(run, name, size, bold):
     rFonts.set(qn('w:cs'), name); rFonts.set(qn('w:ascii'), name); rFonts.set(qn('w:hAnsi'), name)
 
 def he(doc, text, size=11, bold=False, space=6, center=False):
-    p = doc.add_paragraph(); _set_rtl(p)          # bidi + right-align
+    p = doc.add_paragraph(); _set_rtl(p)          # bidi (RTL)
     if center:
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    elif not (bold and size >= 13):                # justify body, keep headings right-aligned
+    else:
+        # justify aligns to the RTL start (right edge) for both headings and body;
+        # an explicit jc=right flips to the left under a bidi section, so avoid it.
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
     r = p.add_run(text); _font(r, HE_FONT, size, bold)
     if bold and size >= 13: r.font.color.rgb = TEAL

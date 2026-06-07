@@ -39,22 +39,22 @@ sources, an instructor **lesson plan** (3 h lecture + 2 h practice), and a Colab
 | Wk | Topic | Materials |
 |----|-------|-----------|
 | | **Part I · Foundations** | |
-| 1 | Deep Learning Overview & ML-to-Network Framing | [Lab](labs/week01.html) · [Refs](references/week01.html) · [Lesson](lessons/week01.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week01.ipynb) |
-| 2 | Tensors & Data Representation | [Lab](labs/week02.html) · [Refs](references/week02.html) · [Lesson](lessons/week02.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week02.ipynb) |
-| 3 | MLPs & Backpropagation | [Lab](labs/week03.html) · [Refs](references/week03.html) · [Lesson](lessons/week03.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week03.ipynb) |
+| 1 | Deep Learning Overview & ML-to-Network Framing | [Lesson](lessons/week01.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week01.ipynb) · [Self-check](labs/week01.html#self-check) · [Homework lab](labs/week01.html) |
+| 2 | Tensors & Data Representation | [Lesson](lessons/week02.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week02.ipynb) · [Self-check](labs/week02.html#self-check) · [Homework lab](labs/week02.html) |
+| 3 | MLPs & Backpropagation | [Lesson](lessons/week03.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week03.ipynb) · [Self-check](labs/week03.html#self-check) · [Homework lab](labs/week03.html) |
 | | **Part II · Training Infrastructure** | |
-| 4 | Data Pipelines | [Lab](labs/week04.html) · [Refs](references/week04.html) · [Lesson](lessons/week04.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week04.ipynb) |
-| 5 | Loss Functions & Metrics | [Lab](labs/week05.html) · [Refs](references/week05.html) · [Lesson](lessons/week05.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week05.ipynb) |
-| 6 | Optimization | [Lab](labs/week06.html) · [Refs](references/week06.html) · [Lesson](lessons/week06.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week06.ipynb) |
-| 7 | Regularization & Generalization | [Lab](labs/week07.html) · [Refs](references/week07.html) · [Lesson](lessons/week07.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week07.ipynb) |
+| 4 | Data Pipelines | [Lesson](lessons/week04.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week04.ipynb) · [Self-check](labs/week04.html#self-check) · [Homework lab](labs/week04.html) |
+| 5 | Loss Functions & Metrics | [Lesson](lessons/week05.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week05.ipynb) · [Self-check](labs/week05.html#self-check) · [Homework lab](labs/week05.html) |
+| 6 | Optimization | [Lesson](lessons/week06.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week06.ipynb) · [Self-check](labs/week06.html#self-check) · [Homework lab](labs/week06.html) |
+| 7 | Regularization & Generalization | [Lesson](lessons/week07.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week07.ipynb) · [Self-check](labs/week07.html#self-check) · [Homework lab](labs/week07.html) |
 | | **Part III · Architectures & Representation Learning** | |
-| 8 | Convolutional Networks I | [Lab](labs/week08.html) · [Refs](references/week08.html) · [Lesson](lessons/week08.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week08.ipynb) |
-| 9 | Convolutional Networks II | [Lab](labs/week09.html) · [Refs](references/week09.html) · [Lesson](lessons/week09.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week09.ipynb) |
-| 10 | Recurrent Networks (RNNs) | [Lab](labs/week10.html) · [Refs](references/week10.html) · [Lesson](lessons/week10.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week10.ipynb) |
-| 11 | LSTMs, GRUs & Sequence Tasks | [Lab](labs/week11.html) · [Refs](references/week11.html) · [Lesson](lessons/week11.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week11.ipynb) |
-| 12 | Representation Learning | [Lab](labs/week12.html) · [Refs](references/week12.html) · [Lesson](lessons/week12.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week12.ipynb) |
+| 8 | Convolutional Networks I | [Lesson](lessons/week08.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week08.ipynb) · [Self-check](labs/week08.html#self-check) · [Homework lab](labs/week08.html) |
+| 9 | Convolutional Networks II | [Lesson](lessons/week09.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week09.ipynb) · [Self-check](labs/week09.html#self-check) · [Homework lab](labs/week09.html) |
+| 10 | Recurrent Networks (RNNs) | [Lesson](lessons/week10.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week10.ipynb) · [Self-check](labs/week10.html#self-check) · [Homework lab](labs/week10.html) |
+| 11 | LSTMs, GRUs & Sequence Tasks | [Lesson](lessons/week11.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week11.ipynb) · [Self-check](labs/week11.html#self-check) · [Homework lab](labs/week11.html) |
+| 12 | Representation Learning | [Lesson](lessons/week12.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week12.ipynb) · [Self-check](labs/week12.html#self-check) · [Homework lab](labs/week12.html) |
 | | **Part IV · Integration** | |
-| 13 | Integration & Transfer Learning | [Lab](labs/week13.html) · [Refs](references/week13.html) · [Lesson](lessons/week13.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week13.ipynb) |
+| 13 | Integration & Transfer Learning | [Lesson](lessons/week13.html) · [Practice nb](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week13.ipynb) · [Self-check](labs/week13.html#self-check) · [Homework lab](labs/week13.html) |
 
 > The `.html` pages render best via the GitHub Pages site above. The notebook links open directly in
 > Google Colab.
