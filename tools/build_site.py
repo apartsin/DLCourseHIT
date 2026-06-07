@@ -383,6 +383,8 @@ def index_html():
         'for, everything they submit</b>, and must be able to <b>explain and defend</b> any part of it. The '
         'Predict, Explain, and short oral-defense steps verify understanding rather than authorship; where an '
         'assistant was used, it should be disclosed.</p>'
+        '<p>For what a strong submission looks like in practice, see a '
+        '<a href="sample-submission.html">fully worked sample submission</a> that follows this model end to end.</p>'
     )
     format_sec = (
         '<h2>Course format</h2>'
@@ -402,7 +404,6 @@ def index_html():
         '<div class="step c"><h3><span class="tag">Part C &middot; in plain language</span>Explain &amp; defend</h3>'
         '<p>Explain why the solution works, where it would break, and what changed; be ready to defend any line.</p></div>'
         '</div>'
-        '<p style="margin-top:14px"><a class="btn" href="sample-submission.html">See a fully worked sample submission &rarr;</a></p>'
     )
     assessment = (
         '<h2>Assessment and grading</h2>'
@@ -429,8 +430,8 @@ def index_html():
         '<li><b>Course materials:</b> lecture slides, exercise notebooks, and starter code are posted weekly.</li>'
         '</ul>'
     )
-    inner = (hero + hitpkg + rationale + format_sec + outcomes + ai + lab_model
-             + prereq_cta + table + assessment + tools)
+    inner = (hero + hitpkg + rationale + format_sec + outcomes
+             + prereq_cta + table + ai + lab_model + assessment + tools)
     return page(f'{COURSE["title"]} (HIT)', 0, inner)
 
 def sample_submission_html():
