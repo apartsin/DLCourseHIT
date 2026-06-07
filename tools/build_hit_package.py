@@ -4,7 +4,7 @@ HITCatalogueExamples templates: English syllabus, Hebrew syllabus, rationale,
 catalogue summary, and committee questionnaire. Output: hit-catalogue/*.docx"""
 import os
 from docx import Document
-from docx.shared import Pt, RGBColor, Inches
+from docx.shared import Pt, RGBColor, Inches, Cm
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
@@ -41,6 +41,25 @@ def set_doc_rtl(doc):
         bidi = OxmlElement('w:bidi')
         grid = sectPr.find(qn('w:docGrid'))
         grid.addprevious(bidi) if grid is not None else sectPr.append(bidi)
+
+def _fixed_layout(table):
+    table.autofit = False
+    tblPr = table._tbl.tblPr
+    for el in tblPr.findall(qn('w:tblLayout')):
+        tblPr.remove(el)
+    lay = OxmlElement('w:tblLayout'); lay.set(qn('w:type'), 'fixed'); tblPr.append(lay)
+
+def _shade(cell, fill):
+    tcPr = cell._tc.get_or_add_tcPr()
+    shd = OxmlElement('w:shd'); shd.set(qn('w:val'), 'clear'); shd.set(qn('w:fill'), fill)
+    tcPr.append(shd)
+
+def _repeat_header(row):
+    row._tr.get_or_add_trPr().append(OxmlElement('w:tblHeader'))
+
+def _widths(row, widths):
+    for cell, w in zip(row.cells, widths):
+        cell.width = w
 
 def _font(run, name, size, bold):
     run.font.name = name; run.font.size = Pt(size); run.bold = bold
@@ -115,20 +134,29 @@ BIB = [
 ]
 
 def week_table(doc, header_left, header_right, weeks, rtl):
+    NUM, TOPIC = Cm(1.7), Cm(13.9)
     t = doc.add_table(rows=1, cols=2); t.style = "Table Grid"
-    h = t.rows[0].cells
-    for c, txt in zip(h, [header_left, header_right]):
-        p = c.paragraphs[0]; r = p.add_run(txt)
-        _font(r, HE_FONT if rtl else EN_FONT, 11, True)
-        if rtl: _set_rtl(p); r._element.get_or_add_rPr().append(OxmlElement('w:rtl'))
+    _fixed_layout(t)
+    hrow = t.rows[0]; _repeat_header(hrow)                 # repeat header across page breaks
+    for c, txt in zip(hrow.cells, [header_left, header_right]):
+        _shade(c, "D9ECEE")                               # light teal header fill
+        p = c.paragraphs[0]; r = p.add_run(txt); _font(r, HE_FONT if rtl else EN_FONT, 11, True)
+        r.font.color.rgb = TEAL
+        if rtl:
+            _set_rtl(p); p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+            r._element.get_or_add_rPr().append(OxmlElement('w:rtl'))
+    _widths(hrow, [NUM, TOPIC])
     for i, wk in enumerate(weeks, 1):
-        cells = t.add_row().cells
-        pn = cells[0].paragraphs[0]; rn = pn.add_run(str(i)); _font(rn, EN_FONT, 11, False)
-        ps = cells[1].paragraphs[0]; rs = ps.add_run(wk)
-        _font(rs, HE_FONT if rtl else EN_FONT, 11, False)
-        if rtl: _set_rtl(ps); rs._element.get_or_add_rPr().append(OxmlElement('w:rtl'))
+        row = t.add_row()
+        pn = row.cells[0].paragraphs[0]; pn.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        _font(pn.add_run(str(i)), EN_FONT, 11, False)
+        ps = row.cells[1].paragraphs[0]; rs = ps.add_run(wk); _font(rs, HE_FONT if rtl else EN_FONT, 11, False)
+        if rtl:
+            _set_rtl(ps); ps.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+            rs._element.get_or_add_rPr().append(OxmlElement('w:rtl'))
+        _widths(row, [NUM, TOPIC])
     if rtl:
-        t.alignment = 2  # right
+        t.alignment = 2
         _set_table_rtl(t)
     return t
 
@@ -230,13 +258,15 @@ def build_questionnaire():
         ("קורסים דומים במכון (פרט)", "אין קורס זהה במכון."),
         ("הערות נוספות:", "הקורס מעשי, מבוסס PyTorch, ומשלב עבודה עם עוזר תכנות מבוסס בינה מלאכותית תוך הערכה של חיזוי והסבר."),
     ]
-    t = d.add_table(rows=0, cols=2); t.style = "Table Grid"; t.alignment = 2; _set_table_rtl(t)
+    t = d.add_table(rows=0, cols=2); t.style = "Table Grid"; t.alignment = 2; _set_table_rtl(t); _fixed_layout(t)
+    LABEL, CONTENT = Cm(6.5), Cm(9.1)
     for left, right in rows:
-        cells = t.add_row().cells
-        for cell, txt in zip(cells, [left, right]):
-            p = cell.paragraphs[0]; _set_rtl(p)
+        row = t.add_row()
+        for cell, txt in zip(row.cells, [left, right]):
+            p = cell.paragraphs[0]; _set_rtl(p); p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
             r = p.add_run(txt); _font(r, HE_FONT, 11, False)
             r._element.get_or_add_rPr().append(OxmlElement('w:rtl'))
+        _widths(row, [LABEL, CONTENT])
     d.save(os.path.join(OUT, "committee_questionnaire.docx"))
 
 def main():
