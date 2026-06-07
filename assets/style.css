@@ -126,6 +126,8 @@ ul.clean li{ margin:0 0 7px; }
   white-space:nowrap; width:104px; font-weight:700; font-size:.85rem; }
 .timeline td.mn{ color:var(--muted); white-space:nowrap; width:60px; font-size:.82rem; }
 .timeline .dt{ display:block; color:var(--soft); font-size:.9rem; margin-top:2px; }
+.timeline .dt-list{ margin:5px 0 0; padding-left:1.15em; }
+.timeline .dt-list li{ color:var(--soft); font-size:.9rem; margin:2px 0; text-align:left; }
 
 /* expected-outcome cards: number + icon + text on one line, compact */
 .ocards{ display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:8px; margin-top:10px; }

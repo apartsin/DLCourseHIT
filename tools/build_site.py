@@ -111,7 +111,10 @@ def timeline(segs):
     rows, t = "", 0
     for mins, title, detail in segs:
         s, e = f"{t//60}:{t%60:02d}", f"{(t+mins)//60}:{(t+mins)%60:02d}"
-        dt = f'<span class="dt">{esc(detail)}</span>' if detail else ""
+        if isinstance(detail, (list, tuple)):
+            dt = '<ul class="dt-list">' + "".join(f"<li>{esc(x)}</li>" for x in detail) + "</ul>"
+        else:
+            dt = f'<span class="dt">{esc(detail)}</span>' if detail else ""
         rows += (f'<tr><td class="tm">{s}–{e}</td><td class="mn">{mins} min</td>'
                  f'<td><b>{esc(title)}</b>{dt}</td></tr>')
         t += mins
@@ -123,9 +126,9 @@ def lesson_html(w):
     lecture = [
         (10, "Recap & objectives", "Connect to the previous week; state this week's objectives."),
         (15, "Motivation", L["motivation"]),
-        (45, L["conceptA"]["title"], pts(L["conceptA"])),
+        (45, L["conceptA"]["title"], L["conceptA"]["points"]),
         (10, "Break", ""),
-        (45, L["conceptB"]["title"], pts(L["conceptB"])),
+        (45, L["conceptB"]["title"], L["conceptB"]["points"]),
         (30, "Live demo", L["demo"]),
         (15, "Wrap-up & practice preview", "Recap the takeaways and preview the practice lesson."),
         (10, "Buffer & questions", ""),
@@ -134,9 +137,9 @@ def lesson_html(w):
     half = (len(demos) + 1) // 2
     practice = [
         (10, "Setup & recap", "Recap the lecture's key ideas and open the working notebook."),
-        (50, "Instructor demonstrations", "; ".join(demos[:half])),
+        (50, "Instructor demonstrations", demos[:half]),
         (5, "Break", ""),
-        (40, "Instructor demonstrations (continued)", "; ".join(demos[half:])),
+        (40, "Instructor demonstrations (continued)", demos[half:]),
         (15, "Wrap-up & lab brief", "Summarize the patterns shown and brief the weekly lab (homework), which students complete on their own."),
     ]
     inner = (
@@ -303,24 +306,25 @@ def index_html():
         f'<h1>{esc(COURSE["title"])}</h1>'
         f'<p class="sub">{esc(COURSE["subtitle"])}</p>'
         '<div class="meta"><span><b>Prerequisite:</b> Introduction to Machine Learning</span>'
-        '<span><b>Leads to:</b> Advanced LLMs &middot; Advanced Computer Vision</span>'
+        '<span><b>Required for:</b> all CS specializations (mandatory)</span>'
+        '<span><b>Feeds into:</b> Advanced LLMs and Computer Vision</span>'
         '<span><b>Format:</b> 3 h lecture + 2 h practice + a homework lab</span>'
         '<span><b>Assessment:</b> labs and projects, no written exams</span></div></div>'
     )
     rationale = (
         '<h2>About this course</h2>'
-        '<p>This is the foundation deep-learning course in the program. It turns an introductory '
-        'machine-learning background into working neural-network skill in PyTorch: framing a task in tensor '
-        'terms, then building, training, and debugging networks. The emphasis is on building and '
-        'experimentation, not on watching. Each week has a 3-hour lecture (theory), a 2-hour '
-        'instructor-led practice lesson (live implementation and worked examples), and a hands-on '
-        'lab set as homework.</p>'
-        '<p><b>Rationale.</b> Modern AI in vision and language rests on a shared deep-learning foundation. '
-        'This course provides that common base and is the bridge to the advanced electives in <b>large '
-        'language models</b> and <b>computer vision</b>: once a student can frame, build, train, and debug a '
-        'network, those courses can focus on what is specific to their domains. It is project- and '
-        'lab-based and designed for the way students will actually work, with an AI coding assistant at '
-        'hand, while keeping the learning genuine through a Build, Predict, and Explain model.</p>'
+        '<p>This is the foundational deep-learning course, <b>required of every computer-science student</b> '
+        'and taught across all specializations. It turns an introductory machine-learning background into '
+        'working neural-network skill in PyTorch: framing a task in tensor terms, then building, training, and '
+        'debugging networks. The emphasis is on building and experimentation, not on watching. Each week has a '
+        '3-hour lecture (theory), a 2-hour instructor-led practice lesson (live implementation and worked '
+        'examples), and a hands-on lab set as homework.</p>'
+        '<p><b>Rationale.</b> Modern AI rests on a shared deep-learning foundation. This course provides that '
+        'common base for continued specialization in artificial intelligence, including <b>computer vision</b>, '
+        '<b>large language models</b>, and others. It is valuable in its own right, not only as a step toward '
+        'later courses. It is project- and lab-based and designed for the way students will actually work, with '
+        'an AI coding assistant at hand, while keeping the learning genuine through a Build, Predict, and Explain '
+        'model.</p>'
     )
     ocards = "".join(
         f'<div class="ocard"><span class="n">{i}</span><span class="oi">{icon}</span>'
