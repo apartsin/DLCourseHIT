@@ -86,6 +86,7 @@ table.predtab thead th{ border-bottom:2px solid var(--ink); }
 table.predtab td.ok{ color:#2f6f4f; font-weight:700; }
 table.predtab td.no{ color:#9c3b2e; font-weight:700; }
 .verdict{ font-weight:700; } .verdict.y{ color:#2f6f4f; } .verdict.n{ color:#9c3b2e; }
+.projmeta{ color:var(--muted); font-size:.92rem; margin:0 0 8px; font-variant:small-caps; letter-spacing:.02em; }
 
 /* deliverables / goals chips */
 .goals{ background:var(--band); border:1px solid var(--rule); border-radius:8px; padding:14px 18px; margin:18px 0 0; }

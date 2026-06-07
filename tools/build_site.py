@@ -415,10 +415,20 @@ def index_html():
         '<tr><td><b>Final project</b></td><td>Implementation, a written report, an AI-use reflection, and a short oral defense.</td><td class="pct">35%</td></tr>'
         '<tr><td><b>Participation</b></td><td>In-class exercises and lab engagement.</td><td class="pct">5%</td></tr>'
         '</tbody></table>'
-        '<p><b>Final project.</b> Working solo or in a pair, students take a task end to end: frame it, build a '
-        'suitable architecture, train and tune it, diagnose failures, and report results. Deliverables are a '
-        'one-page proposal (around week 8), a code submission, a short report, a half-page AI-use reflection, and '
-        'a short oral defense where understanding, rather than authorship, is confirmed.</p>'
+    )
+    midterm_sec = (
+        '<h2 id="midterm">Mid-term mini-project</h2>'
+        f'<p class="projmeta">{esc(PROJECTS["midterm"]["meta"])}</p>'
+        f'<p>{esc(PROJECTS["midterm"]["intro"])}</p>'
+        '<p class="btnrow"><a class="btn" href="projects/midterm.html">Mid-term project examples &rarr;</a></p>'
+    )
+    final_sec = (
+        '<h2 id="final">Final project</h2>'
+        f'<p class="projmeta">{esc(PROJECTS["final"]["meta"])}</p>'
+        f'<p>{esc(PROJECTS["final"]["intro"])}</p>'
+        '<p>Deliverables are a one-page proposal (around week 8), a code submission, a short report, a half-page '
+        'AI-use reflection, and a short oral defense where understanding, rather than authorship, is confirmed.</p>'
+        '<p class="btnrow"><a class="btn" href="projects/final.html">Final project examples &rarr;</a></p>'
     )
     tools = (
         '<h2>Tools and resources</h2>'
@@ -431,7 +441,7 @@ def index_html():
         '</ul>'
     )
     inner = (hero + hitpkg + rationale + format_sec + outcomes
-             + prereq_cta + table + ai + lab_model + assessment + tools)
+             + prereq_cta + table + ai + lab_model + assessment + midterm_sec + final_sec + tools)
     return page(f'{COURSE["title"]} (HIT)', 0, inner)
 
 def sample_submission_html():
