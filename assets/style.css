@@ -76,6 +76,16 @@ ul.clean li{ margin:0 0 7px; }
 .callout.check{ border-left-color:#1c6b4a; background:#f1f8f4; }
 .callout b{ color:var(--ink); }
 .callout .selfcheck details{ margin:6px 0; }
+pre.code{ background:var(--code); border:1px solid var(--rule); border-radius:6px; padding:12px 14px;
+  overflow-x:auto; font-size:.84rem; line-height:1.5; margin:10px 0; }
+pre.code code{ background:none; padding:0; border-radius:0; }
+table.predtab{ border-collapse:collapse; width:100%; margin:10px 0; font-size:.95rem; }
+table.predtab th, table.predtab td{ border-bottom:1px solid var(--rule); padding:7px 10px;
+  text-align:left; vertical-align:top; }
+table.predtab thead th{ border-bottom:2px solid var(--ink); }
+table.predtab td.ok{ color:#2f6f4f; font-weight:700; }
+table.predtab td.no{ color:#9c3b2e; font-weight:700; }
+.verdict{ font-weight:700; } .verdict.y{ color:#2f6f4f; } .verdict.n{ color:#9c3b2e; }
 
 /* deliverables / goals chips */
 .goals{ background:var(--band); border:1px solid var(--rule); border-radius:8px; padding:14px 18px; margin:18px 0 0; }

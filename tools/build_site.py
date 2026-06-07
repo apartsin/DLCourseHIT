@@ -42,6 +42,7 @@ def topnav(depth):
             f'<a class="brand" href="{up}index.html">Introduction to Deep Learning <span>&middot; HIT</span></a>'
             f'<nav><a href="{up}index.html">Home</a>'
             f'<a href="{up}prereq/index.html">Prerequisites</a>'
+            f'<a href="{up}index.html#weekly">Weekly materials</a>'
             f'<a href="{up}projects/index.html">Projects</a></nav></div></div>')
 
 def page(title, depth, inner):
@@ -85,7 +86,8 @@ def lab_html(w):
         + '<div class="callout">This is the weekly <b>homework lab</b>, completed independently after the lecture and the practice lesson. '
           'It follows the course\'s <b>Build / Predict &amp; probe / Explain &amp; defend</b> model: '
           'use an AI assistant freely for the Build; the graded learning is in Predict and Explain. '
-          'See the <a href="../index.html#ai-usage">AI-use policy</a> on the course home page.</div>'
+          'See the <a href="../index.html#ai-usage">AI-use policy</a> and a '
+          '<a href="../sample-submission.html">fully worked sample submission</a>.</div>'
         + '<h2><span class="ic">&#9881;</span>Exercise</h2>' + f'<div class="steps">{steps}</div>'
         + '<h2><span class="ic">&#10003;</span>Deliverables</h2>' + f'<ul class="clean">{li(w["deliverables"])}</ul>'
         + f'<div class="callout hint"><b>Hints.</b><ul class="clean" style="margin-bottom:0">{li(w["hints"])}</ul></div>'
@@ -363,19 +365,8 @@ def index_html():
         '<td class="lk"><a href="prereq/ml.html">Review</a><a href="prereq/ml.html#self-check">Self-check</a></td></tr>'
         '</tbody></table>'
     )
-    table = ('<h2>Weekly materials</h2><table class="weeks"><thead><tr><th>Wk</th><th>Topic</th>'
+    table = ('<h2 id="weekly">Weekly materials</h2><table class="weeks"><thead><tr><th>Wk</th><th>Topic</th>'
              '<th>Materials</th></tr></thead><tbody>' + rows + '</tbody></table>')
-    explore = (
-        '<h2>Explore</h2>'
-        '<p>Everything in this course site, by section:</p>'
-        '<ul class="clean">'
-        '<li><a href="prereq/index.html">Prerequisites</a>: math, Python, and ML refreshers.</li>'
-        '<li><a href="labs/week01.html">Labs</a>: weekly homework labs with self-check questions.</li>'
-        '<li><a href="lessons/week01.html">Lesson plans</a>: instructor lecture and practice outlines, with the week\'s curated references.</li>'
-        '<li><a href="' + colab_url(1) + '" target="_blank" rel="noopener">Practice notebooks</a>: Colab notebooks the instructor runs during the practice lessons.</li>'
-        '<li><a href="projects/index.html">Projects</a>: example briefs for the mid-term and final projects.</li>'
-        '</ul>'
-    )
     hitpkg = (
         '<h2>HIT course catalogue package</h2>'
         '<p>Department submission documents in the HIT form, on the official letterhead (Word, downloadable):</p>'
@@ -411,6 +402,7 @@ def index_html():
         '<div class="step c"><h3><span class="tag">Part C &middot; in plain language</span>Explain &amp; defend</h3>'
         '<p>Explain why the solution works, where it would break, and what changed; be ready to defend any line.</p></div>'
         '</div>'
+        '<p style="margin-top:14px"><a class="btn" href="sample-submission.html">See a fully worked sample submission &rarr;</a></p>'
     )
     assessment = (
         '<h2>Assessment and grading</h2>'
@@ -438,8 +430,152 @@ def index_html():
         '</ul>'
     )
     inner = (hero + hitpkg + rationale + format_sec + outcomes + ai + lab_model
-             + prereq_cta + table + assessment + tools + explore)
+             + prereq_cta + table + assessment + tools)
     return page(f'{COURSE["title"]} (HIT)', 0, inner)
+
+def sample_submission_html():
+    def cb(src):
+        return f'<pre class="code"><code>{esc(src)}</code></pre>'
+    build_code = (
+        "import torch, torch.nn as nn\n"
+        "torch.manual_seed(0)\n\n"
+        "# Synthetic task: the label depends on only the first 6 of 40 features;\n"
+        "# the other 34 are pure noise the model can latch onto and overfit.\n"
+        "def make(n, d=40, k=6):\n"
+        "    X = torch.randn(n, d)\n"
+        "    w = torch.zeros(d)\n"
+        "    w[:k] = torch.tensor([2.0, -1.8, 1.5, -1.4, 1.2, -1.0])\n"
+        "    y = (X @ w + 0.2 * torch.randn(n) > 0).long()\n"
+        "    return X, y\n\n"
+        "Xtr, ytr   = make(60)      # small training set  -> easy to overfit\n"
+        "Xval, yval = make(2000)    # large validation set -> stable estimate\n\n"
+        "def mlp(p_drop=0.0):\n"
+        "    return nn.Sequential(\n"
+        "        nn.Linear(40, 256), nn.ReLU(), nn.Dropout(p_drop),\n"
+        "        nn.Linear(256, 256), nn.ReLU(), nn.Dropout(p_drop),\n"
+        "        nn.Linear(256, 2))\n\n"
+        "def train(model, weight_decay=0.0, epochs=600):\n"
+        "    opt = torch.optim.Adam(model.parameters(), lr=1e-3, weight_decay=weight_decay)\n"
+        "    loss_fn = nn.CrossEntropyLoss()\n"
+        "    for _ in range(epochs):\n"
+        "        model.train(); opt.zero_grad()\n"
+        "        loss_fn(model(Xtr), ytr).backward(); opt.step()\n"
+        "    model.eval()\n"
+        "    with torch.no_grad():\n"
+        "        tr = (model(Xtr).argmax(1) == ytr).float().mean().item()\n"
+        "        va = (model(Xval).argmax(1) == yval).float().mean().item()\n"
+        "    return tr, va\n\n"
+        "torch.manual_seed(0)\n"
+        "tr, va = train(mlp())          # baseline: no regularization\n"
+        'print(f"baseline  train {tr:.2f}  val {va:.3f}")\n'
+        "# -> baseline  train 1.00  val 0.717"
+    )
+    probe_code = (
+        "configs = [\n"
+        '    ("dropout 0.5",           dict(p_drop=0.5)),\n'
+        '    ("weight decay 5e-2",     dict(weight_decay=5e-2)),\n'
+        '    ("dropout 0.5 + wd 5e-2", dict(p_drop=0.5, weight_decay=5e-2)),\n'
+        '    ("over-regularized",      dict(p_drop=0.8, weight_decay=5e-1)),\n'
+        "]\n"
+        "for name, kw in configs:\n"
+        "    torch.manual_seed(0)\n"
+        '    p = kw.get("p_drop", 0.0); wd = kw.get("weight_decay", 0.0)\n'
+        "    tr, va = train(mlp(p), weight_decay=wd)\n"
+        '    print(f"{name:22s} train {tr:.2f}  val {va:.3f}")'
+    )
+    pred_table = (
+        '<table class="predtab"><thead><tr><th>#</th><th>Hypothesis (written before running)</th>'
+        '<th>Predicted outcome</th></tr></thead><tbody>'
+        '<tr><td>H1</td><td>Dropout 0.5 regularizes the network.</td>'
+        '<td>Validation accuracy rises; training accuracy may dip.</td></tr>'
+        '<tr><td>H2</td><td>Weight decay 5e-2 suppresses the 34 noise features.</td>'
+        '<td>Validation rises more than dropout alone.</td></tr>'
+        '<tr><td>H3</td><td>Dropout and weight decay together.</td>'
+        '<td>Best validation accuracy of all configurations.</td></tr>'
+        '<tr><td>H4</td><td>Very strong regularization (dropout 0.8 + wd 5e-1).</td>'
+        '<td>The model underfits; training accuracy collapses.</td></tr>'
+        '</tbody></table>')
+    result_table = (
+        '<table class="predtab"><thead><tr><th>Configuration</th><th>Train acc</th><th>Val acc</th>'
+        '<th>vs baseline</th></tr></thead><tbody>'
+        '<tr><td>baseline (no regularization)</td><td>1.00</td><td>0.717</td><td>&ndash;</td></tr>'
+        '<tr><td>dropout 0.5</td><td>1.00</td><td>0.740</td><td class="ok">+0.023</td></tr>'
+        '<tr><td>weight decay 5e-2</td><td>1.00</td><td><b>0.759</b></td><td class="ok">+0.042</td></tr>'
+        '<tr><td>dropout 0.5 + weight decay 5e-2</td><td>1.00</td><td>0.757</td><td class="ok">+0.040</td></tr>'
+        '<tr><td>over-regularized (drop 0.8 + wd 5e-1)</td><td>0.52</td><td>0.502</td><td class="no">&minus;0.215</td></tr>'
+        '</tbody></table>')
+    verdicts = (
+        '<table class="predtab"><thead><tr><th>#</th><th>Predicted</th><th>Observed</th><th>Verdict</th></tr></thead><tbody>'
+        '<tr><td>H1</td><td>Val rises, train may dip.</td><td>Val +0.023; train stayed 1.00 (60 points still memorized).</td>'
+        '<td class="verdict y">confirmed</td></tr>'
+        '<tr><td>H2</td><td>Weight decay beats dropout.</td><td>Weight decay best single regularizer (+0.042).</td>'
+        '<td class="verdict y">confirmed</td></tr>'
+        '<tr><td>H3</td><td>Combining is best.</td><td>0.757, just below weight decay alone (0.759). Dropout added nothing on top.</td>'
+        '<td class="verdict n">refuted</td></tr>'
+        '<tr><td>H4</td><td>Underfits, train collapses.</td><td>Train fell to 0.52, val to chance (0.50).</td>'
+        '<td class="verdict y">confirmed</td></tr>'
+        '</tbody></table>')
+    inner = (
+        '<div class="whead"><p class="eyebrow"><span class="wbadge">Sample submission</span> &nbsp; '
+        'Week 7 lab &middot; Regularization and generalization</p>'
+        '<h1>Closing the generalization gap on a small classifier</h1>'
+        '<p class="sub">An illustrative, complete lab submission following the course\'s '
+        'Build / Predict &amp; probe / Explain &amp; defend model. It shows the expected structure, depth, and '
+        'tone of a strong submission, including a prediction that turned out wrong and what was learned from it.</p></div>'
+
+        '<div class="callout"><b>Lab task.</b> Train a classifier on a small dataset that overfits, then reduce the '
+        'overfitting with regularization. Report validation accuracy before and after, design an ablation that '
+        'isolates each regularizer, and justify the final choice.</div>'
+
+        '<div class="steps"><div class="step a"><h3><span class="tag">Part A &middot; AI assistant welcome</span>Build</h3>'
+        '<p>The training pipeline below was drafted with an AI assistant and then read line by line. The dataset is '
+        'deliberately small (60 training points) with 34 uninformative noise features, so an unregularized network '
+        'memorizes the training set and generalizes poorly.</p></div></div>'
+        + cb(build_code) +
+        '<p>The baseline reaches <b>100% training accuracy but only 71.7% validation accuracy</b>: a 28-point gap, '
+        'the signature of overfitting. The network has fit the noise features.</p>'
+
+        '<div class="steps"><div class="step b"><h3><span class="tag">Part B &middot; reasoning</span>Predict &amp; probe</h3>'
+        '<p>Four hypotheses were written down <i>before</i> running anything, then tested with a controlled ablation '
+        'that changes one regularizer at a time.</p></div></div>'
+        '<h3>Predictions (before running)</h3>' + pred_table +
+        '<h3>The experiment</h3>' + cb(probe_code) +
+        '<h3>Results</h3>' + result_table +
+        '<h3>Predicted vs observed</h3>' + verdicts +
+        '<div class="callout hint"><b>The instructive miss (H3).</b> Combining dropout with weight decay was '
+        'predicted to be best, but it did not beat weight decay alone. With weight decay already constraining the '
+        'weights, the extra dropout removed capacity the model could not spare on 60 points; the two regularizers '
+        'overlap here rather than stack. Catching this is the point of writing the prediction down first.</div>'
+
+        '<div class="steps"><div class="step c"><h3><span class="tag">Part C &middot; in plain language</span>Explain &amp; defend</h3>'
+        '<p><b>Why regularization helped.</b> A 60-point training set with 34 noise features is a high-variance '
+        'regime: the unregularized network fits the noise (training accuracy 1.00) and carries it to validation. '
+        'Weight decay penalizes large weights, shrinking the reliance on the noise features; dropout forces the '
+        'network to spread its prediction across redundant units. Both lower variance, so validation accuracy '
+        'rises from 0.72 to 0.76.</p>'
+        '<p><b>Where it would break.</b> With abundant training data the gap would be small and regularization '
+        'would matter little. Too strong, and the model underfits, the 0.50 validation case, no better than '
+        'guessing. Dropout must be off at evaluation (<code>model.eval()</code>); leaving it on would corrupt the '
+        'reported validation accuracy.</p>'
+        '<p><b>What changed and the final choice.</b> Validation accuracy improved by 4 points (0.717 to 0.759) by '
+        'suppressing reliance on the 34 noise features. The chosen configuration is <b>weight decay 5e-2 alone</b>: '
+        'it gives the best validation accuracy with the simplest setup, and the ablation shows dropout adds nothing '
+        'on top of it for this dataset.</p></div></div>'
+
+        '<div class="callout"><b>AI-use disclosure.</b> An AI assistant drafted the training loop and the metric '
+        'code (Part A). The ablation design, the four predictions, the interpretation of the H3 surprise, and the '
+        'final choice are the author\'s own work, and every line can be explained and defended on request.</div>'
+
+        '<div class="callout check"><b>How this maps to the rubric.</b> Part A shows working, understood code. '
+        'Part B shows reasoning made falsifiable: predictions first, a clean one-variable-at-a-time ablation, and an '
+        'honest account of the prediction that failed. Part C shows mechanism, failure modes, and a defended '
+        'decision. The graded weight is on Parts B and C, the parts an assistant cannot do for the student.</div>'
+
+        '<p style="margin-top:22px"><a class="btn" href="index.html">&larr; Course home</a> '
+        '<a class="btn" href="labs/week07.html">The Week 7 lab</a> '
+        '<a class="btn" href="' + colab_url(7) + '" target="_blank" rel="noopener">Week 7 practice notebook</a></p>'
+    )
+    return page("Sample submission: Build, Predict and probe, Explain and defend", 0, inner)
 
 def main():
     for d in ("labs", "references", "lessons", "prereq", "projects"):
@@ -456,6 +592,7 @@ def main():
     for k in PROJECTS_ORDER:
         open(P("projects", f"{k}.html"), "w", encoding="utf-8").write(project_page_html(k)); n += 1
     open(P("index.html"), "w", encoding="utf-8").write(index_html()); n += 1
+    open(P("sample-submission.html"), "w", encoding="utf-8").write(sample_submission_html()); n += 1
     write_folder_readmes()
     print(f"generated {n} pages (index + {len(WEEKS)} x3 weekly + {len(PREREQ_ORDER)+1} prereq) and folder READMEs")
 
