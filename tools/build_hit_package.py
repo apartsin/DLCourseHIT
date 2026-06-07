@@ -166,8 +166,8 @@ BIB = [
     "Goodfellow, Ian, Yoshua Bengio, and Aaron Courville. Deep Learning. MIT Press, 2016.",
     "Prince, Simon J. D. Understanding Deep Learning. MIT Press, 2023.",
     "Zhang, Aston, Zachary C. Lipton, Mu Li, and Alexander J. Smola. Dive into Deep Learning. Cambridge University Press, 2023.",
-    "Raschka, Sebastian, Yuxi Liu, and Vahid Mirjalili. Machine Learning with PyTorch and Scikit-Learn. Packt Publishing, 2022.",
-    "Chollet, Francois. Deep Learning with Python. 2nd ed. Manning, 2021.",
+    "Raschka, Sebastian, Yuxi (Hayden) Liu, and Vahid Mirjalili. Machine Learning with PyTorch and Scikit-Learn. Packt Publishing, 2022.",
+    "Chollet, François. Deep Learning with Python. 2nd ed. Manning, 2021.",
 ]
 
 def week_table(doc, header_left, header_right, weeks, rtl):
