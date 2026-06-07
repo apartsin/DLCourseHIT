@@ -44,15 +44,15 @@ def notebook(w):
         "print('PyTorch', torch.__version__, '| device:', device)"
     ))
     cells.append(md("## Part A: Build  *(AI assistant welcome)*\n\n" + bullets(w["build"])))
-    cells.append(code("# Your build code here.\n"))
+    cells.append(code("# Build code here.\n"))
     cells.append(md(
-        "## Part B: Predict & probe  *(your reasoning)*\n\n"
-        "Before running experiments, write your predictions, then test them.\n\n" + bullets(w["predict"])))
-    cells.append(md("**Your predictions (write before running):**\n\n- ...\n"))
-    cells.append(code("# Experiments to test your predictions.\n"))
+        "## Part B: Predict & probe  *(reasoning)*\n\n"
+        "Before running experiments, write the predictions below, then test them.\n\n" + bullets(w["predict"])))
+    cells.append(md("**Predictions (write before running):**\n\n- ...\n"))
+    cells.append(code("# Experiments to test the predictions.\n"))
     cells.append(md(
         "## Part C: Explain & defend  *(in plain language)*\n\n" + bullets(w["explain"]) +
-        "\n\n**Your explanation:**\n\n_Write here. You must be able to defend any line you submit._"))
+        "\n\n**Explanation:**\n\n_Write the explanation here; be ready to defend any line submitted._"))
     cells.append(md(
         "## Deliverables\n\n" + "\n".join(f"- [ ] {d}" for d in w["deliverables"]) +
         f"\n\n---\nLab page and curated references for this week: "

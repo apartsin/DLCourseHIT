@@ -59,7 +59,7 @@ LESSONS = {
         "takeaways": [
             "Nonlinearity is what makes depth worthwhile.",
             "Backpropagation is the chain rule on a graph.",
-            "Autograd automates gradients, but you must zero them each step.",
+            "Autograd automates gradients, but they must be zeroed each step.",
         ],
     },
     4: {
@@ -82,7 +82,7 @@ LESSONS = {
         ],
     },
     5: {
-        "motivation": "The loss defines what the model optimizes; the metric defines what you care about, and they are not the same.",
+        "motivation": "The loss defines what the model optimizes; the metric defines what matters in practice, and they are not the same.",
         "conceptA": {"title": "Loss functions", "points": [
             "Cross-entropy (logits and class indices), BCE, and MSE.",
             "When each loss applies.",
@@ -234,7 +234,7 @@ LESSONS = {
         ],
     },
     13: {
-        "motivation": "You rarely train from scratch; standing on pretrained models is the bridge to the advanced courses.",
+        "motivation": "Training from scratch is rare; standing on pretrained models is the bridge to the advanced courses.",
         "conceptA": {"title": "Transfer learning", "points": [
             "Fixed feature extraction versus fine-tuning.",
             "When each strategy works (data size and similarity).",

@@ -126,14 +126,27 @@ ul.clean li{ margin:0 0 7px; }
 .timeline td.mn{ color:var(--muted); white-space:nowrap; width:60px; font-size:.82rem; }
 .timeline .dt{ display:block; color:var(--soft); font-size:.9rem; margin-top:2px; }
 
-/* expected-outcome cards */
-.ocards{ display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:12px; margin-top:10px; }
-.ocard{ border:1px solid var(--rule); border-top:3px solid var(--navy); border-radius:0 0 6px 6px;
-  padding:12px 15px; background:#fff; font-size:.95rem; color:var(--soft); text-align:left; }
-.ocard .n{ display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px;
-  border-radius:50%; background:var(--badge); color:var(--navy); font-weight:700; font-size:.8rem;
-  font-family:ui-monospace,Menlo,Consolas,monospace; margin-bottom:7px; }
-.ocard b{ color:var(--ink); }
+/* expected-outcome cards: number + icon + text on one line, compact */
+.ocards{ display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:8px; margin-top:10px; }
+.ocard{ display:flex; align-items:center; gap:9px; border:1px solid var(--rule); border-radius:8px;
+  padding:8px 12px; background:#fff; font-size:.9rem; text-align:left; }
+.ocard:hover{ border-color:var(--navy); }
+.ocard .n{ flex:0 0 auto; width:22px; height:22px; border-radius:50%; background:var(--navy); color:#fff;
+  font-weight:700; font-size:.74rem; display:flex; align-items:center; justify-content:center;
+  font-family:ui-monospace,Menlo,Consolas,monospace; }
+.ocard .oi{ flex:0 0 auto; font-size:1.05rem; line-height:1; }
+.ocard .ot{ color:var(--soft); }
+
+/* prerequisites readiness table */
+.prereqs{ border-collapse:collapse; width:100%; font-size:.95rem; margin-top:8px; }
+.prereqs th{ text-align:left; font-variant:small-caps; letter-spacing:.05em; color:var(--muted);
+  font-weight:700; font-size:.8rem; border-bottom:1.5px solid var(--ink); padding:7px 10px; }
+.prereqs td{ padding:9px 10px; border-top:1px solid #e6e8eb; vertical-align:top; }
+.prereqs td.subj{ white-space:nowrap; font-weight:700; }
+.prereqs td.subj .pi{ margin-right:.4em; }
+.prereqs td.top{ color:var(--soft); font-size:.9rem; }
+.prereqs td.lk a{ white-space:nowrap; text-decoration:none; font-weight:700; }
+.prereqs td.lk a+a{ margin-left:14px; }
 
 /* project example cards */
 .pcard{ border:1px solid var(--rule); border-left:4px solid var(--navy); border-radius:0 6px 6px 0;

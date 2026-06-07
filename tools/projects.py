@@ -8,8 +8,8 @@ PROJECTS = {
         "badge": "Mid-term",
         "meta": "20% of the grade · around weeks 9 to 10 · CNN-based",
         "intro": "The mid-term is a convolutional-network project on an image task: build it, train it, "
-                 "run a controlled ablation, and report what you found. Pick one of the examples below or "
-                 "propose your own in the same spirit. Datasets are suggestions; any comparable small image "
+                 "run a controlled ablation, and report the findings. Pick one of the examples below or "
+                 "propose another in the same spirit. Datasets are suggestions; any comparable small image "
                  "dataset works.",
         "deliverables": [
             "Working, documented code (a notebook or a small repo).",
@@ -25,7 +25,7 @@ PROJECTS = {
              "stretch": "Add mixup or cutout augmentation and measure the gain."},
             {"title": "Depth and width study on FashionMNIST",
              "data": "FashionMNIST.", "goal": "Understand model capacity.",
-             "build": "A configurable CNN whose depth and width you can vary.",
+             "build": "A configurable CNN with adjustable depth and width.",
              "study": "Sweep depth and width; plot accuracy against parameter count and identify under- and over-fitting.",
              "stretch": "Add dropout and weight decay and compare the curves."},
             {"title": "Small-data classifier with augmentation",
@@ -77,12 +77,12 @@ PROJECTS = {
         "intro": "The final project takes a task end to end with any architecture family from the course. "
                  "Work solo or in a pair: frame the task, build a suitable network, train and tune it, "
                  "diagnose failures, and report results. The examples below span vision, sequences, and "
-                 "representation learning; propose your own variant if you prefer.",
+                 "representation learning; or propose a variant instead.",
         "deliverables": [
             "A one-page proposal (around week 8).",
             "Working code and a short report with results and curves.",
-            "A half-page reflection on what the AI assistant did versus what you worked out yourself.",
-            "A short oral defense of your design decisions.",
+            "A half-page reflection on what the AI assistant did versus what the student worked out independently.",
+            "A short oral defense of the design decisions.",
         ],
         "fields": [("data", "Data"), ("idea", "Idea"), ("methods", "Methods"), ("eval", "Evaluation"), ("stretch", "Stretch goal")],
         "examples": [
@@ -127,7 +127,7 @@ PROJECTS = {
              "eval": "Classification accuracy; try time and frequency augmentation.",
              "stretch": "Compare raw-waveform input against the spectrogram."},
             {"title": "An empirical optimization study",
-             "data": "A task of your choice.", "idea": "A careful, controlled empirical study.",
+             "data": "A task of the student's choice.", "idea": "A careful, controlled empirical study.",
              "methods": "A fixed architecture with a rigorous protocol over optimizers and regularizers.",
              "eval": "Curves with multiple seeds and visible variance, leading to clear conclusions.",
              "stretch": "Add confidence intervals via bootstrapping."},

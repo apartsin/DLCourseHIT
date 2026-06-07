@@ -10,16 +10,16 @@ from prereq import PREREQ, ORDER as PREREQ_ORDER
 from projects import PROJECTS, ORDER as PROJECTS_ORDER
 
 OUTCOMES = [
-    "Frame ML tasks as networks (tensors in, a loss out).",
-    "Represent data as tensors and use them fluently.",
-    "Build data pipelines with Dataset and DataLoader.",
-    "Use automatic differentiation to compute gradients.",
-    "Implement neural networks in PyTorch.",
-    "Reason about optimization (SGD, Adam, learning rates).",
-    "Diagnose training issues (overfitting, instability).",
-    "Build MLPs, CNNs, RNNs, LSTMs/GRUs, and autoencoders.",
-    "Apply representation learning and transfer learning.",
-    "Carry a transferable base into advanced LLM and vision courses.",
+    ("&#127919;", "Frame ML tasks as networks (tensors in, a loss out)."),
+    ("&#129518;", "Represent data as tensors and use them fluently."),
+    ("&#128256;", "Build data pipelines with Dataset and DataLoader."),
+    ("&#128201;", "Use automatic differentiation to compute gradients."),
+    ("&#129504;", "Implement neural networks in PyTorch."),
+    ("&#9881;&#65039;", "Reason about optimization (SGD, Adam, learning rates)."),
+    ("&#129658;", "Diagnose training issues (overfitting, instability)."),
+    ("&#127959;&#65039;", "Build MLPs, CNNs, RNNs, LSTMs/GRUs, and autoencoders."),
+    ("&#129516;", "Apply representation learning and transfer learning."),
+    ("&#128279;", "Carry a transferable base into advanced LLM and vision courses."),
 ]
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -77,13 +77,13 @@ def whead(w):
 def lab_html(w):
     steps = (
         f'<div class="step a"><h3><span class="tag">Part A &middot; AI assistant welcome</span>Build</h3><ol>{li(w["build"])}</ol></div>'
-        f'<div class="step b"><h3><span class="tag">Part B &middot; your reasoning</span>Predict &amp; probe</h3><ol>{li(w["predict"])}</ol></div>'
+        f'<div class="step b"><h3><span class="tag">Part B &middot; student reasoning</span>Predict &amp; probe</h3><ol>{li(w["predict"])}</ol></div>'
         f'<div class="step c"><h3><span class="tag">Part C &middot; in plain language</span>Explain &amp; defend</h3><ol>{li(w["explain"])}</ol></div>'
     )
     inner = (
         whead(w)
         + f'<div class="goals"><h2>Learning goals</h2><ul class="clean">{li(w["goals"])}</ul></div>'
-        + '<div class="callout">This is the weekly <b>homework lab</b>, completed on your own after the lecture and the practice lesson. '
+        + '<div class="callout">This is the weekly <b>homework lab</b>, completed independently after the lecture and the practice lesson. '
           'It follows the course\'s <b>Build / Predict &amp; probe / Explain &amp; defend</b> model: '
           'use an AI assistant freely for the Build; the graded learning is in Predict and Explain. '
           'See <a href="../syllabus/syllabus.html">the syllabus</a> for the AI-use policy.</div>'
@@ -106,8 +106,8 @@ def selfcheck_block(w):
     items = "".join(
         f'<details><summary>{esc(q)}</summary><div class="ans">{esc(a)}</div></details>'
         for q, a in qa)
-    return ('<h2><span class="ic">&#10067;</span>Self-check</h2>'
-            '<p>Try to answer each before expanding it. If one is unclear, revisit the lab and the references.</p>'
+    return ('<h2 id="self-check"><span class="ic">&#10067;</span>Self-check</h2>'
+            '<p>Answer each before expanding it. If one is unclear, revisit the lab and the references.</p>'
             f'<div class="selfcheck">{items}</div>')
 
 def timeline(segs):
@@ -189,8 +189,10 @@ def prereq_page_html(key):
         f'<div class="whead"><p class="eyebrow"><span class="wbadge">Prerequisite</span> &nbsp; Review &amp; refresh</p>'
         f'<h1>{pr["icon"]} {esc(pr["title"])}</h1><p class="sub">{esc(pr["intro"])}</p></div>'
         + secs
-        + '<div class="goals"><h2>You should be able to</h2><ul class="clean">' + li(pr["checklist"]) + '</ul></div>'
-        + '<h2><span class="ic">&#10067;</span>Self-check</h2><div class="selfcheck">' + sc + '</div>'
+        + '<div class="goals"><h2>Readiness check</h2><ul class="clean">' + li(pr["checklist"]) + '</ul></div>'
+        + '<h2 id="self-check"><span class="ic">&#10067;</span>Self-check</h2>'
+          '<p>Use these to confirm the background is in place. If several are unclear, work through the review above first.</p>'
+          '<div class="selfcheck">' + sc + '</div>'
         + '<h2><span class="ic">&#128218;</span>Refresher resources</h2>' + f'<div class="refgrid">{res}</div>'
         + '<p style="margin-top:22px"><a class="btn" href="index.html">&larr; All prerequisites</a> '
           '<a class="btn" href="../index.html">Course home</a></p>'
@@ -208,8 +210,8 @@ def prereq_index_html():
     inner = (
         '<div class="whead"><p class="eyebrow"><span class="wbadge">Before you start</span></p>'
         '<h1>Prerequisites review</h1>'
-        '<p class="sub">This course assumes a prior machine-learning course plus comfort with the math '
-        'and Python below. Use these pages to self-assess and refresh before Week 1.</p></div>'
+        '<p class="sub">The course assumes a prior machine-learning course and comfort with the mathematics '
+        'and Python below. These pages support self-assessment and a refresher before Week 1.</p></div>'
         + f'<div class="refgrid">{cards}</div>'
         + '<p style="margin-top:22px"><a class="btn" href="../index.html">&larr; Course home</a> '
           '<a class="btn" href="../syllabus/syllabus.html">Syllabus</a></p>'
@@ -247,7 +249,7 @@ def projects_index_html():
         '<div class="whead"><p class="eyebrow"><span class="wbadge">Projects</span></p>'
         '<h1>Project examples</h1>'
         '<p class="sub">Worked example briefs for the mid-term mini-project and the final project. '
-        'Use one as given or adapt it; you may also propose your own in the same spirit.</p></div>'
+        'Use one as given or adapt it; students may also propose another in the same spirit.</p></div>'
         + f'<div class="refgrid">{cards}</div>'
         + '<p style="margin-top:22px"><a class="btn" href="../index.html">&larr; Course home</a> '
           '<a class="btn" href="../syllabus/syllabus.html">Syllabus</a></p>'
@@ -287,6 +289,7 @@ def index_html():
         rows += (f'<tr><td class="wk">{w["num"]}</td>'
                  f'<td class="t"><b>{esc(w["title"])}</b><span>{esc(w["sub"])}</span></td>'
                  f'<td class="lk"><a href="labs/{w2(w["num"])}.html">Lab</a>'
+                 f'<a href="labs/{w2(w["num"])}.html#self-check">Self-check</a>'
                  f'<a href="references/{w2(w["num"])}.html">References</a>'
                  f'<a href="lessons/{w2(w["num"])}.html">Lesson plan</a>'
                  f'<a href="{colab_url(w["num"])}" target="_blank" rel="noopener">Notebook</a></td></tr>')
@@ -313,23 +316,32 @@ def index_html():
         'lab set as homework.</p>'
         '<p><b>Rationale.</b> Modern AI in vision and language rests on a shared deep-learning foundation. '
         'This course provides that common base and is the bridge to the advanced electives in <b>large '
-        'language models</b> and <b>computer vision</b>: once you can frame, build, train, and debug a '
+        'language models</b> and <b>computer vision</b>: once a student can frame, build, train, and debug a '
         'network, those courses can focus on what is specific to their domains. It is project- and '
-        'lab-based and designed for the way you will actually work, with an AI coding assistant at '
+        'lab-based and designed for the way students will actually work, with an AI coding assistant at '
         'hand, while keeping the learning genuine through a Build, Predict, and Explain model.</p>'
     )
-    ocards = "".join(f'<div class="ocard"><span class="n">{i}</span><div>{esc(o)}</div></div>'
-                     for i, o in enumerate(OUTCOMES, 1))
-    outcomes = ('<h2>Expected outcomes</h2><p>By the end of the course you will be able to:</p>'
+    ocards = "".join(
+        f'<div class="ocard"><span class="n">{i}</span><span class="oi">{icon}</span>'
+        f'<span class="ot">{esc(text)}</span></div>'
+        for i, (icon, text) in enumerate(OUTCOMES, 1))
+    outcomes = ('<h2>Expected outcomes</h2><p>By the end of the course, students will be able to:</p>'
                 f'<div class="ocards">{ocards}</div>')
     prereq_cta = (
         '<h2>Before you start</h2>'
-        '<p>The course assumes a prior ML course plus comfort with the math and Python it relies on. '
-        'Review and self-assess with the prerequisite pages:</p>'
-        '<p class="btnrow">'
-        '<a class="btn" href="prereq/math.html">Mathematics</a>'
-        '<a class="btn" href="prereq/python.html">Python</a>'
-        '<a class="btn" href="prereq/ml.html">Machine learning</a></p>'
+        '<p>The course assumes a prior machine-learning course and the background below. Each row links a short '
+        'refresher and a set of self-check questions, so readiness can be confirmed before Week 1.</p>'
+        '<table class="prereqs"><thead><tr><th>Subject</th><th>Background topics</th><th>Material</th></tr></thead><tbody>'
+        '<tr><td class="subj"><span class="pi">&#8721;</span>Mathematics</td>'
+        '<td class="top">Linear algebra, probability, multivariable calculus, gradients, optimization</td>'
+        '<td class="lk"><a href="prereq/math.html">Review</a><a href="prereq/math.html#self-check">Self-check</a></td></tr>'
+        '<tr><td class="subj"><span class="pi">&#128013;</span>Python</td>'
+        '<td class="top">Comprehensions, generators, dunder methods, NumPy versus lists, PyTorch idioms</td>'
+        '<td class="lk"><a href="prereq/python.html">Review</a><a href="prereq/python.html#self-check">Self-check</a></td></tr>'
+        '<tr><td class="subj"><span class="pi">&#129518;</span>Machine learning</td>'
+        '<td class="top">Regression, classification, loss versus metric, overfitting, regularization, bias-variance</td>'
+        '<td class="lk"><a href="prereq/ml.html">Review</a><a href="prereq/ml.html#self-check">Self-check</a></td></tr>'
+        '</tbody></table>'
     )
     table = ('<h2>Weekly materials</h2><table class="weeks"><thead><tr><th>Wk</th><th>Topic</th>'
              '<th>Materials</th></tr></thead><tbody>' + rows + '</tbody></table>')

@@ -37,13 +37,13 @@ WEEKS = [
             "Train for a few epochs and plot the loss going down.",
         ],
         "predict": [
-            "For three tasks (binary spam detection, house-price regression, 10-class digit recognition), write the input tensor shape, output-layer size, and loss you expect, before any coding.",
+            "For three tasks (binary spam detection, house-price regression, 10-class digit recognition), write the input tensor shape, output-layer size, and loss, before any coding.",
             "Predict whether the loss should reach near zero on the toy task and roughly how fast.",
         ],
         "explain": [
             "Explain in a few sentences what the model, loss, and optimizer each do.",
-            "Justify why your shape-and-loss framing is correct for each of the three tasks.",
-            "Name one thing the AI assistant produced that you had to correct or did not initially understand.",
+            "Justify why the shape-and-loss framing is correct for each of the three tasks.",
+            "Name one thing the AI assistant produced that needed correction or was not initially understood.",
         ],
         "deliverables": [
             "A notebook with the running loop and a loss curve.",
@@ -73,7 +73,7 @@ WEEKS = [
             "Predict which operations return a view versus copy memory.",
         ],
         "explain": [
-            "Explain the three expressions whose result shape surprised you, and why broadcasting produced it.",
+            "Explain the three expressions whose result shape is surprising, and why broadcasting produced it.",
             "Fix a seeded shape-mismatch bug and explain its root cause.",
         ],
         "deliverables": [
@@ -100,10 +100,10 @@ WEEKS = [
         ],
         "predict": [
             "Predict the sign and rough magnitude of one weight's gradient after a single step on a toy example.",
-            "Predict how training changes if you remove the nonlinearity.",
+            "Predict how training changes if the nonlinearity is removed.",
         ],
         "explain": [
-            "Verify your hand-computed gradient matches autograd within tolerance and explain any difference.",
+            "Verify the hand-computed gradient matches autograd within tolerance and explain any difference.",
             "Explain in words what each gradient tells its weight to do.",
         ],
         "deliverables": [
@@ -157,7 +157,7 @@ WEEKS = [
             "Implement a training loop with loss and metric tracking (accuracy and F1 for classification, or MAE and R2 for regression).",
         ],
         "predict": [
-            "Predict what happens if you use MSE for a classification task, before trying it.",
+            "Predict what happens if MSE is used for a classification task, before trying it.",
         ],
         "explain": [
             "Critique an AI-written accuracy metric that is wrong under class imbalance; explain the bug, fix it, and report a better metric.",
@@ -346,7 +346,7 @@ WEEKS = [
             "Train an autoencoder and build a simple contrastive embedding.",
         ],
         "predict": [
-            "Predict the latent-space structure you expect (clusters by class, smooth interpolation).",
+            "Predict the expected latent-space structure (clusters by class, smooth interpolation).",
         ],
         "explain": [
             "Probe the latent space (interpolate, cluster, nearest neighbors), interpret what it captures, and critique an AI-suggested but flawed contrastive loss.",

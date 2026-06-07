@@ -5,7 +5,7 @@ Rendered as collapsible Q/A on each lab page so students can verify understandin
 SELFCHECK = {
     1: [
         ("What four components does every ML task reduce to?", "Data, a model, a loss (objective), and optimization."),
-        ("For 10-class digit classification, what output-layer size and loss would you use?", "Ten output logits with cross-entropy loss."),
+        ("For 10-class digit classification, what output-layer size and loss are appropriate?", "Ten output logits with cross-entropy loss."),
         ("Why pass logits, not softmax probabilities, to CrossEntropyLoss?", "It applies log-softmax internally, which is more numerically stable."),
         ("What is the difference in role between the loss and the optimizer?", "The loss measures error; the optimizer updates parameters to reduce it."),
         ("Training loss stays flat. Name two things to check.", "The learning rate, and that the label format matches the chosen loss."),
@@ -14,7 +14,7 @@ SELFCHECK = {
         ("State the broadcasting rule.", "Shapes align from the trailing dimension; each pair of sizes must be equal or one of them 1."),
         ("What is the difference between .view and .reshape?", ".view needs contiguous memory and shares storage; .reshape may copy."),
         ("What is the conventional shape of a batch of images in PyTorch?", "(N, C, H, W): batch, channels, height, width."),
-        ("How do you move a tensor to the GPU?", "tensor.to(device), with device chosen from torch.cuda.is_available()."),
+        ("How is a tensor moved to the GPU?", "tensor.to(device), with device chosen from torch.cuda.is_available()."),
         ("Why does a tensor's dtype matter?", "Layers and losses expect specific types (e.g., float32 inputs, long class indices)."),
     ],
     3: [
@@ -22,12 +22,12 @@ SELFCHECK = {
         ("What does backpropagation compute?", "Gradients of the loss with respect to each parameter, via the chain rule."),
         ("Why call optimizer.zero_grad() each step?", "PyTorch accumulates gradients, so they must be cleared before each backward pass."),
         ("What does .backward() do?", "Computes and stores .grad for every tensor with requires_grad=True."),
-        ("How can you check a computed gradient is correct?", "Compare it to a finite-difference (numerical) estimate, e.g. with gradcheck."),
+        ("How can a computed gradient be checked for correctness?", "Compare it to a finite-difference (numerical) estimate, e.g. with gradcheck."),
     ],
     4: [
         ("Which two methods must a custom Dataset implement?", "__len__ and __getitem__."),
         ("Why fit normalization statistics on the training split only?", "Using validation/test statistics leaks information and inflates metrics."),
-        ("Should you shuffle the validation set?", "No. Shuffle the training set only."),
+        ("Should the validation set be shuffled?", "No. Shuffle the training set only."),
         ("What does batch size trade off?", "Gradient noise/stability against compute, memory, and steps per epoch."),
         ("Give one concrete example of data leakage.", "Computing scaling or feature selection over the whole dataset before splitting."),
     ],
@@ -64,7 +64,7 @@ SELFCHECK = {
         ("How does a skip connection help gradients?", "It provides an identity path so gradients reach earlier layers directly."),
         ("What does batch normalization normalize?", "Layer activations per mini-batch, stabilizing and scaling them."),
         ("Why compare training curves, not just final accuracy, in the ablation?", "To see effects on trainability and convergence speed, not only the endpoint."),
-        ("How do you match shapes for a residual add when channels change?", "Use a 1x1 convolution on the skip path."),
+        ("How are shapes matched for a residual add when channels change?", "Use a 1x1 convolution on the skip path."),
     ],
     10: [
         ("What does an RNN share across time steps?", "The same weights (parameters)."),

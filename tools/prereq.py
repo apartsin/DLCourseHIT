@@ -7,7 +7,7 @@ PREREQ = {
         "title": "Mathematics",
         "icon": "&#8721;",
         "intro": "Deep learning is applied linear algebra and calculus with a probabilistic flavor. "
-                 "You do not need to be a mathematician, but these ideas should feel familiar so the "
+                 "A mathematician's depth is not required, but these ideas should feel familiar so the "
                  "course can move quickly from notation to networks.",
         "sections": [
             {"h": "Linear algebra", "points": [
@@ -32,7 +32,7 @@ PREREQ = {
                 "The gradient points in the direction of steepest ascent.",
                 "Gradient descent: step opposite the gradient to minimize.",
                 "Learning rate intuition: too large diverges, too small crawls.",
-                "Local versus global minima; what convexity buys you.",
+                "Local versus global minima; what convexity provides.",
             ]},
         ],
         "checklist": [
@@ -43,7 +43,7 @@ PREREQ = {
         ],
         "selfcheck": [
             ("If A is 3x4 and B is 4x2, what is the shape of AB?", "3x2 (inner dimensions 4 must match; outer dimensions give the result)."),
-            ("What does the gradient of a scalar function tell you?", "The direction of steepest increase; its negative is the descent direction."),
+            ("What does the gradient of a scalar function indicate?", "The direction of steepest increase; its negative is the descent direction."),
             ("Why is the chain rule central to deep learning?", "Backpropagation applies it to compose per-layer derivatives into parameter gradients."),
             ("What is the difference between mean and variance?", "Mean is the average value; variance measures the spread around the mean."),
         ],
@@ -99,7 +99,7 @@ PREREQ = {
             "Explain why a NumPy vectorized op beats a Python loop.",
         ],
         "selfcheck": [
-            ("What does a generator give you over a list?", "Lazy, memory-efficient iteration; values are produced on demand with yield."),
+            ("What does a generator provide over a list?", "Lazy, memory-efficient iteration; values are produced on demand with yield."),
             ("Which dunder methods does a PyTorch Dataset implement?", "__len__ and __getitem__."),
             ("Why does calling model(x) work instead of model.forward(x)?", "nn.Module defines __call__, which invokes forward (plus hooks)."),
             ("Why prefer a NumPy array over a Python list for numeric work?", "Typed contiguous memory plus vectorized C-level operations, far faster than Python loops."),
@@ -126,7 +126,7 @@ PREREQ = {
             {"h": "Error, cost, and loss", "points": [
                 "Loss is the error on one example; cost or objective aggregates it over the data.",
                 "MSE for regression; cross-entropy for classification.",
-                "The loss is what training minimizes; the metric is what you report.",
+                "The loss is what training minimizes; the metric is what is reported.",
             ]},
             {"h": "Overfitting and generalization", "points": [
                 "Training error versus test (generalization) error.",
@@ -140,10 +140,10 @@ PREREQ = {
             ]},
             {"h": "The bias-variance dilemma", "points": [
                 "High bias (underfitting) versus high variance (overfitting).",
-                "Model capacity and data size move you along the trade-off.",
+                "Model capacity and data size shift the balance along the trade-off.",
                 "The goal is the sweet spot that minimizes test error.",
             ]},
-            {"h": "What else you should know", "points": [
+            {"h": "Other essentials", "points": [
                 "Gradient descent and the learning rate.",
                 "Feature scaling and normalization.",
                 "Evaluation: accuracy, precision, recall, F1, ROC/AUC, the confusion matrix.",
@@ -157,8 +157,8 @@ PREREQ = {
             "Read a confusion matrix and compute precision and recall.",
         ],
         "selfcheck": [
-            ("What is the difference between a loss and a metric?", "The loss is optimized during training; the metric is the human-facing measure you report (they can differ)."),
-            ("How do you detect overfitting?", "A low training error with a much higher validation/test error (a large gap)."),
+            ("What is the difference between a loss and a metric?", "The loss is optimized during training; the metric is the human-facing measure reported (they can differ)."),
+            ("How is overfitting detected?", "A low training error with a much higher validation/test error (a large gap)."),
             ("What does the bias-variance trade-off describe?", "Balancing underfitting (high bias) against overfitting (high variance) to minimize test error."),
             ("Why can accuracy mislead under class imbalance?", "A trivial majority predictor scores high; use precision/recall, F1, or balanced accuracy instead."),
         ],

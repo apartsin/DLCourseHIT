@@ -34,6 +34,14 @@ def _set_table_rtl(t):
     if tblPr.find(qn('w:bidiVisual')) is None:
         tblPr.append(OxmlElement('w:bidiVisual'))
 
+def set_doc_rtl(doc):
+    """Make the whole document section right-to-left (Hebrew docs)."""
+    sectPr = doc.sections[0]._sectPr
+    if sectPr.find(qn('w:bidi')) is None:
+        bidi = OxmlElement('w:bidi')
+        grid = sectPr.find(qn('w:docGrid'))
+        grid.addprevious(bidi) if grid is not None else sectPr.append(bidi)
+
 def _font(run, name, size, bold):
     run.font.name = name; run.font.size = Pt(size); run.bold = bold
     rPr = run._element.get_or_add_rPr()
@@ -56,6 +64,8 @@ def he(doc, text, size=11, bold=False, space=6, center=False):
 
 def en(doc, text, size=11, bold=False, space=6, align=None):
     p = doc.add_paragraph()
+    bidi = OxmlElement('w:bidi'); bidi.set(qn('w:val'), '0')  # force LTR even in an RTL section
+    p._p.get_or_add_pPr().append(bidi)
     if align: p.alignment = align
     elif not (bold and size >= 13): p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
     r = p.add_run(text); _font(r, EN_FONT, size, bold)
@@ -145,7 +155,7 @@ def build_syllabus_en():
 
 # ---------------- 2. Hebrew syllabus ----------------
 def build_syllabus_he():
-    d = new_doc()
+    d = new_doc(); set_doc_rtl(d)
     he(d, "מבוא ללמידה עמוקה - Introduction to Deep Learning", 16, True, 4, center=True)
     he(d, "אופן הוראה: שיעור ותרגול.", 11, False, 0)
     he(d, "שעות שבועיות: הרצאה 3 שעות + תרגול 2 שעות, סה\"כ שעות – 5", 11, False, 0)
@@ -172,7 +182,7 @@ def build_syllabus_he():
 
 # ---------------- 3. Rationale ----------------
 def build_rationale():
-    d = new_doc()
+    d = new_doc(); set_doc_rtl(d)
     he(d, "מסמך רציונל לקורס מבוא ללמידה עמוקה", 14, True, 2, center=True)
     en(d, "Introduction to Deep Learning", 12, True, 10, align=WD_ALIGN_PARAGRAPH.CENTER)
     he(d, "הקורס עוסק ביסודות הלמידה העמוקה: ייצוג נתונים כטנזורים, בניית רשתות נוירונים ואימונן בעזרת PyTorch, והבנת הדינמיקה של אופטימיזציה, רגולריזציה ואבחון תהליך האימון. הקורס מקנה בסיס תיאורטי ומעשי כאחד.")
@@ -184,7 +194,7 @@ def build_rationale():
 
 # ---------------- 4. Catalogue summary ----------------
 def build_summary():
-    d = new_doc()
+    d = new_doc(); set_doc_rtl(d)
     he(d, "תקצירים לידיעון", 14, True, 8, center=True)
     he(d, "מבוא ללמידה עמוקה", 13, True, 0, center=True)
     en(d, "Introduction to Deep Learning", 12, True, 8, align=WD_ALIGN_PARAGRAPH.CENTER)
@@ -204,7 +214,7 @@ def build_summary():
 
 # ---------------- 5. Committee questionnaire ----------------
 def build_questionnaire():
-    d = new_doc()
+    d = new_doc(); set_doc_rtl(d)
     he(d, "שאלות למידע נוסף כהכנה לדיון בוועדת קוריקולום", 13, True, 6, center=True)
     he(d, "תאריך: _________", 11, False, 0)
     he(d, "פקולטה: מדעי המחשב            מחלקה: מדעי המחשב", 11, False, 8)
