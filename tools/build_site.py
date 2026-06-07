@@ -305,11 +305,8 @@ def index_html():
         f'<p class="sub">{esc(COURSE["subtitle"])}</p>'
         '<div class="meta"><span><b>Prerequisite:</b> Introduction to Machine Learning</span>'
         '<span><b>Leads to:</b> Advanced LLMs &middot; Advanced Computer Vision</span>'
-        '<span><b>Format:</b> 3 h lecture + 2 h exercise / week</span></div>'
-        '<div class="btnrow"><a class="btn" href="prereq/index.html">Prerequisites</a>'
-        '<a class="btn" href="syllabus/syllabus.html">Syllabus (HTML)</a>'
-        '<a class="btn" href="syllabus/syllabus.docx">DOCX</a>'
-        '<a class="btn" href="syllabus/syllabus.pdf">PDF</a></div></div>'
+        '<span><b>Format:</b> 3 h lecture + 2 h practice + a homework lab</span>'
+        '<span><b>Assessment:</b> labs and projects, no written exams</span></div></div>'
     )
     rationale = (
         '<h2>About this course</h2>'
@@ -355,7 +352,8 @@ def index_html():
         '<p>Everything in this course site, by section:</p>'
         '<ul class="clean">'
         '<li><a href="prereq/index.html">Prerequisites</a>: math, Python, and ML refreshers.</li>'
-        '<li><a href="syllabus/syllabus.html">Syllabus</a>: full course outline (also DOCX and PDF).</li>'
+        '<li>Formal syllabus document: <a href="syllabus/syllabus.html">HTML</a>, '
+        '<a href="syllabus/syllabus.docx">DOCX</a>, <a href="syllabus/syllabus.pdf">PDF</a>.</li>'
         '<li><a href="labs/week01.html">Labs</a>: weekly homework labs with self-check questions.</li>'
         '<li><a href="lessons/week01.html">Lesson plans</a>: instructor lecture and practice outlines, with the week\'s curated references.</li>'
         '<li><a href="' + colab_url(1) + '" target="_blank" rel="noopener">Practice notebooks</a>: Colab notebooks the instructor runs during the practice lessons.</li>'
@@ -371,7 +369,15 @@ def index_html():
         '<a class="btn" href="hit-catalogue/rationale.docx">Rationale</a>'
         '<a class="btn" href="hit-catalogue/catalogue_summary.docx">Catalogue summary</a></p>'
     )
-    inner = hero + hitpkg + rationale + outcomes + prereq_cta + table + explore
+    ai = (
+        '<h2 id="ai-usage">AI usage</h2>'
+        '<p>Using an AI assistant is <b>highly encouraged</b> in this course; it reflects how the work is really '
+        'done. Two conditions keep the learning genuine: students keep <b>full ownership of, and responsibility '
+        'for, everything they submit</b>, and must be able to <b>explain and defend</b> any part of it. The '
+        'Predict, Explain, and short oral-defense steps verify understanding rather than authorship; where an '
+        'assistant was used, it should be disclosed.</p>'
+    )
+    inner = hero + hitpkg + rationale + ai + outcomes + prereq_cta + table + explore
     return page(f'{COURSE["title"]} (HIT)', 0, inner)
 
 def main():
