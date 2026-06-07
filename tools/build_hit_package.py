@@ -28,6 +28,12 @@ def _set_rtl(p):
     b = OxmlElement('w:bidi'); pPr.append(b)
     p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
 
+def _set_table_rtl(t):
+    """Make a table right-to-left: the first logical column renders on the right."""
+    tblPr = t._tbl.tblPr
+    if tblPr.find(qn('w:bidiVisual')) is None:
+        tblPr.append(OxmlElement('w:bidiVisual'))
+
 def _font(run, name, size, bold):
     run.font.name = name; run.font.size = Pt(size); run.bold = bold
     rPr = run._element.get_or_add_rPr()
@@ -36,9 +42,11 @@ def _font(run, name, size, bold):
         rFonts = OxmlElement('w:rFonts'); rPr.append(rFonts)
     rFonts.set(qn('w:cs'), name); rFonts.set(qn('w:ascii'), name); rFonts.set(qn('w:hAnsi'), name)
 
-def he(doc, text, size=11, bold=False, space=6):
+def he(doc, text, size=11, bold=False, space=6, center=False):
     p = doc.add_paragraph(); _set_rtl(p)          # bidi + right-align
-    if not (bold and size >= 13):                  # justify body, keep headings right-aligned
+    if center:
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    elif not (bold and size >= 13):                # justify body, keep headings right-aligned
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
     r = p.add_run(text); _font(r, HE_FONT, size, bold)
     if bold and size >= 13: r.font.color.rgb = TEAL
@@ -109,6 +117,7 @@ def week_table(doc, header_left, header_right, weeks, rtl):
         if rtl: _set_rtl(ps); rs._element.get_or_add_rPr().append(OxmlElement('w:rtl'))
     if rtl:
         t.alignment = 2  # right
+        _set_table_rtl(t)
     return t
 
 # ---------------- 1. English syllabus ----------------
@@ -137,7 +146,7 @@ def build_syllabus_en():
 # ---------------- 2. Hebrew syllabus ----------------
 def build_syllabus_he():
     d = new_doc()
-    he(d, "מבוא ללמידה עמוקה - Introduction to Deep Learning", 16, True, 4)
+    he(d, "מבוא ללמידה עמוקה - Introduction to Deep Learning", 16, True, 4, center=True)
     he(d, "אופן הוראה: שיעור ותרגול.", 11, False, 0)
     he(d, "שעות שבועיות: הרצאה 3 שעות + תרגול 2 שעות, סה\"כ שעות – 5", 11, False, 0)
     he(d, "נקודות זכות: 4", 11, False, 0)
@@ -164,8 +173,8 @@ def build_syllabus_he():
 # ---------------- 3. Rationale ----------------
 def build_rationale():
     d = new_doc()
-    he(d, "מסמך רציונל לקורס מבוא ללמידה עמוקה", 14, True, 2)
-    en(d, "Introduction to Deep Learning", 12, True, 10, align=WD_ALIGN_PARAGRAPH.RIGHT)
+    he(d, "מסמך רציונל לקורס מבוא ללמידה עמוקה", 14, True, 2, center=True)
+    en(d, "Introduction to Deep Learning", 12, True, 10, align=WD_ALIGN_PARAGRAPH.CENTER)
     he(d, "הקורס עוסק ביסודות הלמידה העמוקה: ייצוג נתונים כטנזורים, בניית רשתות נוירונים ואימונן בעזרת PyTorch, והבנת הדינמיקה של אופטימיזציה, רגולריזציה ואבחון תהליך האימון. הקורס מקנה בסיס תיאורטי ומעשי כאחד.")
     he(d, "הקורס מיועד לסטודנטים מתקדמים לתואר ראשון ולתואר שני במדעי המחשב, שסיימו קורס מבוא בלמידת מכונה. הוא מהווה את קורס היסוד שעליו נשענים קורסי הבחירה המתקדמים במודלי שפה גדולים ובראייה ממוחשבת.")
     he(d, "הנושאים שיילמדו בקורס: ניסוח משימות למידה כרשתות נוירונים; טנזורים וגזירה אוטומטית; רשתות MLP, רשתות קונבולוציה ורשתות נשנות (RNN, LSTM, GRU); פונקציות מחיר, אופטימיזציה ורגולריזציה; למידת ייצוגים ולמידת העברה; ותהליך עבודה מקצה לקצה ב-PyTorch.")
@@ -176,9 +185,9 @@ def build_rationale():
 # ---------------- 4. Catalogue summary ----------------
 def build_summary():
     d = new_doc()
-    he(d, "תקצירים לידיעון", 14, True, 8)
-    he(d, "מבוא ללמידה עמוקה", 13, True, 0)
-    en(d, "Introduction to Deep Learning", 12, True, 8, align=WD_ALIGN_PARAGRAPH.RIGHT)
+    he(d, "תקצירים לידיעון", 14, True, 8, center=True)
+    he(d, "מבוא ללמידה עמוקה", 13, True, 0, center=True)
+    en(d, "Introduction to Deep Learning", 12, True, 8, align=WD_ALIGN_PARAGRAPH.CENTER)
     he(d, "אופן הוראה: שיעור ותרגול", 11, False, 0)
     he(d, "שעות שבועיות: הרצאה 3 שעות + תרגול 2 שעות, סה\"כ שעות – 5", 11, False, 0)
     he(d, "נקודות זכות: 4", 11, False, 0)
@@ -196,7 +205,7 @@ def build_summary():
 # ---------------- 5. Committee questionnaire ----------------
 def build_questionnaire():
     d = new_doc()
-    he(d, "שאלות למידע נוסף כהכנה לדיון בוועדת קוריקולום", 13, True, 6)
+    he(d, "שאלות למידע נוסף כהכנה לדיון בוועדת קוריקולום", 13, True, 6, center=True)
     he(d, "תאריך: _________", 11, False, 0)
     he(d, "פקולטה: מדעי המחשב            מחלקה: מדעי המחשב", 11, False, 8)
     rows = [
@@ -209,7 +218,7 @@ def build_questionnaire():
         ("קורסים דומים במכון (פרט)", "אין קורס זהה במכון."),
         ("הערות נוספות:", "הקורס מעשי, מבוסס PyTorch, ומשלב עבודה עם עוזר תכנות מבוסס בינה מלאכותית תוך הערכה של חיזוי והסבר."),
     ]
-    t = d.add_table(rows=0, cols=2); t.style = "Table Grid"; t.alignment = 2
+    t = d.add_table(rows=0, cols=2); t.style = "Table Grid"; t.alignment = 2; _set_table_rtl(t)
     for left, right in rows:
         cells = t.add_row().cells
         for cell, txt in zip(cells, [left, right]):
