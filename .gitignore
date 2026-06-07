@@ -1,0 +1,25 @@
+# Node (only used by the one-off syllabus DOCX generator, not part of the content repo)
+node_modules/
+package.json
+package-lock.json
+
+# One-off build/maintenance helpers (the syllabus files themselves are the source of truth)
+build_syllabus_docx.js
+depersonalize.py
+update_13weeks.py
+
+# Source templates from the HIT catalogue (third-party example courses, not ours to publish)
+HITCatalogueExamples/
+
+# Python / tooling
+__pycache__/
+*.pyc
+tools/__pycache__/
+
+# Local preview / harness
+.claude/
+
+# Scratch render artifacts
+_*.png
+_*.pdf
+*.tmp

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Introduction to Deep Learning: Course Syllabus</title>
+<style>
+  :root{
+    --ink:#111418; --soft:#2c3138; --muted:#5a626c;
+    --navy:#14385c; --rule:#d1d4d8; --code:#f4f5f7;
+    --band:#f7f8fa; --badge:#eef2f6;
+  }
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:"Charter","Iowan Old Style","Source Serif Pro",Georgia,"Times New Roman",serif;
+    color:var(--ink); background:#fff; margin:0;
+    line-height:1.55; font-size:17px;
+  }
+  .wrap{ max-width:880px; margin:0 auto; padding:56px 28px 88px; }
+
+  /* Header */
+  header.masthead{ text-align:center; border-bottom:2px solid var(--ink); padding-bottom:22px; }
+  .eyebrow{ font-variant:small-caps; letter-spacing:.12em; color:var(--navy);
+            font-weight:700; font-size:.82rem; margin-bottom:6px; }
+  h1{ font-size:2.05rem; line-height:1.15; font-weight:700; margin:0 0 8px; letter-spacing:-.01em; }
+  .subtitle{ color:var(--soft); font-size:1.12rem; font-style:italic; margin:0; }
+
+  /* Logistics card */
+  .facts{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:2px;
+    background:var(--rule); border:1px solid var(--rule);
+    margin:26px 0 8px; border-radius:4px; overflow:hidden;
+  }
+  .facts div{ background:#fff; padding:11px 14px; }
+  .facts dt{ font-variant:small-caps; letter-spacing:.06em; color:var(--muted);
+             font-size:.74rem; font-weight:700; margin:0 0 2px; }
+  .facts dd{ margin:0; font-size:.96rem; }
+  .tbd{ color:var(--muted); border-bottom:1px dotted #aab0b8; }
+
+  /* Pathway band */
+  .pathway{ display:flex; align-items:stretch; gap:0; margin:24px 0 4px;
+    border:1px solid var(--rule); border-radius:6px; overflow:hidden; }
+  .pathway .node{ flex:1; padding:12px 16px; font-size:.92rem; }
+  .pathway .node .lab{ font-variant:small-caps; letter-spacing:.06em; color:var(--muted);
+    font-size:.72rem; font-weight:700; display:block; margin-bottom:3px; }
+  .pathway .node.here{ background:var(--navy); color:#fff; }
+  .pathway .node.here .lab{ color:#cdd9e6; }
+  .pathway .node.prev, .pathway .node.next{ background:var(--band); }
+  .pathway .arrow{ display:flex; align-items:center; padding:0 4px; color:var(--muted);
+    font-size:1.2rem; background:var(--band); }
+  .pathway .node.here + .arrow{ background:var(--band); }
+
+  /* Sections */
+  section{ margin-top:38px; }
+  h2{ font-size:1.28rem; font-weight:700; color:var(--navy); margin:0 0 14px;
+      padding-bottom:6px; border-bottom:1px solid var(--rule); }
+  h2 .num{ color:var(--muted); font-weight:600; margin-right:.5em; font-size:.92em; }
+  h3{ font-size:1.02rem; font-weight:700; color:var(--soft); margin:20px 0 6px; }
+  p{ margin:0 0 12px; }
+  p.flush{ text-indent:0; }
+  a{ color:var(--navy); }
+
+  /* Learning outcomes grid */
+  .outcomes{ display:grid; grid-template-columns:1fr 1fr; gap:12px 26px; margin:6px 0 0; padding:0; list-style:none; }
+  .outcomes li{ display:flex; gap:12px; align-items:flex-start; font-size:.98rem; }
+  .outcomes .b{ flex:0 0 auto; width:26px; height:26px; border-radius:50%;
+                background:var(--badge); color:var(--navy); font-weight:700;
+                font-size:.84rem; display:flex; align-items:center; justify-content:center;
+                font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; margin-top:1px; }
+  .outcomes b{ color:var(--ink); }
+
+  /* Prereq / list */
+  ul.clean{ margin:6px 0 0; padding-left:1.2em; }
+  ul.clean li{ margin:0 0 6px; }
+
+  /* The three-part exercise model */
+  .triad{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:8px 0 0; }
+  .triad .card{ border:1px solid var(--rule); border-top:3px solid var(--navy);
+    border-radius:0 0 5px 5px; padding:12px 14px; background:#fff; }
+  .triad .card h4{ margin:0 0 5px; font-size:.98rem; color:var(--navy); }
+  .triad .card .tag{ font-variant:small-caps; letter-spacing:.05em; font-size:.72rem;
+    font-weight:700; color:var(--muted); }
+  .triad .card p{ margin:4px 0 0; font-size:.9rem; color:var(--soft); }
+
+  /* Schedule table */
+  .schedule{ border-collapse:collapse; width:100%; font-size:.92rem; margin-top:4px; }
+  .schedule thead th{ text-align:left; font-variant:small-caps; letter-spacing:.05em;
+    color:var(--muted); font-weight:700; font-size:.82rem;
+    border-bottom:1.5px solid var(--ink); padding:6px 10px; }
+  .schedule td{ padding:9px 10px; vertical-align:top; }
+  .schedule tbody tr+tr td{ border-top:1px solid #e6e8eb; }
+  .schedule tr.part th{
+    background:var(--band); color:var(--navy); text-align:left;
+    font-variant:small-caps; letter-spacing:.06em; font-weight:700; font-size:.86rem;
+    padding:8px 10px; border-top:1.5px solid var(--rule); border-bottom:1px solid var(--rule);
+  }
+  .schedule td.wk{ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-weight:700; color:var(--navy); width:40px; text-align:center; font-size:.9rem; }
+  .schedule .topic{ width:38%; }
+  .schedule .topic b{ display:block; margin-bottom:2px; }
+  .schedule .topic span{ color:var(--muted); font-size:.88rem; }
+  .schedule .ex b.bd{ color:var(--navy); }
+  .schedule .ex b.li{ color:var(--soft); }
+  .schedule .ex{ color:var(--soft); font-size:.9rem; }
+  .schedule tbody:last-of-type tr:last-child td{ border-bottom:1.5px solid var(--ink); }
+
+  /* Assessment table */
+  .grade{ border-collapse:collapse; width:100%; font-size:.96rem; margin-top:4px; }
+  .grade th{ text-align:left; font-variant:small-caps; letter-spacing:.05em; color:var(--muted);
+    font-weight:700; font-size:.82rem; border-bottom:1.5px solid var(--ink); padding:6px 10px; }
+  .grade td{ padding:8px 10px; border-top:1px solid #e6e8eb; vertical-align:top; }
+  .grade td.pct{ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-weight:700; text-align:right; width:70px; color:var(--navy); }
+  .grade tr.total td{ border-top:1.5px solid var(--ink); font-weight:700; }
+  .grade tr.total td.pct{ color:var(--ink); }
+
+  .note{ background:var(--code); border-left:3px solid var(--navy); border-radius:0 4px 4px 0;
+    padding:12px 16px; margin:14px 0 0; font-size:.94rem; color:var(--soft); }
+
+  footer{ margin-top:48px; padding-top:16px; border-top:1px solid var(--rule);
+    color:var(--muted); font-size:.84rem; text-align:center; }
+
+  /* Responsive */
+  @media (max-width:680px){
+    .facts{ grid-template-columns:1fr 1fr; }
+    .outcomes, .triad{ grid-template-columns:1fr; }
+    .pathway{ flex-direction:column; }
+    .pathway .arrow{ justify-content:center; padding:2px; }
+    body{ font-size:16px; }
+  }
+  /* Print */
+  @media print{
+    .wrap{ max-width:none; padding:0 8mm; }
+    a{ color:var(--ink); text-decoration:none; }
+    section{ break-inside:avoid; }
+    .schedule tr, .grade tr, .triad .card{ break-inside:avoid; }
+    .note{ background:#fff; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="eyebrow">DL&nbsp;201 · 3 Credits · 13 Weeks · Foundation Course</div>
+    <h1>Introduction to Deep Learning</h1>
+    <p class="subtitle">Foundations of Neural Networks with PyTorch</p>
+  </header>
+
+  <dl class="facts">
+    <div><dt>Term</dt><dd>Fall 2026</dd></div>
+    <div><dt>Format</dt><dd>3&nbsp;h lecture + 2&nbsp;h exercise/week</dd></div>
+    <div><dt>Credits</dt><dd>3</dd></div>
+    <div><dt>Lecture</dt><dd><span class="tbd">Tue / Thu, time TBA</span></dd></div>
+    <div><dt>Exercise lab</dt><dd><span class="tbd">Fri, time TBA</span></dd></div>
+    <div><dt>Location</dt><dd><span class="tbd">Room TBA</span></dd></div>
+    <div><dt>Instructor</dt><dd><span class="tbd">Name TBA</span></dd></div>
+    <div><dt>Office hours</dt><dd><span class="tbd">TBA</span></dd></div>
+    <div><dt>Contact</dt><dd><span class="tbd">email TBA</span></dd></div>
+  </dl>
+
+  <div class="pathway">
+    <div class="node prev"><span class="lab">Prerequisite</span><b>Introduction to Machine Learning</b></div>
+    <div class="arrow">&rarr;</div>
+    <div class="node here"><span class="lab">This course</span><b>Introduction to Deep Learning</b></div>
+    <div class="arrow">&rarr;</div>
+    <div class="node next"><span class="lab">Leads to</span><b>Advanced LLMs · Advanced Computer Vision</b></div>
+  </div>
+  <p class="note">Fields marked TBA are placeholders to fill in with the section's specifics (instructor, meeting days and times, room, and contact).</p>
+
+  <section>
+    <h2><span class="num">1</span>Course Description</h2>
+    <p class="flush">This is the foundational deep learning course in the program. It assumes students have completed an introductory machine-learning course and turns that background into working neural-network skills: framing a task in tensor terms, and then implementing, training, and debugging networks in PyTorch. The emphasis throughout is on building and experimentation, not on watching.</p>
+    <p>The course serves as a bridge to the advanced electives. The architectures, training discipline, and representation-learning ideas students build here serve as the assumed background for the later <b>Advanced Large Language Models</b> and <b>Advanced Computer Vision</b> courses. The goal is a solid, transferable foundation rather than depth in any single application area: once students can frame, build, train, and debug a network, the advanced courses can focus on what is specific to language and to vision.</p>
+    <p>The course is project- and exercise-based. Every week pairs a lecture with a hands-on exercise students build themselves, and the term ends in a project students take from framing to a working, evaluated model. The exercises are designed for the way students will actually work with an AI coding assistant at hand. Section 5 explains how that works.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">2</span>Learning Outcomes</h2>
+    <p class="flush">On successful completion of this course, students will be able to:</p>
+    <ol class="outcomes">
+      <li><span class="b">1</span><span><b>Frame tasks as networks.</b> Translate ML tasks into neural-network terms: tensor inputs, model outputs, and loss functions.</span></li>
+      <li><span class="b">2</span><span><b>Represent data as tensors.</b> Use tensor operations, shapes, broadcasting, and device handling fluently.</span></li>
+      <li><span class="b">3</span><span><b>Build data pipelines.</b> Construct <code>Dataset</code> and <code>DataLoader</code> pipelines for batching, shuffling, and transforms.</span></li>
+      <li><span class="b">4</span><span><b>Apply autodiff.</b> Use automatic differentiation (autograd) to compute gradients that drive learning.</span></li>
+      <li><span class="b">5</span><span><b>Implement networks in PyTorch.</b> Turn an architecture specification into working, trainable modules.</span></li>
+      <li><span class="b">6</span><span><b>Reason about optimization.</b> Understand the dynamics of SGD and Adam, learning rates, and convergence.</span></li>
+      <li><span class="b">7</span><span><b>Diagnose training issues.</b> Detect and fix overfitting, underfitting, and unstable or stalled training.</span></li>
+      <li><span class="b">8</span><span><b>Build core architectures.</b> Implement MLPs, CNNs, RNNs, LSTMs/GRUs, and autoencoders.</span></li>
+      <li><span class="b">9</span><span><b>Apply representation learning.</b> Learn useful features with autoencoders and contrastive methods.</span></li>
+      <li><span class="b">10</span><span><b>Stand on a transferable base.</b> Carry these foundations into advanced study of language models and computer vision.</span></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="num">3</span>Prerequisites</h2>
+    <ul class="clean">
+      <li><b>Required: Introduction to Machine Learning</b> (or equivalent). Students should be comfortable with classification and regression, train/validation/test splits, overfitting and generalization, and basic model evaluation.</li>
+      <li><b>Programming:</b> proficiency in Python (functions, classes, NumPy-style array thinking).</li>
+      <li><b>Mathematics:</b> linear algebra (vectors, matrices, matrix multiplication) and multivariable calculus (partial derivatives, gradients, the chain rule).</li>
+      <li><b>Probability:</b> basic probability and statistics (distributions, expectation, mean, and variance).</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="num">4</span>Course Format</h2>
+    <p class="flush">Each week combines a <b>3-hour lecture</b> that develops the concepts with a <b>2-hour exercise lab</b> in which students implement and experiment with them. The exercises are the heart of the course: students write the code, run the training, read the curves, and explain what they found.</p>
+    <p>The thirteen weeks are organized into four parts: <b>Foundations</b> (weeks 1 to 3), <b>Training Infrastructure</b> (weeks 4 to 7), <b>Architectures and Representation Learning</b> (weeks 8 to 12), and <b>Integration</b> (week 13). A mid-term mini-project consolidates Parts I and II; a final project consolidates the entire course and points toward the advanced electives.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">5</span>Working with Claude: How the Exercises Are Built</h2>
+    <p class="flush">Students are expected to use an AI assistant such as Claude as a coding partner in this course. That is how practitioners work now, and pretending otherwise would not prepare them for the advanced courses or for practice. The exercises are designed around that reality: Claude can write the boilerplate, but it cannot do the learning for them. Every weekly exercise, therefore, has three parts.</p>
+    <div class="triad">
+      <div class="card">
+        <span class="tag">Part A · Claude welcome</span>
+        <h4>Build</h4>
+        <p>Students produce working code that meets a specification or reaches a target metric, using Claude freely for scaffolding, syntax, and debugging.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Part B · Student reasoning</span>
+        <h4>Predict &amp; probe</h4>
+        <p>Before running anything, students write down what they expect (a shape, a curve, which setting wins). They then run controlled experiments and compare. The gap between prediction and result is the learning.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Part C · Student's words</span>
+        <h4>Explain &amp; defend</h4>
+        <p>Students submit a short write-up or annotated code explaining why the solution works, where it would break, and what they changed and why. They must be able to defend any line they submit.</p>
+      </div>
+    </div>
+    <h3>What this means in practice</h3>
+    <ul class="clean">
+      <li>Grading weight sits on <b>Predict</b> and <b>Explain</b>, the parts where copying an answer does not help them.</li>
+      <li>Several exercises ask students to <b>critique a Claude-generated solution</b> that contains a subtle, realistic mistake (a wrong loss, a data leak, a misplaced normalization). Finding it requires understanding, not generation.</li>
+      <li>Exercises are framed as <b>predict, build, break, and explain</b>, so an answer a student cannot reason about is worth little.</li>
+      <li>The final project includes a short <b>oral defense</b>, so what is assessed is the student's understanding, not who or what typed the code.</li>
+      <li><b>Disclosure.</b> Students note where they used Claude. Using it is encouraged; submitting work they cannot explain is an integrity violation (Section 9).</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="num">6</span>Weekly Schedule</h2>
+    <table class="schedule">
+      <thead>
+        <tr><th class="wk">Wk</th><th>Lecture topic (3&nbsp;h)</th><th>Weekly exercise: build with Claude, then learn it (2&nbsp;h)</th></tr>
+      </thead>
+
+      <tbody>
+        <tr class="part"><th colspan="3">Part I · Foundations (Weeks 1 to 3)</th></tr>
+        <tr>
+          <td class="wk">1</td>
+          <td class="topic"><b>Deep Learning Overview &amp; ML-to-Network Framing</b><span>From the introductory ML course to networks, tasks as tensors in, loss out, tooling, and environment.</span></td>
+          <td class="ex"><b class="bd">Build:</b> a tiny end-to-end training loop with Claude scaffolding. <b class="li">Learn it:</b> for three ML tasks, write the input tensor shape, output layer, and loss in plain language, and predict each before checking.</td>
+        </tr>
+        <tr>
+          <td class="wk">2</td>
+          <td class="topic"><b>Tensors &amp; Data Representation</b><span>Tensor operations, shapes, broadcasting, devices; images, text, and tabular data as tensors.</span></td>
+          <td class="ex"><b class="bd">Build:</b> a set of tensor ops with Claude's help. <b class="li">Learn it:</b> predict the output shape of eight broadcasting and reshape expressions before running, then fix a seeded shape-mismatch bug.</td>
+        </tr>
+        <tr>
+          <td class="wk">3</td>
+          <td class="topic"><b>MLPs &amp; Backpropagation</b><span>Multilayer perceptrons; the forward pass; backprop mechanics via PyTorch autograd.</span></td>
+          <td class="ex"><b class="bd">Build:</b> an MLP trained with autograd. <b class="li">Learn it:</b> hand-derive the gradient for one layer, check it against autograd, and explain in words what each gradient tells the weight to do.</td>
+        </tr>
+      </tbody>
+
+      <tbody>
+        <tr class="part"><th colspan="3">Part II · Training Infrastructure (Weeks 4 to 7)</th></tr>
+        <tr>
+          <td class="wk">4</td>
+          <td class="topic"><b>Data Pipelines</b><span>The <code>Dataset</code> and <code>DataLoader</code> abstractions; batching, shuffling, transforms, and splits.</span></td>
+          <td class="ex"><b class="bd">Build:</b> a custom <code>Dataset</code> and full <code>DataLoader</code>. <b class="li">Learn it:</b> introduce a deliberate data leak, observe the inflated metric, explain it, and predict the effect of batch size on the curve.</td>
+        </tr>
+        <tr>
+          <td class="wk">5</td>
+          <td class="topic"><b>Loss Functions &amp; Metrics</b><span>Task-appropriate losses (cross-entropy, MSE, BCE); metrics; the train/eval loop.</span></td>
+          <td class="ex"><b class="bd">Build:</b> a training loop with metric tracking. <b class="li">Learn it:</b> pick the wrong loss on purpose, predict and observe the failure, then critique a Claude-written accuracy metric that is wrong under class imbalance.</td>
+        </tr>
+        <tr>
+          <td class="wk">6</td>
+          <td class="topic"><b>Optimization</b><span>Gradient descent; SGD, momentum, and Adam; learning rates and optimization dynamics.</span></td>
+          <td class="ex"><b class="bd">Build:</b> an optimizer-comparison harness. <b class="li">Learn it:</b> predict the loss-curve shape for three learning rates before running, explain divergence and slow convergence by step size, then tune to a target accuracy.</td>
+        </tr>
+        <tr>
+          <td class="wk">7</td>
+          <td class="topic"><b>Regularization &amp; Generalization</b><span>Overfitting, dropout, weight decay, early stopping, and basic data augmentation.</span></td>
+          <td class="ex"><b class="bd">Build:</b> add dropout and weight decay. <b class="li">Learn it:</b> first make a model overfit, then close the train/validation gap to a target and explain which regularizer helped and why.</td>
+        </tr>
+      </tbody>
+
+      <tbody>
+        <tr class="part"><th colspan="3">Part III · Architectures &amp; Representation Learning (Weeks 8 to 12)</th></tr>
+        <tr>
+          <td class="wk">8</td>
+          <td class="topic"><b>Convolutional Networks I</b><span>Convolution, pooling, and feature maps; building a CNN image classifier.</span></td>
+          <td class="ex"><b class="bd">Build:</b> a CNN image classifier. <b class="li">Learn it:</b> compute by hand the output spatial size and parameter count of each conv and pool layer, then verify against the model summary.</td>
+        </tr>
+        <tr>
+          <td class="wk">9</td>
+          <td class="topic"><b>Convolutional Networks II</b><span>Batch and layer normalization; residual connections; modern CNN design.</span></td>
+          <td class="ex"><b class="bd">Build:</b> add normalization and residual blocks. <b class="li">Learn it:</b> ablate each, predict and measure the effect on trainability and depth, and explain why residuals help gradient flow. <i>(Mid-term mini-project starts.)</i></td>
+        </tr>
+        <tr>
+          <td class="wk">10</td>
+          <td class="topic"><b>Recurrent Networks (RNNs)</b><span>Sequence data and recurrence; the RNN cell; backpropagation through time; the vanishing and exploding gradient problem.</span></td>
+          <td class="ex"><b class="bd">Build:</b> a plain RNN on a character-level or short time-series task. <b class="li">Learn it:</b> measure gradient norms across time steps, demonstrate vanishing gradients on long sequences, and explain why long-range dependencies are hard for a plain RNN.</td>
+        </tr>
+        <tr>
+          <td class="wk">11</td>
+          <td class="topic"><b>LSTMs, GRUs &amp; Sequence Tasks</b><span>Gated recurrent units; how gates restore gradient flow; LSTM versus GRU; sequence classification and sequence-to-sequence tasks.</span></td>
+          <td class="ex"><b class="bd">Build:</b> an LSTM or GRU on the same task and compare it to the plain RNN. <b class="li">Learn it:</b> ablate the gates, predict behavior on long versus short sequences, and explain how gating preserves the gradient signal where the RNN failed.</td>
+        </tr>
+        <tr>
+          <td class="wk">12</td>
+          <td class="topic"><b>Representation Learning</b><span>Autoencoders and latent representations; contrastive methods for learned features.</span></td>
+          <td class="ex"><b class="bd">Build:</b> an autoencoder and a contrastive embedding. <b class="li">Learn it:</b> probe the latent space (interpolate, cluster), interpret what it captures, and critique a Claude-suggested but flawed contrastive loss.</td>
+        </tr>
+      </tbody>
+
+      <tbody>
+        <tr class="part"><th colspan="3">Part IV · Integration (Week 13)</th></tr>
+        <tr>
+          <td class="wk">13</td>
+          <td class="topic"><b>Integration &amp; Transfer Learning</b><span>Transfer learning and fine-tuning; model inference; the end-to-end workflow in the advanced courses.</span></td>
+          <td class="ex"><b class="bd">Build:</b> fine-tune a pretrained model end-to-end. <b class="li">Learn it:</b> compare from-scratch, fine-tuning, and frozen-features under a fixed budget, and explain when transfer helps. <i>(Final project due.)</i></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="note">The schedule expands the four-part course outline into per-week detail. Topics may shift by a session to match class pace.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">7</span>Assessment &amp; Grading</h2>
+    <p class="flush">Grading is project- and exercise-based, with weight placed on the parts that an AI assistant cannot do for the student: reasoning, interpretation, and defense. There are no written exams.</p>
+    <table class="grade">
+      <thead>
+        <tr><th>Component</th><th>What it covers</th><th style="text-align:right">Weight</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><b>Weekly exercises</b></td><td>Eleven exercises (best 10 count), each graded mostly on the Predict and Explain parts, not on the code alone.</td><td class="pct">40%</td></tr>
+        <tr><td><b>Mid-term mini-project</b></td><td>A CNN-based project (around weeks 9 to 10): build, train, ablate, and report on an image task.</td><td class="pct">20%</td></tr>
+        <tr><td><b>Final project</b></td><td>Implementation, a written report with results, an AI-use reflection, and a short oral defense.</td><td class="pct">35%</td></tr>
+        <tr><td><b>Participation</b></td><td>In-lecture exercises and lab engagement.</td><td class="pct">5%</td></tr>
+        <tr class="total"><td>Total</td><td></td><td class="pct">100%</td></tr>
+      </tbody>
+    </table>
+    <h3>Final project</h3>
+    <p class="flush">Working solo or in a pair, students take a task end to end: frame it, build a suitable architecture from the families covered in the course, train and tune it, diagnose failures, and report results. Students may use Claude throughout. Deliverables are a one-page proposal (around week 8), a code submission, a short report with curves and discussion, a half-page reflection on what Claude did versus what they had to work out themselves, and a short oral defense in which they explain their design decisions. The oral defense is where understanding, rather than authorship, is confirmed.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">8</span>Tools &amp; Resources</h2>
+    <ul class="clean">
+      <li><b>Core stack:</b> Python 3.11+, PyTorch, NumPy, and Matplotlib; Jupyter notebooks or Google Colab for exercises.</li>
+      <li><b>AI assistant:</b> Claude (or an equivalent) is part of the toolkit and is expected for the Build portion of exercises.</li>
+      <li><b>Compute:</b> a GPU is helpful but not required; Colab provides free GPU access for the exercises and project.</li>
+      <li><b>Reference reading:</b> <i>Dive into Deep Learning</i> (d2l.ai) and the official PyTorch tutorials, used as companions to lecture.</li>
+      <li><b>Course materials:</b> lecture slides, exercise notebooks, and starter code are posted weekly on the course site.</li>
+    </ul>
+  </section>
+
+  <footer>
+    Introduction to Deep Learning · Foundation Course · Course Syllabus · Fall 2026 · subject to revision
+  </footer>
+
+</div>
+</body>
+</html>

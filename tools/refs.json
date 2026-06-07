@@ -1,0 +1,80 @@
+{
+  "week1": {
+    "course": {"title": "MIT 6.S191: Introduction to Deep Learning", "url": "https://introtodeeplearning.com/", "note": "MIT's free open course; Lecture 1 lays out what deep learning is and the foundations of neural networks."},
+    "book": {"title": "Dive into Deep Learning, Chapter 1: Introduction", "url": "https://d2l.ai/chapter_introduction/index.html", "note": "Frames every ML task in terms of data, model, objective (loss), and optimization, exactly the framing this week teaches."},
+    "video": {"title": "3Blue1Brown: But what is a neural network?", "url": "https://www.3blue1brown.com/lessons/neural-networks", "note": "A visual, intuition-first introduction to neural networks using the MNIST digit example."},
+    "blog": {"title": "Colah's blog: Calculus on Computational Graphs (Backpropagation)", "url": "https://colah.github.io/posts/2015-08-Backprop/", "note": "Shows how a model plus loss becomes a computational graph whose derivatives are computed efficiently."}
+  },
+  "week2": {
+    "course": {"title": "Stanford CS231n: Python, NumPy and Array/Tensor Tutorial", "url": "https://cs231n.github.io/python-numpy-tutorial/", "note": "Canonical Stanford notes on arrays, shapes, array math, and broadcasting."},
+    "book": {"title": "Dive into Deep Learning, 2.1 Data Manipulation", "url": "https://d2l.ai/chapter_preliminaries/ndarray.html", "note": "Hands-on PyTorch tensor creation, reshaping, indexing, broadcasting, and in-place ops."},
+    "video": {"title": "Andrej Karpathy: Neural Networks, Zero to Hero", "url": "https://karpathy.ai/zero-to-hero.html", "note": "From-scratch lectures that build tensor and autograd objects in code with a PyTorch-like API."},
+    "blog": {"title": "PyTorch Official Tutorial: Tensors", "url": "https://docs.pytorch.org/tutorials/beginner/basics/tensorqs_tutorial.html", "note": "The official reference on tensor initialization, attributes (shape, dtype, device), and operations."}
+  },
+  "week3": {
+    "course": {"title": "Karpathy: The spelled-out intro to neural networks and backpropagation (micrograd)", "url": "https://www.youtube.com/watch?v=VMj-3S1tku0", "note": "Builds an MLP and a tiny autograd engine from scratch, deriving the forward pass and backprop step by step."},
+    "book": {"title": "Dive into Deep Learning, 5.1 Multilayer Perceptrons", "url": "https://d2l.ai/chapter_multilayer-perceptrons/mlp.html", "note": "Introduces hidden layers and nonlinear activations and why MLPs go beyond linear models."},
+    "video": {"title": "3Blue1Brown: Backpropagation, intuitively", "url": "https://www.3blue1brown.com/lessons/backpropagation", "note": "A visual walkthrough of how gradients flow backward through a network to update weights."},
+    "blog": {"title": "PyTorch Official Tutorial: A Gentle Introduction to torch.autograd", "url": "https://docs.pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html", "note": "Connects backprop theory to PyTorch autograd: the dynamic graph, requires_grad, and .backward()."}
+  },
+  "week4": {
+    "course": {"title": "fast.ai Practical Deep Learning, Lesson 1: Getting Started", "url": "https://course.fast.ai/Lessons/lesson1.html", "note": "Builds and trains an image model end-to-end with an automatic train/validation split."},
+    "book": {"title": "Dive into Deep Learning, 4.2 The Image Classification Dataset", "url": "https://d2l.ai/chapter_linear-classification/image-classification-dataset.html", "note": "Loads Fashion-MNIST and reads minibatches via a DataLoader, demonstrating batch_size and shuffling."},
+    "video": {"title": "PyTorch Tutorial: Dataset and DataLoader, Batch Training (Patrick Loeber)", "url": "https://www.youtube.com/watch?v=PXOzkkB5eH0", "note": "Focused walkthrough of writing a custom Dataset and wrapping it in a DataLoader."},
+    "blog": {"title": "PyTorch Official Tutorial: Datasets & DataLoaders", "url": "https://docs.pytorch.org/tutorials/beginner/basics/data_tutorial.html", "note": "The canonical tutorial on the Dataset/DataLoader primitives, batching, and shuffling."}
+  },
+  "week5": {
+    "course": {"title": "Stanford CS231n: Linear Classification (Softmax and SVM)", "url": "https://cs231n.github.io/linear-classify/", "note": "Derives softmax/cross-entropy and hinge losses with probabilistic and information-theoretic views."},
+    "book": {"title": "Understanding Deep Learning (Simon Prince), Chapter 5: Loss functions", "url": "https://udlbook.github.io/udlbook/", "note": "Derives MSE, cross-entropy, and BCE from maximum likelihood (free PDF)."},
+    "video": {"title": "StatQuest: Neural Networks Part 6, Cross Entropy", "url": "https://www.youtube.com/watch?v=6ArSys5qHAU", "note": "A clear, intuitive explanation of cross-entropy as the classification loss."},
+    "blog": {"title": "scikit-learn User Guide: Metrics and scoring", "url": "https://scikit-learn.org/stable/modules/model_evaluation.html", "note": "Authoritative reference for accuracy, precision/recall, F1, ROC AUC, MSE, and R2."}
+  },
+  "week6": {
+    "course": {"title": "Stanford CS231n: Neural Networks Part 3 (Optimization)", "url": "https://cs231n.github.io/neural-networks-3/", "note": "Covers SGD, momentum/Nesterov, Adagrad/RMSProp/Adam, and learning-rate annealing."},
+    "book": {"title": "Dive into Deep Learning, 12.4 Stochastic Gradient Descent", "url": "https://d2l.ai/chapter_optimization/sgd.html", "note": "SGD, dynamic learning-rate schedules, and convergence behavior."},
+    "video": {"title": "3Blue1Brown: Gradient descent, how neural networks learn", "url": "https://www.youtube.com/watch?v=IHZwWFHWa-w", "note": "Visual, intuition-first explanation of gradient descent and the negative-gradient update."},
+    "blog": {"title": "Sebastian Ruder: An overview of gradient descent optimization algorithms", "url": "https://www.ruder.io/optimizing-gradient-descent/", "note": "The authoritative comparison of SGD variants, momentum, Adagrad/RMSProp/Adam, with practical guidance."}
+  },
+  "week7": {
+    "course": {"title": "Stanford CS231n: Neural Networks Part 2 (Regularization)", "url": "https://cs231n.github.io/neural-networks-2/", "note": "Dedicated sections on L2/L1 regularization and dropout, plus train/val/test discipline."},
+    "book": {"title": "Understanding Deep Learning (Simon Prince), Chapter 9: Regularization", "url": "https://udlbook.github.io/udlbook/", "note": "Covers overfitting, weight decay, dropout, early stopping, and augmentation as one toolkit (free PDF)."},
+    "video": {"title": "StatQuest: Regularization Part 1, Ridge (L2) Regression", "url": "https://www.youtube.com/watch?v=Q81RR3yKn30", "note": "Intuitive introduction to L2/weight-decay regularization and the bias-variance trade-off."},
+    "blog": {"title": "Dive into Deep Learning, 5.6 Dropout", "url": "https://d2l.ai/chapter_multilayer-perceptrons/dropout.html", "note": "A runnable tutorial explaining dropout, with both a from-scratch and an nn.Dropout version."}
+  },
+  "week8": {
+    "course": {"title": "Stanford CS231n: Deep Learning for Computer Vision", "url": "https://cs231n.github.io/", "note": "The canonical CNN course, from convolution and pooling through full image-classifier architectures."},
+    "book": {"title": "Dive into Deep Learning, Chapter 7: Convolutional Neural Networks", "url": "https://d2l.ai/chapter_convolutional-neural-networks/index.html", "note": "Free PyTorch chapter on convolutions, pooling, receptive fields, and building LeNet."},
+    "video": {"title": "CS231n Lecture 5: Convolutional Neural Networks", "url": "https://www.youtube.com/watch?v=bNb2fEVKeEo", "note": "Focused lecture introducing convolution, filters/feature maps, and pooling."},
+    "blog": {"title": "CS231n Notes: Convolutional Networks", "url": "https://cs231n.github.io/convolutional-networks/", "note": "Authoritative notes on conv layers, stride/padding, pooling, and activation maps with formulas."}
+  },
+  "week9": {
+    "course": {"title": "Stanford CS231n: Deep Learning for Computer Vision (Architectures)", "url": "https://cs231n.github.io/", "note": "The CNN course whose architecture module surveys AlexNet, VGG, GoogLeNet, and ResNet."},
+    "book": {"title": "Dive into Deep Learning, Chapter 8: Modern Convolutional Neural Networks", "url": "https://d2l.ai/chapter_convolutional-modern/index.html", "note": "Dedicated sections on batch normalization and residual networks plus other modern architectures."},
+    "video": {"title": "CS231n Lecture 9: CNN Architectures", "url": "https://www.youtube.com/watch?v=DAOcjicFr1Y", "note": "Canonical lecture on ResNet and the residual-connection idea that lets very deep nets train."},
+    "blog": {"title": "Dive into Deep Learning, 8.6 Residual Networks (ResNet)", "url": "https://d2l.ai/chapter_convolutional-modern/resnet.html", "note": "A self-contained explainer of residual blocks with a ResNet-18 implementation in PyTorch."}
+  },
+  "week10": {
+    "course": {"title": "Stanford CS224n: Natural Language Processing with Deep Learning", "url": "https://web.stanford.edu/class/cs224n/", "note": "Its Language Models and RNNs lecture covers recurrence and the vanishing-gradient problem."},
+    "book": {"title": "Dive into Deep Learning, 9.7 Backpropagation Through Time", "url": "https://d2l.ai/chapter_recurrent-neural-networks/bptt.html", "note": "Derives BPTT by unrolling the RNN graph and shows how vanishing/exploding gradients arise."},
+    "video": {"title": "MIT 6.S191: Recurrent Neural Networks", "url": "https://www.youtube.com/watch?v=qjrad0V0uJE", "note": "Accessible lecture introducing sequence data, the RNN cell, recurrence, and BPTT."},
+    "blog": {"title": "Andrej Karpathy: The Unreasonable Effectiveness of Recurrent Neural Networks", "url": "https://karpathy.github.io/2015/05/21/rnn-effectiveness/", "note": "Classic post building intuition for what RNNs learn via character-level language models."}
+  },
+  "week11": {
+    "course": {"title": "Dive into Deep Learning, Chapter 10: Modern Recurrent Neural Networks", "url": "https://d2l.ai/chapter_recurrent-modern/index.html", "note": "Full sections on LSTM, GRU, and sequence-to-sequence machine translation."},
+    "book": {"title": "Dive into Deep Learning, 10.7 Sequence-to-Sequence Learning", "url": "https://d2l.ai/chapter_recurrent-modern/seq2seq.html", "note": "Builds an encoder-decoder seq2seq model with teacher forcing and masked loss."},
+    "video": {"title": "StatQuest: Long Short-Term Memory (LSTM), Clearly Explained", "url": "https://www.youtube.com/watch?v=YCzL96nL7j0", "note": "Step-by-step visual explanation of LSTM gates and the cell state."},
+    "blog": {"title": "Christopher Olah: Understanding LSTM Networks", "url": "https://colah.github.io/posts/2015-08-Understanding-LSTMs/", "note": "The definitive illustrated walkthrough of LSTM gates, with a GRU variant section."}
+  },
+  "week12": {
+    "course": {"title": "Stanford CS231n Lecture: Self-Supervised Learning", "url": "https://www.youtube.com/watch?v=4howBU7THbM", "note": "Stanford lecture on pretext tasks, contrastive learning, and self-supervised representations."},
+    "book": {"title": "Goodfellow, Bengio & Courville, Deep Learning, Chapter 14: Autoencoders", "url": "https://www.deeplearningbook.org/contents/autoencoders.html", "note": "The standard free chapter on autoencoders and their role in learning latent representations."},
+    "video": {"title": "SimCLR: Contrastive Learning of Visual Representations (illustrated)", "url": "https://www.youtube.com/watch?v=YZgeWsuyRH8", "note": "A focused walkthrough of SimCLR: augmentation views, the contrastive loss, and the projection head."},
+    "blog": {"title": "Lil'Log: Contrastive Representation Learning", "url": "https://lilianweng.github.io/posts/2021-05-31-contrastive/", "note": "A deeply-cited survey of contrastive and self-supervised methods (SimCLR, MoCo, BYOL, SwAV)."}
+  },
+  "week13": {
+    "course": {"title": "Stanford CS231n Notes: Transfer Learning and Fine-tuning", "url": "https://cs231n.github.io/transfer-learning/", "note": "Lays out the two core strategies (fixed feature extractor vs fine-tuning) and when to use each."},
+    "book": {"title": "Dive into Deep Learning, 14.2 Fine-Tuning", "url": "https://d2l.ai/chapter_computer-vision/fine-tuning.html", "note": "A runnable PyTorch walkthrough of fine-tuning a pretrained ResNet-18, including layer-wise rates."},
+    "video": {"title": "fast.ai Practical Deep Learning, Lesson 1", "url": "https://course.fast.ai/Lessons/lesson1.html", "note": "Trains a real image classifier end-to-end via transfer learning on a pretrained model."},
+    "blog": {"title": "PyTorch: Transfer Learning for Computer Vision Tutorial", "url": "https://docs.pytorch.org/tutorials/beginner/transfer_learning_tutorial.html", "note": "Official tutorial demonstrating both fine-tuning and fixed-feature-extractor transfer learning."}
+  }
+}
