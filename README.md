@@ -17,12 +17,12 @@ bridge to the advanced electives in **Large Language Models** and **Computer Vis
 
 - [HTML](syllabus/syllabus.html) · [Word (.docx)](syllabus/syllabus.docx) · [PDF](syllabus/syllabus.pdf)
 
-## Working with Claude (the exercise model)
+## Working with an AI assistant (the exercise model)
 
 Every week is built for the way students actually work, with an AI coding assistant at hand.
 Each lab and notebook has three parts:
 
-1. **Build** (Claude welcome): produce working code that meets a spec or hits a target metric.
+1. **Build** (AI assistant welcome): produce working code that meets a spec or hits a target metric.
 2. **Predict & probe** (your reasoning): predict outcomes before running, then run controlled experiments.
 3. **Explain & defend** (in plain language): explain why it works, where it breaks, and what changed.
 

@@ -20,7 +20,7 @@ PARTS = {
 
 # Each week: num, part, title, sub (one-line topic), goals, build, predict,
 # explain, deliverables, hints. build/predict/explain mirror the syllabus's
-# AI-aware exercise model (Build with Claude / Predict & probe / Explain & defend).
+# AI-aware exercise model (Build with an AI assistant / Predict & probe / Explain & defend).
 WEEKS = [
     {
         "num": 1, "part": "I",
@@ -33,7 +33,7 @@ WEEKS = [
         ],
         "build": [
             "Set up Python, PyTorch, and Jupyter or Colab; confirm whether a GPU is visible and fall back to CPU if not.",
-            "With Claude's help, scaffold a minimal training loop on a tiny dataset (a 2-class toy set or a small MNIST subset): model, loss, optimizer, and one train step.",
+            "With an AI assistant's help, scaffold a minimal training loop on a tiny dataset (a 2-class toy set or a small MNIST subset): model, loss, optimizer, and one train step.",
             "Train for a few epochs and plot the loss going down.",
         ],
         "predict": [
@@ -43,7 +43,7 @@ WEEKS = [
         "explain": [
             "Explain in a few sentences what the model, loss, and optimizer each do.",
             "Justify why your shape-and-loss framing is correct for each of the three tasks.",
-            "Name one thing Claude produced that you had to correct or did not initially understand.",
+            "Name one thing the AI assistant produced that you had to correct or did not initially understand.",
         ],
         "deliverables": [
             "A notebook with the running loop and a loss curve.",
@@ -65,7 +65,7 @@ WEEKS = [
             "Encode real data into correctly shaped tensors.",
         ],
         "build": [
-            "Implement a set of tensor manipulations (reshape, permute, broadcasting, reductions, indexing) with Claude's help.",
+            "Implement a set of tensor manipulations (reshape, permute, broadcasting, reductions, indexing) with an AI assistant's help.",
             "Encode a small dataset (a few images and a small table) into tensors with the right dtype and device.",
         ],
         "predict": [
@@ -160,7 +160,7 @@ WEEKS = [
             "Predict what happens if you use MSE for a classification task, before trying it.",
         ],
         "explain": [
-            "Critique a Claude-written accuracy metric that is wrong under class imbalance; explain the bug, fix it, and report a better metric.",
+            "Critique an AI-written accuracy metric that is wrong under class imbalance; explain the bug, fix it, and report a better metric.",
         ],
         "deliverables": [
             "A train and eval loop with metric logging.",
@@ -349,7 +349,7 @@ WEEKS = [
             "Predict the latent-space structure you expect (clusters by class, smooth interpolation).",
         ],
         "explain": [
-            "Probe the latent space (interpolate, cluster, nearest neighbors), interpret what it captures, and critique a Claude-suggested but flawed contrastive loss.",
+            "Probe the latent space (interpolate, cluster, nearest neighbors), interpret what it captures, and critique an AI-suggested but flawed contrastive loss.",
         ],
         "deliverables": [
             "An autoencoder and embedding notebook with latent-space visualizations.",

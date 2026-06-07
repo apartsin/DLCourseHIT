@@ -81,7 +81,7 @@ PROJECTS = {
         "deliverables": [
             "A one-page proposal (around week 8).",
             "Working code and a short report with results and curves.",
-            "A half-page reflection on what Claude did versus what you worked out yourself.",
+            "A half-page reflection on what the AI assistant did versus what you worked out yourself.",
             "A short oral defense of your design decisions.",
         ],
         "fields": [("data", "Data"), ("idea", "Idea"), ("methods", "Methods"), ("eval", "Evaluation"), ("stretch", "Stretch goal")],

@@ -76,7 +76,7 @@ def whead(w):
 
 def lab_html(w):
     steps = (
-        f'<div class="step a"><h3><span class="tag">Part A &middot; Claude welcome</span>Build</h3><ol>{li(w["build"])}</ol></div>'
+        f'<div class="step a"><h3><span class="tag">Part A &middot; AI assistant welcome</span>Build</h3><ol>{li(w["build"])}</ol></div>'
         f'<div class="step b"><h3><span class="tag">Part B &middot; your reasoning</span>Predict &amp; probe</h3><ol>{li(w["predict"])}</ol></div>'
         f'<div class="step c"><h3><span class="tag">Part C &middot; in plain language</span>Explain &amp; defend</h3><ol>{li(w["explain"])}</ol></div>'
     )
@@ -84,7 +84,7 @@ def lab_html(w):
         whead(w)
         + f'<div class="goals"><h2>Learning goals</h2><ul class="clean">{li(w["goals"])}</ul></div>'
         + '<div class="callout">This lab follows the course\'s <b>Build / Predict &amp; probe / Explain &amp; defend</b> model. '
-          'Use Claude freely for the Build; the graded learning is in Predict and Explain. '
+          'Use an AI assistant freely for the Build; the graded learning is in Predict and Explain. '
           'See <a href="../syllabus/syllabus.html">the syllabus</a> for the AI-use policy.</div>'
         + '<h2><span class="ic">&#9881;</span>Exercise</h2>' + f'<div class="steps">{steps}</div>'
         + '<h2><span class="ic">&#10003;</span>Deliverables</h2>' + f'<ul class="clean">{li(w["deliverables"])}</ul>'
@@ -135,7 +135,7 @@ def lesson_html(w):
     practice = [
         (10, "Setup & brief", "Confirm environments run; restate the lab goal and deliverables."),
         (15, "Predict", "Students write predictions before coding. " + "; ".join(w["predict"])),
-        (45, "Build (Claude welcome)", "; ".join(w["build"])),
+        (45, "Build (AI assistant welcome)", "; ".join(w["build"])),
         (5, "Break", ""),
         (25, "Probe", "Run controlled experiments and compare results against the predictions."),
         (15, "Explain & defend", "; ".join(w["explain"])),

@@ -211,13 +211,13 @@
   </section>
 
   <section>
-    <h2><span class="num">5</span>Working with Claude: How the Exercises Are Built</h2>
-    <p class="flush">Students are expected to use an AI assistant such as Claude as a coding partner in this course. That is how practitioners work now, and pretending otherwise would not prepare them for the advanced courses or for practice. The exercises are designed around that reality: Claude can write the boilerplate, but it cannot do the learning for them. Every weekly exercise, therefore, has three parts.</p>
+    <h2><span class="num">5</span>Working with an AI assistant: How the Exercises Are Built</h2>
+    <p class="flush">Students are expected to use an AI assistant as a coding partner in this course. That is how practitioners work now, and pretending otherwise would not prepare them for the advanced courses or for practice. The exercises are designed around that reality: An AI assistant can write the boilerplate, but it cannot do the learning for them. Every weekly exercise, therefore, has three parts.</p>
     <div class="triad">
       <div class="card">
-        <span class="tag">Part A · Claude welcome</span>
+        <span class="tag">Part A · AI assistant welcome</span>
         <h4>Build</h4>
-        <p>Students produce working code that meets a specification or reaches a target metric, using Claude freely for scaffolding, syntax, and debugging.</p>
+        <p>Students produce working code that meets a specification or reaches a target metric, using an AI assistant freely for scaffolding, syntax, and debugging.</p>
       </div>
       <div class="card">
         <span class="tag">Part B · Student reasoning</span>
@@ -233,10 +233,10 @@
     <h3>What this means in practice</h3>
     <ul class="clean">
       <li>Grading weight sits on <b>Predict</b> and <b>Explain</b>, the parts where copying an answer does not help them.</li>
-      <li>Several exercises ask students to <b>critique a Claude-generated solution</b> that contains a subtle, realistic mistake (a wrong loss, a data leak, a misplaced normalization). Finding it requires understanding, not generation.</li>
+      <li>Several exercises ask students to <b>critique an AI-generated solution</b> that contains a subtle, realistic mistake (a wrong loss, a data leak, a misplaced normalization). Finding it requires understanding, not generation.</li>
       <li>Exercises are framed as <b>predict, build, break, and explain</b>, so an answer a student cannot reason about is worth little.</li>
       <li>The final project includes a short <b>oral defense</b>, so what is assessed is the student's understanding, not who or what typed the code.</li>
-      <li><b>Disclosure.</b> Students note where they used Claude. Using it is encouraged; submitting work they cannot explain is an integrity violation (Section 9).</li>
+      <li><b>Disclosure.</b> Students note where they used the AI assistant. Using it is encouraged; submitting work they cannot explain is an integrity violation (Section 9).</li>
     </ul>
   </section>
 
@@ -244,7 +244,7 @@
     <h2><span class="num">6</span>Weekly Schedule</h2>
     <table class="schedule">
       <thead>
-        <tr><th class="wk">Wk</th><th>Lecture topic (3&nbsp;h)</th><th>Weekly exercise: build with Claude, then learn it (2&nbsp;h)</th></tr>
+        <tr><th class="wk">Wk</th><th>Lecture topic (3&nbsp;h)</th><th>Weekly exercise: build with an AI assistant, then learn it (2&nbsp;h)</th></tr>
       </thead>
 
       <tbody>
@@ -252,12 +252,12 @@
         <tr>
           <td class="wk">1</td>
           <td class="topic"><b>Deep Learning Overview &amp; ML-to-Network Framing</b><span>From the introductory ML course to networks, tasks as tensors in, loss out, tooling, and environment.</span></td>
-          <td class="ex"><b class="bd">Build:</b> a tiny end-to-end training loop with Claude scaffolding. <b class="li">Learn it:</b> for three ML tasks, write the input tensor shape, output layer, and loss in plain language, and predict each before checking.</td>
+          <td class="ex"><b class="bd">Build:</b> a tiny end-to-end training loop with AI-assistant scaffolding. <b class="li">Learn it:</b> for three ML tasks, write the input tensor shape, output layer, and loss in plain language, and predict each before checking.</td>
         </tr>
         <tr>
           <td class="wk">2</td>
           <td class="topic"><b>Tensors &amp; Data Representation</b><span>Tensor operations, shapes, broadcasting, devices; images, text, and tabular data as tensors.</span></td>
-          <td class="ex"><b class="bd">Build:</b> a set of tensor ops with Claude's help. <b class="li">Learn it:</b> predict the output shape of eight broadcasting and reshape expressions before running, then fix a seeded shape-mismatch bug.</td>
+          <td class="ex"><b class="bd">Build:</b> a set of tensor ops with an AI assistant's help. <b class="li">Learn it:</b> predict the output shape of eight broadcasting and reshape expressions before running, then fix a seeded shape-mismatch bug.</td>
         </tr>
         <tr>
           <td class="wk">3</td>
@@ -276,7 +276,7 @@
         <tr>
           <td class="wk">5</td>
           <td class="topic"><b>Loss Functions &amp; Metrics</b><span>Task-appropriate losses (cross-entropy, MSE, BCE); metrics; the train/eval loop.</span></td>
-          <td class="ex"><b class="bd">Build:</b> a training loop with metric tracking. <b class="li">Learn it:</b> pick the wrong loss on purpose, predict and observe the failure, then critique a Claude-written accuracy metric that is wrong under class imbalance.</td>
+          <td class="ex"><b class="bd">Build:</b> a training loop with metric tracking. <b class="li">Learn it:</b> pick the wrong loss on purpose, predict and observe the failure, then critique an AI-written accuracy metric that is wrong under class imbalance.</td>
         </tr>
         <tr>
           <td class="wk">6</td>
@@ -315,7 +315,7 @@
         <tr>
           <td class="wk">12</td>
           <td class="topic"><b>Representation Learning</b><span>Autoencoders and latent representations; contrastive methods for learned features.</span></td>
-          <td class="ex"><b class="bd">Build:</b> an autoencoder and a contrastive embedding. <b class="li">Learn it:</b> probe the latent space (interpolate, cluster), interpret what it captures, and critique a Claude-suggested but flawed contrastive loss.</td>
+          <td class="ex"><b class="bd">Build:</b> an autoencoder and a contrastive embedding. <b class="li">Learn it:</b> probe the latent space (interpolate, cluster), interpret what it captures, and critique an AI-suggested but flawed contrastive loss.</td>
         </tr>
       </tbody>
 
@@ -347,14 +347,14 @@
       </tbody>
     </table>
     <h3>Final project</h3>
-    <p class="flush">Working solo or in a pair, students take a task end to end: frame it, build a suitable architecture from the families covered in the course, train and tune it, diagnose failures, and report results. Students may use Claude throughout. Deliverables are a one-page proposal (around week 8), a code submission, a short report with curves and discussion, a half-page reflection on what Claude did versus what they had to work out themselves, and a short oral defense in which they explain their design decisions. The oral defense is where understanding, rather than authorship, is confirmed.</p>
+    <p class="flush">Working solo or in a pair, students take a task end to end: frame it, build a suitable architecture from the families covered in the course, train and tune it, diagnose failures, and report results. Students may use an AI assistant throughout. Deliverables are a one-page proposal (around week 8), a code submission, a short report with curves and discussion, a half-page reflection on what the AI assistant did versus what they had to work out themselves, and a short oral defense in which they explain their design decisions. The oral defense is where understanding, rather than authorship, is confirmed.</p>
   </section>
 
   <section>
     <h2><span class="num">8</span>Tools &amp; Resources</h2>
     <ul class="clean">
       <li><b>Core stack:</b> Python 3.11+, PyTorch, NumPy, and Matplotlib; Jupyter notebooks or Google Colab for exercises.</li>
-      <li><b>AI assistant:</b> Claude (or an equivalent) is part of the toolkit and is expected for the Build portion of exercises.</li>
+      <li><b>AI assistant:</b> An AI assistant is part of the toolkit and is expected for the Build portion of exercises.</li>
       <li><b>Compute:</b> a GPU is helpful but not required; Colab provides free GPU access for the exercises and project.</li>
       <li><b>Reference reading:</b> <i>Dive into Deep Learning</i> (d2l.ai) and the official PyTorch tutorials, used as companions to lecture.</li>
       <li><b>Course materials:</b> lecture slides, exercise notebooks, and starter code are posted weekly on the course site.</li>

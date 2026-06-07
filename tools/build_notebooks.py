@@ -30,7 +30,7 @@ def notebook(w):
         f'**{COURSE["title"]} (HIT)** &middot; Part {w["part"]}: {PARTS[w["part"]]}\n\n'
         f'{w["sub"]}\n\n'
         f'This practice notebook follows the course\'s **Build / Predict & probe / Explain & defend** '
-        f'model. Use Claude freely for the Build; the graded learning is in Predict and Explain.'
+        f'model. Use an AI assistant freely for the Build; the graded learning is in Predict and Explain.'
     ))
     cells.append(md("## Goals\n\n" + "\n".join(f"- {g}" for g in w["goals"])))
     cells.append(md("## Setup\nRun this first. On Colab, set Runtime > Change runtime type > GPU for the later weeks."))
@@ -43,7 +43,7 @@ def notebook(w):
         "torch.manual_seed(0)\n"
         "print('PyTorch', torch.__version__, '| device:', device)"
     ))
-    cells.append(md("## Part A: Build  *(Claude welcome)*\n\n" + bullets(w["build"])))
+    cells.append(md("## Part A: Build  *(AI assistant welcome)*\n\n" + bullets(w["build"])))
     cells.append(code("# Your build code here.\n"))
     cells.append(md(
         "## Part B: Predict & probe  *(your reasoning)*\n\n"
