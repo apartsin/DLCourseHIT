@@ -104,6 +104,7 @@ ul.clean li{ margin:0 0 7px; }
 .weeks .t span{ color:var(--muted); font-size:.86rem; }
 
 .hero{ border-bottom:2px solid var(--ink); padding-bottom:18px; margin-bottom:8px; }
+.hitlogo{ display:block; height:60px; width:auto; margin:0 0 16px; }
 .hero .eyebrow{ font-size:.82rem; }
 .hero h1{ font-size:2rem; margin:0 0 8px; font-weight:700; }
 .hero .sub{ color:var(--soft); font-style:italic; font-size:1.1rem; margin:0 0 12px; }
@@ -155,6 +156,17 @@ ul.clean li{ margin:0 0 7px; }
 .pcard h3 .n{ color:var(--navy); font-family:ui-monospace,Menlo,Consolas,monospace; margin-right:.4em; }
 .pcard .fld{ margin:4px 0; font-size:.95rem; color:var(--soft); }
 .pcard .fld b{ color:var(--navy); font-variant:small-caps; letter-spacing:.04em; font-size:.85rem; margin-right:.3em; }
+
+/* multiple-choice self-check */
+.mcqs{ margin-top:8px; }
+.mcq{ border:1px solid var(--rule); border-radius:8px; padding:11px 16px; margin:0 0 10px; background:#fff; }
+.mcq .q{ margin:0 0 6px; font-weight:600; color:var(--ink); }
+.mcq .opts{ margin:0 0 4px; padding-left:1.7em; }
+.mcq .opts li{ margin:2px 0; color:var(--soft); }
+.mcq details{ margin-top:4px; }
+.mcq summary{ cursor:pointer; color:var(--navy); font-weight:700; font-size:.86rem; font-variant:small-caps; letter-spacing:.04em; }
+.mcq .ans{ margin-top:7px; color:var(--soft); font-size:.94rem; }
+.mcq .ans b{ color:var(--navy); }
 
 /* self-check */
 .selfcheck details{ border:1px solid var(--rule); border-radius:6px; padding:9px 14px; margin:0 0 8px; background:#fff; }

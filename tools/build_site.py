@@ -92,7 +92,6 @@ def lab_html(w):
         + f'<div class="callout hint"><b>Hints.</b><ul class="clean" style="margin-bottom:0">{li(w["hints"])}</ul></div>'
         + selfcheck_block(w)
         + ('<p style="margin-top:22px">'
-           f'<a class="btn" href="{colab_url(w["num"])}" target="_blank" rel="noopener">Open the lab notebook in Colab</a> '
            f'<a class="btn" href="../references/{w2(w["num"])}.html">Reference material</a> '
            f'<a class="btn" href="../lessons/{w2(w["num"])}.html">Instructor lesson plan</a></p>')
         + pager("lab", w)
@@ -152,10 +151,11 @@ def lesson_html(w):
         + timeline(lecture)
         + f'<div class="callout"><b>Key takeaways.</b><ul class="clean" style="margin-bottom:0">{li(L["takeaways"])}</ul></div>'
         + '<h2><span class="ic">&#128187;</span><span class="secttag prac">Practice &middot; 2 hours</span></h2>'
-        + f'<p>In the practice lesson the instructor demonstrates implementations, runs code, and works through examples. The weekly <a href="../labs/{w2(n)}.html">lab</a> is then set as homework, where students apply this themselves.</p>'
+        + f'<p>In the practice lesson the instructor demonstrates implementations, runs code, and works through examples, using the practice notebook linked below. The weekly <a href="../labs/{w2(n)}.html">lab</a> is then set as homework, where students apply this themselves.</p>'
         + timeline(practice)
         + f'<div class="callout hint"><b>Common pitfalls to pre-empt.</b><ul class="clean" style="margin-bottom:0">{li(w["hints"])}</ul></div>'
         + ('<p style="margin-top:22px">'
+           f'<a class="btn" href="{colab_url(n)}" target="_blank" rel="noopener">Open the practice notebook in Colab</a> '
            f'<a class="btn" href="../labs/{w2(n)}.html">Lab (homework)</a> '
            f'<a class="btn" href="../references/{w2(n)}.html">References</a></p>')
         + pager("lesson", w)
@@ -183,16 +183,22 @@ def prereq_page_html(key):
         f'<a href="{esc(r["url"])}" target="_blank" rel="noopener">{esc(r["title"])}</a> '
         f'<span class="dom">{esc(dom(r["url"]))}</span></div></div>'
         for r in pr["resources"])
-    sc = "".join(f'<details><summary>{esc(q)}</summary><div class="ans">{esc(a)}</div></details>'
-                 for q, a in pr["selfcheck"])
+    sc = ""
+    for i, m in enumerate(pr["mcq"], 1):
+        opts = "".join(f'<li>{esc(o)}</li>' for o in m["options"])
+        correct = chr(65 + m["answer"])
+        sc += (f'<div class="mcq"><p class="q"><b>{i}.</b> {esc(m["q"])}</p>'
+               f'<ol class="opts" type="A">{opts}</ol>'
+               f'<details><summary>Show answer</summary><div class="ans"><b>Correct: {correct}.</b> {esc(m["why"])}</div></details></div>')
     inner = (
         f'<div class="whead"><p class="eyebrow"><span class="wbadge">Prerequisite</span> &nbsp; Review &amp; refresh</p>'
         f'<h1>{pr["icon"]} {esc(pr["title"])}</h1><p class="sub">{esc(pr["intro"])}</p></div>'
         + secs
         + '<div class="goals"><h2>Readiness check</h2><ul class="clean">' + li(pr["checklist"]) + '</ul></div>'
-        + '<h2 id="self-check"><span class="ic">&#10067;</span>Self-check</h2>'
-          '<p>Use these to confirm the background is in place. If several are unclear, work through the review above first.</p>'
-          '<div class="selfcheck">' + sc + '</div>'
+        + '<h2 id="self-check"><span class="ic">&#10067;</span>Self-check questions</h2>'
+          '<p>Multiple-choice questions on the topic itself. Pick an answer, then reveal it. '
+          'If several are unclear, work through the review above first.</p>'
+          '<div class="mcqs">' + sc + '</div>'
         + '<h2><span class="ic">&#128218;</span>Refresher resources</h2>' + f'<div class="refgrid">{res}</div>'
         + '<p style="margin-top:22px"><a class="btn" href="index.html">&larr; All prerequisites</a> '
           '<a class="btn" href="../index.html">Course home</a></p>'
@@ -208,8 +214,8 @@ def prereq_index_html():
                   f'<a href="{k}.html">{esc(pr["title"])}</a>'
                   f'<p class="note">{esc(pr["intro"])}</p></div></div>')
     inner = (
-        '<div class="whead"><p class="eyebrow"><span class="wbadge">Before you start</span></p>'
-        '<h1>Prerequisites review</h1>'
+        '<div class="whead"><p class="eyebrow"><span class="wbadge">Prerequisites</span></p>'
+        '<h1>Prerequisites: review and self-check</h1>'
         '<p class="sub">The course assumes a prior machine-learning course and comfort with the mathematics '
         'and Python below. These pages support self-assessment and a refresher before Week 1.</p></div>'
         + f'<div class="refgrid">{cards}</div>'
@@ -292,9 +298,10 @@ def index_html():
                  f'<a href="labs/{w2(w["num"])}.html#self-check">Self-check</a>'
                  f'<a href="references/{w2(w["num"])}.html">References</a>'
                  f'<a href="lessons/{w2(w["num"])}.html">Lesson plan</a>'
-                 f'<a href="{colab_url(w["num"])}" target="_blank" rel="noopener">Notebook</a></td></tr>')
+                 f'<a href="{colab_url(w["num"])}" target="_blank" rel="noopener">Practice notebook</a></td></tr>')
     hero = (
         '<div class="hero">'
+        '<img class="hitlogo" src="assets/hit-logo.png" alt="Holon Institute of Technology">'
         f'<p class="eyebrow">{esc(COURSE["code"])} &middot; HIT &middot; Foundation Course &middot; 13 Weeks</p>'
         f'<h1>{esc(COURSE["title"])}</h1>'
         f'<p class="sub">{esc(COURSE["subtitle"])}</p>'
@@ -328,7 +335,7 @@ def index_html():
     outcomes = ('<h2>Expected outcomes</h2><p>By the end of the course, students will be able to:</p>'
                 f'<div class="ocards">{ocards}</div>')
     prereq_cta = (
-        '<h2>Before you start</h2>'
+        '<h2>Prerequisites: review and self-check</h2>'
         '<p>The course assumes a prior machine-learning course and the background below. Each row links a short '
         'refresher and a set of self-check questions, so readiness can be confirmed before Week 1.</p>'
         '<table class="prereqs"><thead><tr><th>Subject</th><th>Background topics</th><th>Material</th></tr></thead><tbody>'
@@ -354,7 +361,7 @@ def index_html():
         '<li><a href="labs/week01.html">Labs</a>: weekly homework labs with self-check questions.</li>'
         '<li><a href="references/week01.html">References</a>: curated free courses, books, videos, and blogs.</li>'
         '<li><a href="lessons/week01.html">Lesson plans</a>: instructor lecture and practice outlines.</li>'
-        '<li><a href="' + colab_url(1) + '" target="_blank" rel="noopener">Notebooks</a>: Colab-ready lab notebooks (homework).</li>'
+        '<li><a href="' + colab_url(1) + '" target="_blank" rel="noopener">Practice notebooks</a>: Colab notebooks the instructor runs during the practice lessons.</li>'
         '<li><a href="projects/index.html">Projects</a>: example briefs for the mid-term and final projects.</li>'
         '</ul>'
     )
@@ -408,8 +415,8 @@ def write_folder_readmes():
                       "video, and an authoritative blog or tutorial).\n\n" + _wk_list("references") + "\n",
         "lessons": "# Lesson plans\n\nInstructor lesson plans: a timed 3-hour lecture outline and a 2-hour "
                    "practice outline per week.\n\n" + _wk_list("lessons") + "\n",
-        "notebooks": "# Notebooks\n\nColab-ready practice notebooks with an Open-in-Colab badge and the "
-                     "Build / Predict / Explain scaffolding.\n\n" +
+        "notebooks": "# Practice notebooks\n\nColab notebooks for the instructor to run during the 2-hour "
+                     "practice lessons (one section per live demonstration). The student homework is the lab.\n\n" +
                      "\n".join(f"- Week {w['num']:02d}: [Open in Colab]({colab_url(w['num'])}) &middot; [`{w2(w['num'])}.ipynb`]({w2(w['num'])}.ipynb)" for w in WEEKS) + "\n",
         "hit-catalogue": "# HIT catalogue package\n\nDepartment submission package in the HIT form, with the "
                          "official HIT letterhead.\n\n- `syllabus_en.docx` (English syllabus)\n- `syllabus_he.docx` "

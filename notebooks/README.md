@@ -1,6 +1,6 @@
-# Notebooks
+# Practice notebooks
 
-Colab-ready practice notebooks with an Open-in-Colab badge and the Build / Predict / Explain scaffolding.
+Colab notebooks for the instructor to run during the 2-hour practice lessons (one section per live demonstration). The student homework is the lab.
 
 - Week 01: [Open in Colab](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week01.ipynb) &middot; [`week01.ipynb`](week01.ipynb)
 - Week 02: [Open in Colab](https://colab.research.google.com/github/apartsin/DLCourseHIT/blob/main/notebooks/week02.ipynb) &middot; [`week02.ipynb`](week02.ipynb)

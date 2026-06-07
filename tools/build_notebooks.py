@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-"""Generate per-week Colab-ready practice notebooks under notebooks/weekNN.ipynb.
-Each notebook carries an Open-in-Colab badge and the Build / Predict & probe /
-Explain & defend scaffolding, mirroring the lab pages."""
+"""Generate per-week Colab-ready PRACTICE notebooks under notebooks/weekNN.ipynb.
+These are for the instructor to run during the 2-hour practice lesson: each carries an
+Open-in-Colab badge and one section per live demonstration. The student homework is the lab."""
 import json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from content import COURSE, PARTS, WEEKS
+from lessons import PRACTICE
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REPO = "apartsin/DLCourseHIT"
@@ -24,15 +25,16 @@ def bullets(items): return "\n".join(f"{i}. {x}" for i, x in enumerate(items, 1)
 def notebook(w):
     n = w["num"]
     cells = []
+    demos = PRACTICE[n]
     cells.append(md(
         f'[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]({colab_url(n)})\n\n'
         f'# Week {n}: {w["title"]}\n'
         f'**{COURSE["title"]} (HIT)** &middot; Part {w["part"]}: {PARTS[w["part"]]}\n\n'
         f'{w["sub"]}\n\n'
-        f'This is the weekly lab notebook (homework). It follows the course\'s **Build / Predict & probe / Explain & defend** '
-        f'model. Use an AI assistant freely for the Build; the graded learning is in Predict and Explain.'
+        f'**Instructor practice notebook.** Run these live demonstrations during the 2-hour practice '
+        f'lesson. The student homework is the weekly lab.'
     ))
-    cells.append(md("## Goals\n\n" + "\n".join(f"- {g}" for g in w["goals"])))
+    cells.append(md("## Goals for the practice lesson\n\n" + "\n".join(f"- {g}" for g in w["goals"])))
     cells.append(md("## Setup\nRun this first. On Colab, set Runtime > Change runtime type > GPU for the later weeks."))
     cells.append(code(
         "import torch\n"
@@ -43,20 +45,12 @@ def notebook(w):
         "torch.manual_seed(0)\n"
         "print('PyTorch', torch.__version__, '| device:', device)"
     ))
-    cells.append(md("## Part A: Build  *(AI assistant welcome)*\n\n" + bullets(w["build"])))
-    cells.append(code("# Build code here.\n"))
+    for i, demo in enumerate(demos, 1):
+        cells.append(md(f"## Demonstration {i}\n{demo}"))
+        cells.append(code(f"# {demo}\n"))
     cells.append(md(
-        "## Part B: Predict & probe  *(reasoning)*\n\n"
-        "Before running experiments, write the predictions below, then test them.\n\n" + bullets(w["predict"])))
-    cells.append(md("**Predictions (write before running):**\n\n- ...\n"))
-    cells.append(code("# Experiments to test the predictions.\n"))
-    cells.append(md(
-        "## Part C: Explain & defend  *(in plain language)*\n\n" + bullets(w["explain"]) +
-        "\n\n**Explanation:**\n\n_Write the explanation here; be ready to defend any line submitted._"))
-    cells.append(md(
-        "## Deliverables\n\n" + "\n".join(f"- [ ] {d}" for d in w["deliverables"]) +
-        f"\n\n---\nLab page and curated references for this week: "
-        f"`labs/{w2(n)}.html` and `references/{w2(n)}.html` in the course site."))
+        f"---\nStudent materials for this week: the lab handout (`labs/{w2(n)}.html`) and the curated "
+        f"references (`references/{w2(n)}.html`) in the course site."))
     return {
         "cells": cells,
         "metadata": {
