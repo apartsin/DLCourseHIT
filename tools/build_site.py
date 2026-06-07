@@ -315,8 +315,10 @@ def index_html():
         'exercise-based and designed for the way you will actually work, with an AI coding assistant at '
         'hand, while keeping the learning genuine through a Build, Predict, and Explain model.</p>'
     )
-    outcomes = ('<div class="goals"><h2>Expected outcomes</h2><p>By the end of the course you will be able to:</p>'
-                '<ol class="clean" style="columns:2;column-gap:32px">' + li(OUTCOMES) + '</ol></div>')
+    ocards = "".join(f'<div class="ocard"><span class="n">{i}</span><div>{esc(o)}</div></div>'
+                     for i, o in enumerate(OUTCOMES, 1))
+    outcomes = ('<h2>Expected outcomes</h2><p>By the end of the course you will be able to:</p>'
+                f'<div class="ocards">{ocards}</div>')
     prereq_cta = (
         '<h2>Before you start</h2>'
         '<p>The course assumes a prior ML course plus comfort with the math and Python it relies on. '
